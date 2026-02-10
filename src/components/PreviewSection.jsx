@@ -13,7 +13,7 @@ const DEVICE_CONFIG = {
     mobile: {
         width: 320,
         height: 640,
-        scale: 0.85, // Reduced from 1 to fit better
+        scale: 0.75, // Reduced to 0.75 as requested
         frameClass: 'rounded-[3.5rem] border-12 border-[#121212]',
         bezelClass: 'rounded-[2.7rem]'
     },
