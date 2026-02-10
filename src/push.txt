@@ -1,0 +1,10 @@
+✅ Selesai! Project sudah terhubung ke GitHub dan fitur auto-push sudah aktif.
+
+Cara menggunakan auto-sync:
+
+Buka terminal baru
+Jalankan: npm run sync
+Script akan otomatis commit & push setiap ada perubahan file (dengan delay 5 detik)
+Semua file sudah ter-push ke: https://github.com/rizd027/Vlink-Builder
+
+Silakan cek walkthrough untuk detail lengkap!

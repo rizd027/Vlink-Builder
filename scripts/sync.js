@@ -1,5 +1,5 @@
-const { execSync } = require('child_process');
-const chokidar = require('chokidar');
+import { execSync } from 'child_process';
+import chokidar from 'chokidar';
 
 let debounceTimer;
 const DEBOUNCE_DELAY = 5000; // 5 seconds
