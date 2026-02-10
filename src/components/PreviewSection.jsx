@@ -374,7 +374,7 @@ const PreviewSection = memo(({ theme, profile, links, socials, layoutType, previ
                                     )}
                                 </div>
                                 <p
-                                    className={`leading-relaxed opacity-80 ${theme.pageAnimation && theme.pageAnimation !== 'none' ? (theme.pageAnimation === 'sweep' ? 'animate-sweep-text' : `animate-${theme.pageAnimation}`) : ''}`}
+                                    className={`leading-relaxed opacity-80 ${theme.pageAnimation && theme.pageAnimation !== 'none' ? (theme.pageAnimation === 'sweep' ? 'animate-sweep-text' : `animate-${theme.pageAnimation}`) : ''} ${profile.showBio === false ? 'hidden' : ''}`}
                                     style={{
                                         fontFamily: theme.pageFont || 'Inter',
                                         fontWeight: theme.pageWeight || 400,
