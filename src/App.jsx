@@ -669,7 +669,7 @@ function App() {
             <main className={`flex flex-col overflow-hidden bg-[#0a0a0a] z-10 transition-all duration-500 ease-in-out 
                 ${isMobilePreview ? 'hidden md:flex w-0 opacity-0' : (isEditorHidden ? 'flex-none md:flex-none' : 'flex-1 opacity-100')}
                 ${isEditorHidden ? 'md:w-0 md:opacity-0 md:pointer-events-none' : 'md:flex-1 md:opacity-100'}
-                pb-20 md:pb-0`}
+                pb-10 md:pb-0`}
             >
                 {/* Editor Header */}
                 <header className="h-16 md:h-20 px-6 md:px-8 border-b border-white/5 flex items-center justify-between bg-transparent shrink-0">
