@@ -1999,6 +1999,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
 
                                         <div className="grid grid-cols-1 gap-4">
                                             <SelectField
+                                                id="title-font-select"
+                                                name="title-font"
                                                 label="Font Family"
                                                 value={theme.titleFont || 'Inter'}
                                                 onChange={(e) => setTheme({ ...theme, titleFont: e.target.value })}
@@ -2010,6 +2012,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
 
                                             <div className="grid grid-cols-2 gap-3">
                                                 <SelectField
+                                                    id="title-weight-select"
+                                                    name="title-weight"
                                                     label="Weight"
                                                     value={theme.titleWeight || 700}
                                                     onChange={(e) => setTheme({ ...theme, titleWeight: parseInt(e.target.value) })}
@@ -2023,6 +2027,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                     <option value="900" className="bg-[#121212]">Black</option>
                                                 </SelectField>
                                                 <SelectField
+                                                    id="title-transform-select"
+                                                    name="title-transform"
                                                     label="Transform"
                                                     value={theme.titleTransform || 'none'}
                                                     onChange={(e) => setTheme({ ...theme, titleTransform: e.target.value })}
@@ -2056,6 +2062,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         <div className="flex flex-col gap-2">
                                             <SelectField
                                                 id="title-animation-select"
+                                                name="title-animation"
                                                 label="Title Animation"
                                                 value={theme.titleAnimation || 'none'}
                                                 onChange={(e) => setTheme({ ...theme, titleAnimation: e.target.value })}
@@ -2097,6 +2104,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                     <div className="flex items-center gap-2 p-3 rounded-xl bg-black/20 border border-white/5">
                                                         <input
                                                             type="color"
+                                                            id="title-color-gradient-1"
+                                                            name="title-color-gradient-1"
                                                             value={theme.titleColorGradient1 || '#8228d9'}
                                                             onChange={(e) => setTheme({ ...theme, titleColorGradient1: e.target.value })}
                                                             className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer border border-white/10"
@@ -2106,6 +2115,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                     <div className="flex items-center gap-2 p-3 rounded-xl bg-black/20 border border-white/5">
                                                         <input
                                                             type="color"
+                                                            id="title-color-gradient-2"
+                                                            name="title-color-gradient-2"
                                                             value={theme.titleColorGradient2 || '#6366f1'}
                                                             onChange={(e) => setTheme({ ...theme, titleColorGradient2: e.target.value })}
                                                             className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer border border-white/10"
@@ -2146,6 +2157,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                         <input
                                                             type="file"
                                                             id="title-pattern-upload"
+                                                            name="title-pattern-upload"
                                                             className="hidden"
                                                             accept="image/*"
                                                             onChange={(e) => {
@@ -2206,6 +2218,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         <div className="flex flex-col gap-2">
                                             <SelectField
                                                 id="header-layout-select"
+                                                name="header-layout"
                                                 label="Header Layout"
                                                 value={profile.headerLayout || 'classic'}
                                                 onChange={(e) => setProfile({ ...profile, headerLayout: e.target.value })}
@@ -2219,6 +2232,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         <div className="flex flex-col gap-2">
                                             <SelectField
                                                 id="header-size-select"
+                                                name="header-size"
                                                 label="Header Size"
                                                 value={profile.headerSize || 'small'}
                                                 onChange={(e) => setProfile({ ...profile, headerSize: e.target.value })}
@@ -2231,6 +2245,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         <div className="grid grid-cols-1 gap-4">
                                             <SelectField
                                                 id="bio-font-select"
+                                                name="bio-font"
                                                 label="Font Family"
                                                 value={theme.pageFont || 'Inter'}
                                                 onChange={(e) => setTheme({ ...theme, pageFont: e.target.value })}
@@ -2243,6 +2258,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                             <div className="grid grid-cols-2 gap-3">
                                                 <SelectField
                                                     id="bio-weight-select"
+                                                    name="bio-weight"
                                                     label="Weight"
                                                     value={theme.pageWeight || 400}
                                                     onChange={(e) => setTheme({ ...theme, pageWeight: parseInt(e.target.value) })}
@@ -2255,6 +2271,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                 </SelectField>
                                                 <SelectField
                                                     id="bio-transform-select"
+                                                    name="bio-transform"
                                                     label="Transform"
                                                     value={theme.pageTransform || 'none'}
                                                     onChange={(e) => setTheme({ ...theme, pageTransform: e.target.value })}
@@ -2305,6 +2322,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         <div className="flex flex-col gap-2">
                                             <SelectField
                                                 id="bio-animation-select"
+                                                name="bio-animation"
                                                 label="Bio Animation"
                                                 value={theme.pageAnimation || 'none'}
                                                 onChange={(e) => setTheme({ ...theme, pageAnimation: e.target.value })}
@@ -2346,6 +2364,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                     <div className="flex items-center gap-2 p-3 rounded-xl bg-black/20 border border-white/5">
                                                         <input
                                                             type="color"
+                                                            id="page-color-gradient-1"
+                                                            name="page-color-gradient-1"
                                                             value={theme.pageColorGradient1 || '#8228d9'}
                                                             onChange={(e) => setTheme({ ...theme, pageColorGradient1: e.target.value })}
                                                             className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer border border-white/10"
@@ -2355,6 +2375,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                     <div className="flex items-center gap-2 p-3 rounded-xl bg-black/20 border border-white/5">
                                                         <input
                                                             type="color"
+                                                            id="page-color-gradient-2"
+                                                            name="page-color-gradient-2"
                                                             value={theme.pageColorGradient2 || '#6366f1'}
                                                             onChange={(e) => setTheme({ ...theme, pageColorGradient2: e.target.value })}
                                                             className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer border border-white/10"
@@ -2395,6 +2417,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                         <input
                                                             type="file"
                                                             id="bio-pattern-upload"
+                                                            name="bio-pattern-upload"
                                                             className="hidden"
                                                             accept="image/*"
                                                             onChange={(e) => {
@@ -2727,6 +2750,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                 <input
                                                     type="file"
                                                     id="wallpaper-pattern-upload"
+                                                    name="wallpaper-pattern-upload"
                                                     className="hidden"
                                                     accept="image/*"
                                                     onChange={(e) => {
@@ -2904,6 +2928,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                     <span className="text-[9px] text-white/20 font-black uppercase tracking-widest mt-1">PNG, JPG up to 10MB</span>
                                                     <input
                                                         id="bg-image-upload"
+                                                        name="bg-image-upload"
                                                         type="file"
                                                         accept="image/*"
                                                         className="hidden"
@@ -2988,6 +3013,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                     <span className="text-[9px] text-white/20 font-black uppercase tracking-widest mt-1">MP4, MOV up to 50MB</span>
                                                     <input
                                                         id="bg-video-upload"
+                                                        name="bg-video-upload"
                                                         type="file"
                                                         accept="video/*"
                                                         className="hidden"
@@ -3220,6 +3246,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                                     <input
                                                                         type="file"
                                                                         id="btn-body-pattern-upload"
+                                                                        name="btn-body-pattern-upload"
                                                                         className="hidden"
                                                                         accept="image/*"
                                                                         onChange={(e) => {
@@ -3351,6 +3378,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
 
                                                     {/* Font Family */}
                                                     <SelectField
+                                                        id="btn-font-select"
+                                                        name="btn-font"
                                                         label="Font Family"
                                                         value={theme.btnFont || 'Inter'}
                                                         onChange={(e) => setTheme({ ...theme, btnFont: e.target.value })}
@@ -3363,6 +3392,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                     <div className="grid grid-cols-2 gap-3">
                                                         {/* Font Weight */}
                                                         <SelectField
+                                                            id="btn-weight-select"
+                                                            name="btn-weight"
                                                             label="Weight"
                                                             value={theme.btnTextWeight || 600}
                                                             onChange={(e) => setTheme({ ...theme, btnTextWeight: parseInt(e.target.value) })}
@@ -3377,6 +3408,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
 
                                                         {/* Text Transform */}
                                                         <SelectField
+                                                            id="btn-transform-select"
+                                                            name="btn-transform"
                                                             label="Transform"
                                                             value={theme.btnTextTransform || 'none'}
                                                             onChange={(e) => setTheme({ ...theme, btnTextTransform: e.target.value })}
@@ -3477,6 +3510,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                                     <input
                                                                         type="file"
                                                                         id="btn-text-pattern-upload"
+                                                                        name="btn-text-pattern-upload"
                                                                         className="hidden"
                                                                         accept="image/*"
                                                                         onChange={(e) => {
@@ -3527,6 +3561,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                 </div>
                                                 <input
                                                     type="range" min="-20" max="20"
+                                                    id="btn-shadow-x"
+                                                    name="btn-shadow-x"
                                                     value={theme.btnShadowX || 0}
                                                     onChange={(e) => setTheme({ ...theme, btnShadowX: parseInt(e.target.value) })}
                                                     className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-indigo-500"
@@ -3539,6 +3575,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                 </div>
                                                 <input
                                                     type="range" min="-20" max="20"
+                                                    id="btn-shadow-y"
+                                                    name="btn-shadow-y"
                                                     value={theme.btnShadowY || 0}
                                                     onChange={(e) => setTheme({ ...theme, btnShadowY: parseInt(e.target.value) })}
                                                     className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-indigo-500"
@@ -3554,6 +3592,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                 </div>
                                                 <input
                                                     type="range" min="0" max="50"
+                                                    id="btn-shadow-blur"
+                                                    name="btn-shadow-blur"
                                                     value={theme.btnShadowBlur || 0}
                                                     onChange={(e) => setTheme({ ...theme, btnShadowBlur: parseInt(e.target.value) })}
                                                     className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-indigo-500"
@@ -3566,6 +3606,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                 </div>
                                                 <input
                                                     type="range" min="0" max="100"
+                                                    id="btn-shadow-opacity"
+                                                    name="btn-shadow-opacity"
                                                     value={(theme.btnShadowOpacity || 0) * 100}
                                                     onChange={(e) => setTheme({ ...theme, btnShadowOpacity: parseInt(e.target.value) / 100 })}
                                                     className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-indigo-500"
@@ -3661,6 +3703,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                             <input
                                                                 type="file"
                                                                 id="btn-shadow-pattern-upload"
+                                                                name="btn-shadow-pattern-upload"
                                                                 className="hidden"
                                                                 accept="image/*"
                                                                 onChange={(e) => {
@@ -3722,7 +3765,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                     <button
                                                         key={opt}
                                                         onClick={() => setTheme({ ...theme, btnHoverEffect: opt })}
-                                                        className={`py-3 px-1 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all border ${theme.btnHoverEffect === opt
+                                                        className={`py-3 px-1 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${theme.btnHoverEffect === opt
                                                             ? 'bg-amber-500/20 text-white border-amber-500/40 shadow-xl shadow-amber-500/10'
                                                             : 'bg-black/20 text-white/20 border-white/5 hover:border-white/10 hover:text-white/40'
                                                             }`}
@@ -3741,7 +3784,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                     <button
                                                         key={opt}
                                                         onClick={() => setTheme({ ...theme, btnPressEffect: opt })}
-                                                        className={`py-3 px-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all border ${theme.btnPressEffect === opt
+                                                        className={`py-3 px-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${theme.btnPressEffect === opt
                                                             ? 'bg-amber-500/20 text-white border-amber-500/40 shadow-xl shadow-amber-500/10'
                                                             : 'bg-black/20 text-white/20 border-white/5 hover:border-white/10 hover:text-white/40'
                                                             }`}
@@ -3901,6 +3944,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         {/* Animation */}
                                         <div className="py-6 border-t border-white/5">
                                             <SelectField
+                                                id="footer-animation-select"
+                                                name="footer-animation"
                                                 label="Animation"
                                                 value={theme.footerAnimation || 'none'}
                                                 onChange={(e) => setTheme({ ...theme, footerAnimation: e.target.value })}
@@ -4048,6 +4093,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                                     <input
                                                                         type="file"
                                                                         id="footer-body-pattern-upload"
+                                                                        name="footer-body-pattern-upload"
                                                                         className="hidden"
                                                                         accept="image/*"
                                                                         onChange={(e) => {
@@ -4083,6 +4129,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
 
                                                         {/* Font Family */}
                                                         <SelectField
+                                                            id="footer-font-select"
+                                                            name="footer-font"
                                                             label="Font Family"
                                                             value={theme.footerFont || 'Inter'}
                                                             onChange={(e) => setTheme({ ...theme, footerFont: e.target.value })}
@@ -4095,6 +4143,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                         <div className="grid grid-cols-2 gap-3">
                                                             {/* Font Weight */}
                                                             <SelectField
+                                                                id="footer-weight-select"
+                                                                name="footer-weight"
                                                                 label="Weight"
                                                                 value={theme.footerWeight || 400}
                                                                 onChange={(e) => setTheme({ ...theme, footerWeight: parseInt(e.target.value) })}
@@ -4108,6 +4158,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
 
                                                             {/* Text Transform */}
                                                             <SelectField
+                                                                id="footer-transform-select"
+                                                                name="footer-transform"
                                                                 label="Transform"
                                                                 value={theme.footerTransform || 'none'}
                                                                 onChange={(e) => setTheme({ ...theme, footerTransform: e.target.value })}
@@ -4122,10 +4174,12 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                         {/* Font Size */}
                                                         <div className="flex flex-col gap-3">
                                                             <div className="flex items-center justify-between">
-                                                                <label className="text-[9px] font-bold text-white/30 uppercase tracking-wider">Size</label>
+                                                                <label htmlFor="footer-font-size" className="text-[9px] font-bold text-white/30 uppercase tracking-wider">Size</label>
                                                                 <span className="text-[9px] font-bold text-white">{theme.footerFontSize || 12}px</span>
                                                             </div>
                                                             <input
+                                                                id="footer-font-size"
+                                                                name="footer-font-size"
                                                                 type="range"
                                                                 min="10"
                                                                 max="24"
@@ -4212,6 +4266,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                                     <input
                                                                         type="file"
                                                                         id="footer-text-pattern-upload"
+                                                                        name="footer-text-pattern-upload"
                                                                         className="hidden"
                                                                         accept="image/*"
                                                                         onChange={(e) => {
@@ -4390,6 +4445,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                         <input
                                                             type="file"
                                                             id="footer-shadow-pattern-upload"
+                                                            name="footer-shadow-pattern-upload"
                                                             className="hidden"
                                                             accept="image/*"
                                                             onChange={(e) => {
@@ -4605,8 +4661,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         <div className="flex items-center gap-4 animate-in fade-in slide-in-from-top-2 duration-200">
                                             <div className="relative group">
                                                 <input
-                                                    id="social-custom-color"
-                                                    name="social-custom-color"
+                                                    id="social-custom-color-picker"
+                                                    name="social-custom-color-picker"
                                                     type="color"
                                                     value={theme.socialCustomColor || '#ffffff'}
                                                     onChange={(e) => setTheme({ ...theme, socialCustomColor: e.target.value })}
@@ -4701,6 +4757,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
 
                                         <div className="pt-6 border-t border-white/5">
                                             <SelectField
+                                                id="social-animation-select"
+                                                name="social-animation"
                                                 label="Active Animation"
                                                 value={theme.socialAnimation || 'none'}
                                                 onChange={(e) => setTheme({ ...theme, socialAnimation: e.target.value })}
@@ -4742,6 +4800,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                 <div className="relative">
                                                     <input
                                                         id={`social-${p.id}`}
+                                                        name={`social-${p.id}`}
                                                         type="text"
                                                         value={currentSocial?.url || ''}
                                                         onChange={(e) => {
