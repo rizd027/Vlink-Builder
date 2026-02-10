@@ -18,9 +18,9 @@ const DEVICE_CONFIG = {
         bezelClass: 'rounded-[2.7rem]'
     },
     tablet: {
-        width: 768,
+        width: 868,
         height: 1024,
-        scale: 0.45, // Reduced to 0.65 as requested
+        scale: 0.50, // Reduced to 0.65 as requested
         frameClass: 'rounded-[2.5rem] border-[14px] border-[#181818]',
         bezelClass: 'rounded-[1.8rem]'
     },
