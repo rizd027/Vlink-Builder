@@ -328,9 +328,9 @@ const ReorderLinkItem = memo(({
                             </button>
                             <button
                                 onClick={() => updateLink(link.id, 'active', !link.active)}
-                                className={`w-11 h-6 rounded-full relative ${link.active ? 'bg-green-500' : 'bg-white/10'}`}
+                                className={`w-11 h-6 rounded-full relative transition-colors duration-300 ease-in-out ${link.active ? 'bg-green-500' : 'bg-white/10 hover:bg-white/20'}`}
                             >
-                                <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm ${link.active ? 'left-[22px]' : 'left-0.5'}`} />
+                                <div className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${link.active ? 'translate-x-[20px]' : 'translate-x-0'}`} />
                             </button>
                         </div>
                     </div>
