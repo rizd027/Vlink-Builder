@@ -626,7 +626,7 @@ function App() {
 
             {/* Sidebar Navigation - Permanent Bar on Desktop, Bottom Bar on Mobile */}
             <aside className={`fixed bottom-0 left-0 right-0 h-20 md:relative md:h-full transition-all duration-500 ease-in-out border-t md:border-t-0 md:border-r border-white/5 flex flex-row md:flex-col items-center justify-around md:justify-start md:py-8 md:gap-8 bg-[#080808]/95 backdrop-blur-lg md:bg-[#080808] z-50 shrink-0 overflow-hidden
-                ${isEditorHidden ? 'md:w-0 md:opacity-0 md:-translate-x-full md:pointer-events-none translate-y-full md:translate-y-0 opacity-0' : 'md:w-24 md:opacity-100 md:translate-x-0 translate-y-0 opacity-100'}`}
+                ${isEditorHidden ? 'md:w-0 md:opacity-0 md:-translate-x-full md:pointer-events-none' : 'md:w-24 md:opacity-100 md:translate-x-0 translate-y-0 opacity-100'}`}
             >
                 <button
                     onClick={() => setIsEditorHidden(!isEditorHidden)}
