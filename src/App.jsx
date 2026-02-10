@@ -1787,25 +1787,17 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         <div className="flex items-center justify-between w-full">
                                             <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Profile Avatar</span>
                                             <button
-  type="button"
-  onClick={() => setProfile({ ...profile, showAvatar: !profile.showAvatar })}
-  className={`
-    relative w-9 h-5 rounded-full 
-    transition-colors duration-300 ease-in-out
-    focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2
-    ${profile.showAvatar ? 'bg-green-500' : 'bg-white/10 hover:bg-white/20'}
-  `}
-  title={profile.showAvatar ? "Hide Avatar" : "Show Avatar"}
->
-  <div
-    className={`
-      absolute top-1 left-1 w-3 h-3 rounded-full bg-white shadow-sm
-      transition-transform duration-500 
-      ease-[cubic-bezier(0.2,0.8,0.2,1)] 
-      ${profile.showAvatar ? 'translate-x-4' : 'translate-x-0'}
-    `}
-  />
-</button>
+                                                onClick={() => setProfile({ ...profile, showAvatar: profile.showAvatar === false ? true : false })}
+                                                className={`w-9 h-5 rounded-full relative transition-colors duration-300 ease-in-out ${profile.showAvatar !== false ? 'bg-green-500' : 'bg-white/10 hover:bg-white/20'}`}
+                                                title={profile.showAvatar !== false ? "Hide Avatar" : "Show Avatar"}
+                                            >
+                                                <div className={`
+                                                    absolute top-1 left-0.5 w-3 h-3 rounded-full bg-white shadow-sm 
+                                                    transition-transform duration-500 
+                                                    ease-[cubic-bezier(0.2,0.8,0.2,1)] 
+                                                    ${profile.showAvatar !== false ? 'translate-x-4' : 'translate-x-0'}
+                                                `} />
+                                            </button>
                                         </div>
                                         <button
                                             onClick={() => setProfileImageModalOpen(true)}
