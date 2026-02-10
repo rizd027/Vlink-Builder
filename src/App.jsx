@@ -1784,15 +1784,15 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         <div className="flex items-center justify-between w-full">
                                             <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Profile Avatar</span>
                                             <button
-                                                onClick={() => setProfile({ ...profile, showAvatar: !profile.showAvatar })}
-                                                className={`w-8 h-4 rounded-full relative transition-colors duration-300 ease-in-out ${profile.showAvatar ? 'bg-green-500' : 'bg-white/10 hover:bg-white/20'}`}
-                                                title={profile.showAvatar ? "Hide Avatar" : "Show Avatar"}
+                                                onClick={() => setProfile({ ...profile, showAvatar: profile.showAvatar === false ? true : false })}
+                                                className={`w-8 h-4 rounded-full relative transition-colors duration-300 ease-in-out ${profile.showAvatar !== false ? 'bg-green-500' : 'bg-white/10 hover:bg-white/20'}`}
+                                                title={profile.showAvatar !== false ? "Hide Avatar" : "Show Avatar"}
                                             >
                                                 <div className={`
                                                     absolute top-0.5 left-0.5 w-3 h-3 rounded-full bg-white shadow-sm 
                                                     transition-transform duration-500 
                                                     ease-[cubic-bezier(0.2,0.8,0.2,1)] 
-                                                    ${profile.showAvatar ? 'translate-x-4' : 'translate-x-0'}
+                                                    ${profile.showAvatar !== false ? 'translate-x-4' : 'translate-x-0'}
                                                 `} />
                                             </button>
                                         </div>
