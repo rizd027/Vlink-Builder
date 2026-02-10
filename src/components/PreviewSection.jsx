@@ -327,51 +327,53 @@ const PreviewSection = memo(({ theme, profile, links, socials, layoutType, previ
                                 <div className={`flex flex-col items-center gap-1 text-center px-3 
                                     ${profile.headerLayout === 'hero' ? 'bg-black/20 w-full py-6 rounded-2xl -mt-2 border border-white/5' : ''}
                                 `}>
-                                    {theme.titleStyle === 'text' ? (
-                                        <h2
-                                            className={`${theme.titleAnimation && theme.titleAnimation !== 'none' ? (theme.titleAnimation === 'sweep' ? 'animate-sweep-text' : `animate-${theme.titleAnimation}`) : ''}`}
-                                            style={{
-                                                fontFamily: theme.titleFont || 'Inter',
-                                                fontWeight: theme.titleWeight || 700,
-                                                textTransform: theme.titleTransform || 'none',
-                                                fontSize: theme.titleSize ? `${theme.titleSize}px` : `${1.25 * ((typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100))) / 100)}rem`,
-                                                ...(theme.titleColorType === 'gradient' ? {
-                                                    backgroundImage: `linear-gradient(135deg, ${theme.titleColorGradient1 || '#8228d9'}, ${theme.titleColorGradient2 || '#6366f1'})`,
-                                                    WebkitBackgroundClip: 'text',
-                                                    backgroundClip: 'text',
-                                                    WebkitTextFillColor: 'transparent',
-                                                    color: 'transparent'
-                                                } : theme.titleColorType === 'pattern' ? {
-                                                    backgroundImage: theme.titleColorPattern === 'dots'
-                                                        ? `radial-gradient(circle, ${theme.titleColor || '#ffffff'} 1px, transparent 1px)`
-                                                        : theme.titleColorPattern === 'stripes'
-                                                            ? `linear-gradient(45deg, ${theme.titleColor || '#ffffff'} 25%, transparent 25%, transparent 50%, ${theme.titleColor || '#ffffff'} 50%, ${theme.titleColor || '#ffffff'} 75%, transparent 75%, transparent)`
-                                                            : theme.titleColorPattern === 'custom' && theme.titleColorCustomPattern
-                                                                ? `url(${theme.titleColorCustomPattern})`
-                                                                : 'none',
-                                                    backgroundSize: theme.titleColorPattern === 'dots' ? '6px 6px' : theme.titleColorPattern === 'stripes' ? '10px 10px' : 'cover',
-                                                    WebkitBackgroundClip: 'text',
-                                                    backgroundClip: 'text',
-                                                    WebkitTextFillColor: 'transparent',
-                                                    color: 'transparent'
-                                                } : {
-                                                    color: theme.titleColor || '#ffffff'
-                                                })
-                                            }}
-                                        >
-                                            {profile.username}
-                                        </h2>
-                                    ) : (
-                                        <div
-                                            style={{
-                                                width: `${110 * ((typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100))) / 100)}px`,
-                                                height: `${36 * ((typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100))) / 100)}px`
-                                            }}
-                                            className={`bg-white/20 rounded-lg p-2 flex items-center justify-center`}
-                                        >
-                                            <span className="text-[10px] font-black uppercase tracking-widest opacity-40 italic">Your Logo</span>
-                                        </div>
-                                    )}
+                                    <div className={`${profile.showTitle === false ? 'hidden' : ''} w-full flex justify-center`}>
+                                        {theme.titleStyle === 'text' ? (
+                                            <h2
+                                                className={`${theme.titleAnimation && theme.titleAnimation !== 'none' ? (theme.titleAnimation === 'sweep' ? 'animate-sweep-text' : `animate-${theme.titleAnimation}`) : ''}`}
+                                                style={{
+                                                    fontFamily: theme.titleFont || 'Inter',
+                                                    fontWeight: theme.titleWeight || 700,
+                                                    textTransform: theme.titleTransform || 'none',
+                                                    fontSize: theme.titleSize ? `${theme.titleSize}px` : `${1.25 * ((typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100))) / 100)}rem`,
+                                                    ...(theme.titleColorType === 'gradient' ? {
+                                                        backgroundImage: `linear-gradient(135deg, ${theme.titleColorGradient1 || '#8228d9'}, ${theme.titleColorGradient2 || '#6366f1'})`,
+                                                        WebkitBackgroundClip: 'text',
+                                                        backgroundClip: 'text',
+                                                        WebkitTextFillColor: 'transparent',
+                                                        color: 'transparent'
+                                                    } : theme.titleColorType === 'pattern' ? {
+                                                        backgroundImage: theme.titleColorPattern === 'dots'
+                                                            ? `radial-gradient(circle, ${theme.titleColor || '#ffffff'} 1px, transparent 1px)`
+                                                            : theme.titleColorPattern === 'stripes'
+                                                                ? `linear-gradient(45deg, ${theme.titleColor || '#ffffff'} 25%, transparent 25%, transparent 50%, ${theme.titleColor || '#ffffff'} 50%, ${theme.titleColor || '#ffffff'} 75%, transparent 75%, transparent)`
+                                                                : theme.titleColorPattern === 'custom' && theme.titleColorCustomPattern
+                                                                    ? `url(${theme.titleColorCustomPattern})`
+                                                                    : 'none',
+                                                        backgroundSize: theme.titleColorPattern === 'dots' ? '6px 6px' : theme.titleColorPattern === 'stripes' ? '10px 10px' : 'cover',
+                                                        WebkitBackgroundClip: 'text',
+                                                        backgroundClip: 'text',
+                                                        WebkitTextFillColor: 'transparent',
+                                                        color: 'transparent'
+                                                    } : {
+                                                        color: theme.titleColor || '#ffffff'
+                                                    })
+                                                }}
+                                            >
+                                                {profile.username}
+                                            </h2>
+                                        ) : (
+                                            <div
+                                                style={{
+                                                    width: `${110 * ((typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100))) / 100)}px`,
+                                                    height: `${36 * ((typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100))) / 100)}px`
+                                                }}
+                                                className={`bg-white/20 rounded-lg p-2 flex items-center justify-center`}
+                                            >
+                                                <span className="text-[10px] font-black uppercase tracking-widest opacity-40 italic">Your Logo</span>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                                 <p
                                     className={`leading-relaxed opacity-80 ${theme.pageAnimation && theme.pageAnimation !== 'none' ? (theme.pageAnimation === 'sweep' ? 'animate-sweep-text' : `animate-${theme.pageAnimation}`) : ''} ${profile.showBio === false ? 'hidden' : ''}`}
