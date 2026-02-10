@@ -1995,7 +1995,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
 
                                     {/* Profile Title Settings */}
                                     <div className="flex flex-col gap-6 pt-4 border-t border-white/5">
-                                        <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Title Text Appearance</label>
+                                        <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Title Text Appearance</span>
 
                                         <div className="grid grid-cols-1 gap-4">
                                             <SelectField
@@ -2213,7 +2213,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                     </div>
 
                                     <div className="flex flex-col gap-6 pt-6 border-t border-white/5">
-                                        <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Bio Text Appearance</label>
+                                        <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Bio Text Appearance</span>
 
                                         <div className="flex flex-col gap-2">
                                             <SelectField
@@ -2337,7 +2337,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         {/* Bio Color Mode Selector */}
                                         <div className="flex flex-col gap-4">
                                             <div className="flex items-center justify-between px-1">
-                                                <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Bio Color Mode</label>
+                                                <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Bio Color Mode</span>
                                             </div>
                                             <ModeSelector
                                                 mode={theme.pageColorType || 'solid'}
@@ -4407,7 +4407,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                 <div className="flex flex-col gap-4">
                                                     <div className="flex flex-col gap-3">
                                                         <div className="flex items-center justify-between">
-                                                            <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Select Pattern</label>
+                                                            <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Select Pattern</span>
                                                         </div>
                                                         <div className="grid grid-cols-4 gap-2">
                                                             {['dots', 'stripes', 'noise', 'custom'].map((p) => (
@@ -4428,7 +4428,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                         </div>
                                                     </div>
                                                     <div className="flex flex-col gap-3">
-                                                        <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Pattern Color</label>
+                                                        <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Pattern Color</span>
                                                         <div className="flex items-center gap-4 p-3 rounded-2xl bg-white/5 border border-white/5 group focus-within:border-white/10 transition-all">
                                                             <input
                                                                 id="footer-shadow-pattern-color"
@@ -4517,7 +4517,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         </div>
 
                                         <div className="flex flex-col gap-4">
-                                            <label className="text-xs font-bold text-white/60">Display Style</label>
+                                            <span className="text-xs font-bold text-white/60">Display Style</span>
                                             <div className="flex p-1 bg-black/40 rounded-xl border border-white/5">
                                                 <button
                                                     onClick={() => setTheme({ ...theme, socialStyle: 'icons-only' })}
@@ -4537,7 +4537,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         </div>
 
                                         <div className="flex flex-col gap-4">
-                                            <label className="text-xs font-bold text-white/60">Position</label>
+                                            <span className="text-xs font-bold text-white/60">Position</span>
                                             <div className="flex p-1 bg-black/40 rounded-xl border border-white/5">
                                                 <button
                                                     onClick={() => setTheme({ ...theme, socialPosition: 'top' })}
@@ -4557,7 +4557,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         </div>
 
                                         <div className="flex flex-col gap-4">
-                                            <label className="text-xs font-bold text-white/60">Alignment</label>
+                                            <span className="text-xs font-bold text-white/60">Alignment</span>
                                             <div className="flex p-1 bg-black/40 rounded-xl border border-white/5">
                                                 <button
                                                     onClick={() => setTheme({ ...theme, socialAlignment: 'left' })}
@@ -4695,7 +4695,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         </div>
 
                                         <div className="flex flex-col gap-4">
-                                            <label className="text-xs font-bold text-white/60">Font Family</label>
+                                            <span className="text-xs font-bold text-white/60">Font Family</span>
                                             <div className="grid grid-cols-2 gap-2">
                                                 {FONTS.map(f => (
                                                     <button
@@ -4711,7 +4711,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         </div>
 
                                         <div className="flex flex-col gap-4">
-                                            <label className="text-xs font-bold text-white/60">Text Weight</label>
+                                            <span className="text-xs font-bold text-white/60">Text Weight</span>
                                             <div className="flex p-1 bg-black/40 rounded-xl border border-white/5">
                                                 {[400, 700, 900].map(weight => (
                                                     <button
@@ -4735,7 +4735,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         </div>
 
                                         <div className="flex flex-col gap-4">
-                                            <label className="text-xs font-bold text-white/60">Hover Animation</label>
+                                            <span className="text-xs font-bold text-white/60">Hover Animation</span>
                                             <div className="grid grid-cols-2 gap-2">
                                                 {[
                                                     { id: 'none', label: 'None', icon: Square },
