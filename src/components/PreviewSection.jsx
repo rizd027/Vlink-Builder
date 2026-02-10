@@ -672,7 +672,6 @@ const PreviewSection = memo(({ theme, profile, links, socials, layoutType, previ
                 </div>
             </div>
         </div>
-        </section >
     );
 });
 
