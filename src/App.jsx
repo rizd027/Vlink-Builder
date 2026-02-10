@@ -624,8 +624,8 @@ function App() {
             {/* Solid Background for better performance */}
             <div className="fixed inset-0 bg-[#050505] -z-10" />
 
-            {/* Sidebar Navigation - Permanent Bar on Desktop, Bottom Bar on Mobile */}
-            <aside className={`fixed bottom-0 left-0 right-0 h-20 md:relative md:h-full transition-all duration-500 ease-in-out border-t md:border-t-0 md:border-r border-white/5 flex flex-row md:flex-col items-center justify-around md:justify-start md:py-8 md:gap-8 bg-[#080808]/95 backdrop-blur-lg md:bg-[#080808] z-50 shrink-0 overflow-hidden
+            {/* Sidebar Navigation - Permanent Bar on Desktop, Top Bar on Mobile */}
+            <aside className={`fixed top-0 left-0 right-0 h-20 md:relative md:h-full transition-all duration-500 ease-in-out border-b md:border-b-0 md:border-r border-white/5 flex flex-row md:flex-col items-center justify-around md:justify-start md:py-8 md:gap-8 bg-[#080808]/95 backdrop-blur-lg md:bg-[#080808] z-50 shrink-0 overflow-hidden
                 ${isEditorHidden ? 'md:w-0 md:opacity-0 md:-translate-x-full md:pointer-events-none' : 'md:w-24 md:opacity-100 md:translate-x-0 translate-y-0 opacity-100'}`}
             >
                 <button
@@ -669,7 +669,7 @@ function App() {
             <main className={`flex flex-col overflow-hidden bg-[#0a0a0a] z-10 transition-all duration-500 ease-in-out 
                 ${isMobilePreview ? 'hidden md:flex w-0 opacity-0' : (isEditorHidden ? 'flex-none md:flex-none' : 'flex-1 opacity-100')}
                 ${isEditorHidden ? 'md:w-0 md:opacity-0 md:pointer-events-none' : 'md:flex-1 md:opacity-100'}
-                pb-20 md:pb-0`}
+                pt-20 md:pt-0`}
             >
                 {/* Editor Header */}
                 <header className="h-16 md:h-20 px-6 md:px-8 border-b border-white/5 flex items-center justify-between bg-transparent shrink-0">
@@ -693,7 +693,7 @@ function App() {
                     </div>
                 </header>
 
-                <div className={`flex-1 ${activeTab === 'appearance' ? 'overflow-hidden p-0' : 'overflow-y-auto p-4 md:p-8 pb-20 md:pb-8'} custom-scrollbar gpu-scroll scroll-smooth`}>
+                <div className={`flex-1 ${activeTab === 'appearance' ? 'overflow-hidden p-0' : 'overflow-y-auto p-4 md:p-8 pt-20 md:pt-8'} custom-scrollbar gpu-scroll scroll-smooth`}>
                     {activeTab === 'links' && <LinkEditor links={links} setLinks={setLinks} layoutType={layoutType} setLayoutType={setLayoutType} profile={profile} setProfile={setProfile} theme={theme} setTheme={setTheme} socials={socials} setSocials={setSocials} setAppearanceSubTab={setAppearanceSubTab} setActiveTab={setActiveTab} />}
                     {activeTab === 'appearance' && <AppearanceEditor theme={theme} setTheme={setTheme} profile={profile} setProfile={setProfile} socials={socials} setSocials={setSocials} subTab={appearanceSubTab} setSubTab={setAppearanceSubTab} />}
                     {activeTab === 'settings' && <SettingsEditor links={links} setLinks={setLinks} profile={profile} setProfile={setProfile} theme={theme} setTheme={setTheme} socials={socials} setSocials={setSocials} />}
@@ -1730,7 +1730,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                 </aside>
 
                 {/* Main Content Area */}
-                <main className="flex-1 p-4 md:p-12 pb-20 md:pb-12 bg-[#0a0a0a] flex flex-col gap-8 md:gap-12 overflow-y-auto custom-scrollbar gpu-scroll">
+                <main className="flex-1 p-4 md:p-12 pt-20 md:pt-12 bg-[#0a0a0a] flex flex-col gap-8 md:gap-12 overflow-y-auto custom-scrollbar gpu-scroll">
                     <>
                         {subTab === 'header' && (
                             <div className="flex flex-col gap-10">
@@ -4799,7 +4799,7 @@ const SettingsEditor = memo(function SettingsEditor({ links, setLinks, profile, 
     };
 
     return (
-        <div className="max-w-4xl mx-auto flex flex-col gap-8 pb-20 md:pb-0">
+        <div className="max-w-4xl mx-auto flex flex-col gap-8 pt-20 md:pt-0">
             <section className="p-12 rounded-[3rem] bg-linear-to-br from-purple-500/10 to-indigo-500/10 border border-white/5 flex flex-col items-center gap-8 text-center shadow-2xl">
                 <div className="w-20 h-20 rounded-3xl bg-purple-500 flex items-center justify-center shadow-2xl shadow-purple-500/20">
                     <Settings size={40} className="text-white" />
