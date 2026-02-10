@@ -1792,7 +1792,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                 title={profile.showAvatar !== false ? "Hide Avatar" : "Show Avatar"}
                                             >
                                                 <div className={`
-                                                    absolute top-0.5 left-0.5 w-3 h-3 rounded-full bg-white shadow-sm 
+                                                    absolute top-1 left-0.5 w-3 h-3 rounded-full bg-white shadow-sm 
                                                     transition-transform duration-500 
                                                     ease-[cubic-bezier(0.2,0.8,0.2,1)] 
                                                     ${profile.showAvatar !== false ? 'translate-x-4' : 'translate-x-0'}
