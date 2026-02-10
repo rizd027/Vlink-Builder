@@ -1781,7 +1781,21 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         </div>
                                     </div>
                                     <div className="flex flex-col gap-3">
-                                        <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Profile Avatar</span>
+                                        <div className="flex items-center justify-between w-full">
+                                            <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Profile Avatar</span>
+                                            <button
+                                                onClick={() => setProfile({ ...profile, showAvatar: !profile.showAvatar })}
+                                                className={`w-8 h-4 rounded-full relative transition-colors duration-300 ease-in-out ${profile.showAvatar ? 'bg-green-500' : 'bg-white/10 hover:bg-white/20'}`}
+                                                title={profile.showAvatar ? "Hide Avatar" : "Show Avatar"}
+                                            >
+                                                <div className={`
+                                                    absolute top-0.5 left-0.5 w-3 h-3 rounded-full bg-white shadow-sm 
+                                                    transition-transform duration-500 
+                                                    ease-[cubic-bezier(0.2,0.8,0.2,1)] 
+                                                    ${profile.showAvatar ? 'translate-x-4' : 'translate-x-0'}
+                                                `} />
+                                            </button>
+                                        </div>
                                         <button
                                             onClick={() => setProfileImageModalOpen(true)}
                                             className="px-6 py-2.5 rounded-full border border-white/10 hover:bg-white/5 text-[11px] font-bold flex items-center gap-2 text-white transition-all hover:scale-105 shadow-xl shadow-white/5"
@@ -1821,7 +1835,21 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
 
                                 {/* Title Section */}
                                 <div className="flex flex-col gap-2 px-2">
-                                    <label htmlFor="editor-profile-title" className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Display Title</label>
+                                    <div className="flex items-center justify-between px-1">
+                                        <label htmlFor="editor-profile-title" className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Display Title</label>
+                                        <button
+                                            onClick={() => setProfile({ ...profile, showTitle: !profile.showTitle })}
+                                            className={`w-8 h-4 rounded-full relative transition-colors duration-300 ease-in-out ${profile.showTitle ? 'bg-green-500' : 'bg-white/10 hover:bg-white/20'}`}
+                                            title={profile.showTitle ? "Hide Title" : "Show Title"}
+                                        >
+                                            <div className={`
+                                                absolute top-0.5 left-0.5 w-3 h-3 rounded-full bg-white shadow-sm 
+                                                transition-transform duration-500 
+                                                ease-[cubic-bezier(0.2,0.8,0.2,1)] 
+                                                ${profile.showTitle ? 'translate-x-4' : 'translate-x-0'}
+                                            `} />
+                                        </button>
+                                    </div>
                                     <input
                                         id="editor-profile-title"
                                         name="editor-profile-title"
@@ -2135,6 +2163,34 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                     </div>
 
                                     {/* Bio Settings */}
+                                    {/* Bio Input Section */}
+                                    <div className="flex flex-col gap-2 px-2 pb-6">
+                                        <div className="flex items-center justify-between px-1">
+                                            <label htmlFor="editor-profile-bio" className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Bio Description</label>
+                                            <button
+                                                onClick={() => setProfile({ ...profile, showBio: !profile.showBio })}
+                                                className={`w-8 h-4 rounded-full relative transition-colors duration-300 ease-in-out ${profile.showBio ? 'bg-green-500' : 'bg-white/10 hover:bg-white/20'}`}
+                                                title={profile.showBio ? "Hide Bio" : "Show Bio"}
+                                            >
+                                                <div className={`
+                                                    absolute top-0.5 left-0.5 w-3 h-3 rounded-full bg-white shadow-sm 
+                                                    transition-transform duration-500 
+                                                    ease-[cubic-bezier(0.2,0.8,0.2,1)] 
+                                                    ${profile.showBio ? 'translate-x-4' : 'translate-x-0'}
+                                                `} />
+                                            </button>
+                                        </div>
+                                        <textarea
+                                            id="editor-profile-bio"
+                                            name="editor-profile-bio"
+                                            value={profile.bio}
+                                            onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
+                                            rows={2}
+                                            className="w-full bg-white/3 border border-white/5 rounded-xl px-5 py-3 text-sm font-medium text-white outline-none focus:border-purple-500/20 focus:bg-white/5 transition-all placeholder:text-white/10 resize-none"
+                                            placeholder="Tell us about yourself..."
+                                        />
+                                    </div>
+
                                     <div className="flex flex-col gap-6 pt-6 border-t border-white/5">
                                         <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Bio Text Appearance</label>
 
