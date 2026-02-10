@@ -779,6 +779,7 @@ const AddLinkModal = memo(function AddLinkModal({ isOpen, onClose, addLink }) {
                 </div>
 
                 <div className="relative group">
+                    <label htmlFor="modal-link-url" className="sr-only">Enter URL</label>
                     <input
                         autoFocus
                         id="modal-link-url"
@@ -935,6 +936,8 @@ const ProfileImageModal = memo(function ProfileImageModal({ isOpen, onClose, pro
                         </div>
                         <ArrowRight size={18} className="text-white/10 group-hover:text-purple-400 transition-all" />
                         <input
+                            id="avatar-upload"
+                            name="avatar-upload"
                             ref={fileInputRef}
                             type="file"
                             accept="image/*,.gif"
@@ -1903,8 +1906,11 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                     </div>
 
                                     <div className="flex items-center gap-4 px-1">
+                                        <label htmlFor="header-size-range" className="sr-only">Header Size Range</label>
                                         <span className="text-[10px] font-bold text-white/30">20%</span>
                                         <input
+                                            id="header-size-range"
+                                            name="header-size-range"
                                             type="range"
                                             min="20"
                                             max="150"
@@ -1930,7 +1936,10 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                             </button>
                                         ))}
                                         <div className="flex-1"></div>
+                                        <label htmlFor="header-size-number" className="sr-only">Header Size Number</label>
                                         <input
+                                            id="header-size-number"
+                                            name="header-size-number"
                                             type="number"
                                             min="20"
                                             max="150"
@@ -4824,6 +4833,8 @@ const SettingsEditor = memo(function SettingsEditor({ links, setLinks, profile, 
                         Import Config
                     </button>
                     <input
+                        id="import-config-field"
+                        name="import-config"
                         type="file"
                         ref={fileInputRef}
                         onChange={importConfig}
@@ -4866,8 +4877,10 @@ const SettingsEditor = memo(function SettingsEditor({ links, setLinks, profile, 
                     </div>
 
                     <div className="flex flex-col gap-3">
+                        <label htmlFor="suggestion-text" className="sr-only">Suggestion text</label>
                         <textarea
                             id="suggestion-text"
+                            name="suggestion-text"
                             placeholder="Type your suggestion here..."
                             className="w-full h-32 bg-black/20 border border-white/5 rounded-2xl p-4 text-sm text-white resize-none focus:outline-none focus:border-blue-500/30 transition-all placeholder:text-white/10"
                         ></textarea>
