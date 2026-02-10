@@ -409,52 +409,6 @@ const PreviewSection = memo(({ theme, profile, links, socials, layoutType, previ
                                     {profile.bio}
                                 </p>
                             </div>
-
-                            {/* Social Icons - Top Position */}
-                            {theme.socialPosition === 'top' && (
-                                <div
-                                    className={`flex flex-wrap w-full ${theme.socialAlignment === 'left' ? 'justify-start' : theme.socialAlignment === 'right' ? 'justify-end' : 'justify-center'}`}
-                                    style={{ gap: `${(theme.socialSpacing || 16) * 0.75}px`, marginTop: '4px' }}
-                                >
-                                    {socials.filter(s => s.url).map(social => {
-                                        const platform = social.platform;
-                                        const Icon = platform === 'instagram' ? Instagram :
-                                            platform === 'twitter' ? Twitter :
-                                                platform === 'youtube' ? Youtube :
-                                                    platform === 'github' ? Github :
-                                                        platform === 'linkedin' ? Linkedin :
-                                                            platform === 'tiktok' ? TikTok :
-                                                                Mail;
-                                        const pData = PLATFORMS.find(p => p.id === platform);
-                                        const color = theme.socialColorType === 'brand' && pData ? pData.color.replace('text-', '') :
-                                            theme.socialColorType === 'custom' ? theme.socialCustomColor : (theme.pageColor || '#ffffff');
-
-                                        const hoverClass = theme.socialHover === 'lift' ? 'hover:-translate-y-1' :
-                                            theme.socialHover === 'scale' ? 'hover:scale-110' :
-                                                theme.socialHover === 'glow' ? 'hover:drop-shadow-[0_0_8px_rgba(168,85,247,0.5)]' : '';
-
-                                        return (
-                                            <a
-                                                key={platform}
-                                                href={social.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                style={{
-                                                    color: theme.socialColorType === 'brand' ? undefined : color,
-                                                    fontFamily: theme.socialFont || 'Inter',
-                                                    fontWeight: theme.socialTextWeight || 700
-                                                }}
-                                                className={`opacity-70 hover:opacity-100 transition-all duration-300 flex items-center gap-2 transform-gpu ${hoverClass} ${theme.socialColorType === 'brand' ? (pData?.color || '') : ''} ${theme.socialAnimation && theme.socialAnimation !== 'none' ? (theme.socialAnimation === 'sweep' ? 'animate-sweep' : `animate-${theme.socialAnimation}`) : ''}`}
-                                            >
-                                                <Icon size={theme.socialSize || 18} strokeWidth={2} />
-                                                {theme.socialStyle === 'icon-text' && (
-                                                    <span className={`text-[10px] uppercase tracking-widest ${theme.socialAnimation === 'sweep' ? 'animate-sweep-text' : ''}`}>{platform}</span>
-                                                )}
-                                            </a>
-                                        );
-                                    })}
-                                </div>
-                            )}
                         </div>
 
                         {/* Links Area */}
