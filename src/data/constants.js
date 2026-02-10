@@ -27,7 +27,11 @@ export const PLATFORMS = [
     { id: 'mail', name: 'Email', icon: Mail, color: 'text-gray-400', placeholder: 'mailto:your@email.com' },
 ];
 
-export const FONTS = ['Inter', 'DM Sans', 'Outfit', 'Roboto', 'Playfair Display', 'Bento'];
+export const FONTS = [
+    'Inter', 'DM Sans', 'Outfit', 'Roboto', 'Playfair Display', 'Bento',
+    'Open Sans', 'Montserrat', 'Lato', 'Poppins', 'Raleway', 'Nunito', 'Ubuntu',
+    'Merriweather', 'Lora', 'Oswald', 'Lobster', 'Pacifico'
+];
 
 export const ANIMATION_OPTIONS = [
     { id: 'none', label: 'None' },
