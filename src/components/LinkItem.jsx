@@ -325,7 +325,7 @@ const LinkItem = memo(function LinkItem({ link, i, layoutType, theme }) {
                 {theme.btnHoverEffect === 'shine' && (
                     <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[inherit]" style={{ zIndex: 50 }}>
                         <div
-                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent group-hover:animate-shine"
+                            className="absolute inset-0 bg-linear-to-r from-transparent via-white/40 to-transparent group-hover:animate-shine"
                             style={{
                                 width: '100%',
                                 height: '100%',
