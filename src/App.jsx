@@ -444,7 +444,10 @@ function App() {
             bio: 'Your Bio',
             avatar: null, // Default to null for icon
             headerLayout: 'classic',
-            headerSize: 'small'
+            headerSize: 'small',
+            showAvatar: true,
+            showTitle: true,
+            showBio: true
         };
     });
 
@@ -1891,8 +1894,8 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                 key={size}
                                                 onClick={() => setProfile({ ...profile, headerSize: size })}
                                                 className={`px-3 py-1.5 rounded-lg text-[10px] font-bold border transition-all ${(typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'small' ? 80 : (profile.headerSize === 'large' ? 120 : 100))) === size
-                                                        ? 'bg-orange-500/20 border-orange-500/40 text-orange-400'
-                                                        : 'bg-white/5 border-white/5 text-white/40 hover:bg-white/10'
+                                                    ? 'bg-orange-500/20 border-orange-500/40 text-orange-400'
+                                                    : 'bg-white/5 border-white/5 text-white/40 hover:bg-white/10'
                                                     }`}
                                             >
                                                 {size === 80 ? 'Small' : size === 100 ? 'Normal' : 'Large'}
