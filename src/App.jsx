@@ -4799,7 +4799,7 @@ const SettingsEditor = memo(function SettingsEditor({ links, setLinks, profile, 
     };
 
     return (
-        <div className="max-w-4xl mx-auto flex flex-col gap-8">
+        <div className="max-w-4xl mx-auto flex flex-col gap-8 pb-20 md:pb-0">
             <section className="p-12 rounded-[3rem] bg-linear-to-br from-purple-500/10 to-indigo-500/10 border border-white/5 flex flex-col items-center gap-8 text-center shadow-2xl">
                 <div className="w-20 h-20 rounded-3xl bg-purple-500 flex items-center justify-center shadow-2xl shadow-purple-500/20">
                     <Settings size={40} className="text-white" />
