@@ -1859,25 +1859,59 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
 
                                 {/* Size Section */}
                                 <div className="flex flex-col gap-4 p-6 rounded-[2rem] bg-white/3 border border-white/5">
-                                    <div className="flex items-center gap-2 px-1">
-                                        <div className="w-6 h-6 rounded-lg bg-orange-500/10 flex items-center justify-center border border-orange-500/10">
-                                            <LayoutGrid size={12} className="text-orange-400" />
+                                    <div className="flex items-center justify-between px-1">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-6 h-6 rounded-lg bg-orange-500/10 flex items-center justify-center border border-orange-500/10">
+                                                <LayoutGrid size={12} className="text-orange-400" />
+                                            </div>
+                                            <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Header Size</span>
                                         </div>
-                                        <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Header Size</span>
+                                        <div className="text-[10px] font-bold text-white/40 bg-white/5 px-2 py-1 rounded-md border border-white/5">
+                                            {typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'small' ? 80 : 100)}%
+                                        </div>
                                     </div>
-                                    <div className="flex p-1 bg-black/20 rounded-xl border border-white/5">
-                                        {[
-                                            { id: 'small', label: 'Small' },
-                                            { id: 'large', label: 'Large' }
-                                        ].map(option => (
+
+                                    <div className="flex items-center gap-4 px-1">
+                                        <span className="text-[10px] font-bold text-white/30">20%</span>
+                                        <input
+                                            type="range"
+                                            min="20"
+                                            max="150"
+                                            step="5"
+                                            value={typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'small' ? 80 : (profile.headerSize === 'large' ? 120 : 100))}
+                                            onChange={(e) => setProfile({ ...profile, headerSize: parseInt(e.target.value) })}
+                                            className="flex-1 h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-orange-500 hover:accent-orange-400 transition-all"
+                                        />
+                                        <span className="text-[10px] font-bold text-white/30">150%</span>
+                                    </div>
+
+                                    <div className="flex gap-2">
+                                        {[80, 100, 120].map(size => (
                                             <button
-                                                key={option.id}
-                                                onClick={() => setProfile({ ...profile, headerSize: option.id })}
-                                                className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${profile.headerSize === option.id ? 'bg-orange-500/20 border-orange-500/40 text-white shadow-xl shadow-orange-500/5' : 'bg-transparent border-transparent text-white/40 hover:text-white/60'}`}
+                                                key={size}
+                                                onClick={() => setProfile({ ...profile, headerSize: size })}
+                                                className={`px-3 py-1.5 rounded-lg text-[10px] font-bold border transition-all ${(typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'small' ? 80 : (profile.headerSize === 'large' ? 120 : 100))) === size
+                                                        ? 'bg-orange-500/20 border-orange-500/40 text-orange-400'
+                                                        : 'bg-white/5 border-white/5 text-white/40 hover:bg-white/10'
+                                                    }`}
                                             >
-                                                {option.label}
+                                                {size === 80 ? 'Small' : size === 100 ? 'Normal' : 'Large'}
                                             </button>
                                         ))}
+                                        <div className="flex-1"></div>
+                                        <input
+                                            type="number"
+                                            min="20"
+                                            max="150"
+                                            value={typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'small' ? 80 : (profile.headerSize === 'large' ? 120 : 100))}
+                                            onChange={(e) => {
+                                                let val = parseInt(e.target.value);
+                                                if (val > 150) val = 150;
+                                                if (val < 20) val = 20;
+                                                setProfile({ ...profile, headerSize: val });
+                                            }}
+                                            className="w-16 bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-center text-xs font-bold text-white outline-none focus:border-orange-500/50 transition-all"
+                                        />
                                     </div>
                                 </div>
 
