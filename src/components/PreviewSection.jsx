@@ -20,7 +20,7 @@ const DEVICE_CONFIG = {
     tablet: {
         width: 768,
         height: 1024,
-        scale: 0.55, // Adjusted from 0.6
+        scale: 0.85, // Updated to 0.85 as requested
         frameClass: 'rounded-[2.5rem] border-[14px] border-[#181818]',
         bezelClass: 'rounded-[1.8rem]'
     },
