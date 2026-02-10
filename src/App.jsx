@@ -1788,7 +1788,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                             <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Profile Avatar</span>
                                             <button
                                                 onClick={() => setProfile({ ...profile, showAvatar: profile.showAvatar === false ? true : false })}
-                                                className={`w-8 h-4 rounded-full relative transition-colors duration-300 ease-in-out ${profile.showAvatar !== false ? 'bg-green-500' : 'bg-white/10 hover:bg-white/20'}`}
+                                                className={`w-8 h-5 rounded-full relative transition-colors duration-300 ease-in-out ${profile.showAvatar !== false ? 'bg-green-500' : 'bg-white/10 hover:bg-white/20'}`}
                                                 title={profile.showAvatar !== false ? "Hide Avatar" : "Show Avatar"}
                                             >
                                                 <div className={`
