@@ -10,7 +10,7 @@ import SelectField from './components/SelectField';
 import {
     PanelLeft, Palette, Settings, LogOut, ExternalLink,
     Plus, Search, Github, Twitter, Instagram, Youtube, Linkedin,
-    MoreHorizontal, Share2, PanelRight, Smartphone, Eye, Layout, Type,
+    MoreHorizontal, Share2, PanelRight, Smartphone, Eye, EyeOff, Layout, Type,
     Image, Zap, Bell, QrCode, Globe, Clock, Shield, Trash2, Edit2, Link2,
     Check, ChevronRight, ChevronLeft, X, Star, BarChart2, Calendar, Lock, Upload, Copy, Heart,
     ArrowRight, GripVertical, Edit3, LayoutGrid, Monitor, ShoppingBag, Music,
@@ -1784,35 +1784,25 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         </div>
                                     </div>
                                     <div className="flex flex-col gap-3">
-                                        <div className="flex items-center justify-between w-full">
+                                        <div className="flex items-center justify-between w-full px-1">
                                             <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Profile Avatar</span>
-                                                                                    <button
-                                                                                        type="button"
-                                                                                        onClick={() => setProfile({ ...profile, showAvatar: !profile.showAvatar })}
-                                                                                        className={`
-                                            relative w-9 h-5 rounded-full outline-none
-                                            transition-colors duration-300 ease-in-out
-                                            ${profile.showAvatar ? 'bg-green-500' : 'bg-white/10 hover:bg-white/20'}
-                                        `}
-                                                                                        title={profile.showAvatar ? "Hide Avatar" : "Show Avatar"}
-                                                                                    >
-                                                                                        <div
-                                                                                            className={`
-                                            absolute top-1 left-1 w-3 h-3 rounded-full bg-white shadow-sm
-                                            transition-transform duration-500 
-                                            ease-[cubic-bezier(0.2,0.8,0.2,1)] 
-                                            ${profile.showAvatar ? 'translate-x-4' : 'translate-x-0'}
-                                            `}
-                                                                                        />
-                                                                                    </button>
                                         </div>
-                                        <button
-                                            onClick={() => setProfileImageModalOpen(true)}
-                                            className="px-6 py-2.5 rounded-full border border-white/10 hover:bg-white/5 text-[11px] font-bold flex items-center gap-2 text-white transition-all hover:scale-105 shadow-xl shadow-white/5"
-                                        >
-                                            <Edit3 size={12} />
-                                            Change Image
-                                        </button>
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            <button
+                                                onClick={() => setProfileImageModalOpen(true)}
+                                                className="px-6 py-2.5 rounded-full border border-white/10 hover:bg-white/5 text-[11px] font-bold flex items-center gap-2 text-white transition-all hover:scale-105 shadow-xl shadow-white/5"
+                                            >
+                                                <Edit3 size={12} />
+                                                Change Image
+                                            </button>
+                                            <button
+                                                onClick={() => setProfile({ ...profile, showAvatar: !profile.showAvatar })}
+                                                className={`px-4 py-2.5 rounded-full border border-white/10 hover:bg-white/5 text-[11px] font-bold flex items-center gap-2 transition-all hover:scale-105 shadow-xl shadow-white/5 ${profile.showAvatar ? 'text-white' : 'text-white/40'}`}
+                                            >
+                                                {profile.showAvatar ? <EyeOff size={12} /> : <Eye size={12} />}
+                                                {profile.showAvatar ? 'Hide' : 'Show'}
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
