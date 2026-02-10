@@ -1730,7 +1730,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                 </aside>
 
                 {/* Main Content Area */}
-                <main className="flex-1 p-4 md:p-12 bg-[#0a0a0a] flex flex-col gap-8 md:gap-12 overflow-y-auto custom-scrollbar gpu-scroll">
+                <main className="flex-1 p-4 md:p-12 pb-20 md:pb-12 bg-[#0a0a0a] flex flex-col gap-8 md:gap-12 overflow-y-auto custom-scrollbar gpu-scroll">
                     <>
                         {subTab === 'header' && (
                             <div className="flex flex-col gap-10">
