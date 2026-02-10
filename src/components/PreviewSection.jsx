@@ -409,224 +409,269 @@ const PreviewSection = memo(({ theme, profile, links, socials, layoutType, previ
                                     {profile.bio}
                                 </p>
                             </div>
-                        </div>
 
-                        {/* Links Area */}
-                        <div className={`w-full mt-2 ${layoutType === 'grid' ? 'grid grid-cols-2' :
-                            layoutType === 'carousel' ? 'flex overflow-x-auto pb-4 snap-x snap-mandatory hide-scrollbar' :
-                                'flex flex-col'
-                            }`}
-                            style={{ gap: `${theme.btnSpacing || 12}px` }}
-                        >
-                            {links.filter(l => l.active).map((link, i) => (
-                                <LinkItem key={link.id} link={link} i={i} layoutType={link.layout || layoutType} theme={theme} />
-                            ))}
-                        </div>
+                            {/* Social Icons - Top Position */}
+                            {theme.socialPosition === 'top' && (
+                                <div
+                                    className={`flex flex-wrap w-full ${theme.socialAlignment === 'left' ? 'justify-start' : theme.socialAlignment === 'right' ? 'justify-end' : 'justify-center'}`}
+                                    style={{ gap: `${(theme.socialSpacing || 16) * 0.75}px`, marginTop: '4px' }}
+                                >
+                                    {socials.filter(s => s.url).map(social => {
+                                        const platform = social.platform;
+                                        const Icon = platform === 'instagram' ? Instagram :
+                                            platform === 'twitter' ? Twitter :
+                                                platform === 'youtube' ? Youtube :
+                                                    platform === 'github' ? Github :
+                                                        platform === 'linkedin' ? Linkedin :
+                                                            platform === 'tiktok' ? TikTok :
+                                                                Mail;
+                                        const pData = PLATFORMS.find(p => p.id === platform);
+                                        const color = theme.socialColorType === 'brand' && pData ? pData.color.replace('text-', '') :
+                                            theme.socialColorType === 'custom' ? theme.socialCustomColor : (theme.pageColor || '#ffffff');
 
-                        {/* Social Icons - Bottom Position */}
-                        {theme.socialPosition === 'bottom' && (
-                            <div
-                                className={`flex flex-wrap mt-auto pt-5 w-full border-t border-white/5 ${theme.socialAlignment === 'left' ? 'justify-start' : theme.socialAlignment === 'right' ? 'justify-end' : 'justify-center'}`}
-                                style={{ gap: `${(theme.socialSpacing || 16) * 0.75}px` }}
-                            >
-                                {socials.filter(s => s.url).map(social => {
-                                    const platform = social.platform;
-                                    const Icon = platform === 'instagram' ? Instagram :
-                                        platform === 'twitter' ? Twitter :
-                                            platform === 'youtube' ? Youtube :
-                                                platform === 'github' ? Github :
-                                                    platform === 'linkedin' ? Linkedin :
-                                                        platform === 'tiktok' ? TikTok :
-                                                            Mail;
-                                    const pData = PLATFORMS.find(p => p.id === platform);
-                                    const color = theme.socialColorType === 'brand' && pData ? pData.color.replace('text-', '') :
-                                        theme.socialColorType === 'custom' ? theme.socialCustomColor : (theme.pageColor || '#ffffff');
+                                        const hoverClass = theme.socialHover === 'lift' ? 'hover:-translate-y-1' :
+                                            theme.socialHover === 'scale' ? 'hover:scale-110' :
+                                                theme.socialHover === 'glow' ? 'hover:drop-shadow-[0_0_8px_rgba(168,85,247,0.5)]' : '';
 
-                                    const hoverClass = theme.socialHover === 'lift' ? 'hover:-translate-y-1' :
-                                        theme.socialHover === 'scale' ? 'hover:scale-110' :
-                                            theme.socialHover === 'glow' ? 'hover:drop-shadow-[0_0_8px_rgba(168,85,247,0.5)]' : '';
-
-                                    return (
-                                        <a
-                                            key={platform}
-                                            href={social.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            style={{
-                                                color: theme.socialColorType === 'brand' ? undefined : color,
-                                                fontFamily: theme.socialFont || 'Inter',
-                                                fontWeight: theme.socialTextWeight || 700
-                                            }}
-                                            className={`opacity-70 hover:opacity-100 transition-all duration-300 flex items-center gap-2 transform-gpu ${hoverClass} ${theme.socialColorType === 'brand' ? (pData?.color || '') : ''} ${theme.socialAnimation && theme.socialAnimation !== 'none' ? (theme.socialAnimation === 'sweep' ? 'animate-sweep' : `animate-${theme.socialAnimation}`) : ''}`}
-                                        >
-                                            <Icon size={theme.socialSize || 20} strokeWidth={2} />
-                                            {theme.socialStyle === 'icon-text' && (
-                                                <span className={`text-[10px] uppercase tracking-widest ${theme.socialAnimation === 'sweep' ? 'animate-sweep-text' : ''}`}>{platform}</span>
-                                            )}
-                                        </a>
-                                    );
-                                })}
-                            </div>
-                        )}
-
-                        {/* Minimalist Footer Preview */}
-                        <div className="w-full flex flex-col gap-4 mt-2">
-                            {/* Greeting Card Preview */}
-                            {theme.showFooter && (() => {
-                                // Background and Border Logic (Identical to LinkItem)
-                                const getFooterBg = () => {
-                                    if (theme.footerBtnStyle === 'glass') {
-                                        return {
-                                            className: 'bg-white/5 backdrop-blur-md border border-white/10 shadow-lg',
-                                            style: { backgroundColor: theme.footerBtnColor ? `${theme.footerBtnColor}1A` : 'rgba(255,255,255,0.05)' }
-                                        };
-                                    }
-                                    if (theme.footerBtnStyle === 'outline') {
-                                        return {
-                                            className: 'bg-transparent border-2',
-                                            style: { borderColor: theme.footerBtnColor || '#ffffff' }
-                                        };
-                                    }
-                                    let bgStyle = { backgroundColor: theme.footerBtnColor || '#ffffff' };
-                                    if (theme.footerBtnColorType === 'gradient') {
-                                        bgStyle = { backgroundImage: `linear-gradient(135deg, ${theme.footerBtnColorGradient1 || '#8228d9'}, ${theme.footerBtnColorGradient2 || '#6366f1'})` };
-                                    } else if (theme.footerBtnColorType === 'pattern') {
-                                        if (theme.footerBtnColorPattern === 'dots') {
-                                            bgStyle = {
-                                                backgroundColor: theme.footerBtnColor || '#ffffff',
-                                                backgroundImage: `radial-gradient(rgba(255,255,255,0.3) 1.5px, transparent 1.5px)`,
-                                                backgroundSize: '12px 12px'
-                                            };
-                                        } else if (theme.footerBtnColorPattern === 'stripes') {
-                                            bgStyle = {
-                                                backgroundColor: theme.footerBtnColor || '#ffffff',
-                                                backgroundImage: `linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent)`,
-                                                backgroundSize: '24px 24px'
-                                            };
-                                        }
-                                    }
-                                    return { className: 'border-none', style: bgStyle };
-                                };
-
-                                // Text Style Logic
-                                const getFooterTextStyle = (isDesc = false) => {
-                                    const baseStyle = {
-                                        fontFamily: theme.footerFont || 'Inter',
-                                        fontWeight: theme.footerWeight || 400,
-                                        textTransform: theme.footerTransform || 'none',
-                                        fontSize: isDesc ? `${Math.max(10, (theme.footerFontSize || 12) * 0.9)}px` : `${theme.footerFontSize || 12}px`
-                                    };
-
-                                    if (theme.footerBtnTextColorType === 'solid') {
-                                        const color = theme.footerBtnTextColor || (theme.footerBtnStyle === 'solid' ? '#000000' : '#ffffff');
-                                        return { ...baseStyle, color: isDesc ? color + '99' : color };
-                                    }
-                                    const textGradient = theme.footerBtnTextColorType === 'gradient'
-                                        ? `linear-gradient(135deg, ${theme.footerBtnTextColorGradient1 || '#ffffff'}, ${theme.footerBtnTextColorGradient2 || '#cbd5e1'})`
-                                        : theme.footerBtnTextColorType === 'pattern'
-                                            ? `radial-gradient(circle, ${theme.footerBtnTextColor || '#ffffff'} 2px, transparent 2px)`
-                                            : 'none';
-                                    const patternSize = theme.footerBtnTextColorType === 'pattern' ? '8px 8px' : 'auto';
-                                    return {
-                                        ...baseStyle,
-                                        backgroundImage: textGradient,
-                                        backgroundSize: patternSize,
-                                        WebkitBackgroundClip: 'text',
-                                        backgroundClip: 'text',
-                                        WebkitTextFillColor: 'transparent',
-                                        color: 'transparent',
-                                        opacity: isDesc ? 0.8 : 1
-                                    };
-                                };
-
-                                // Shadow Logic
-                                const getFooterShadowStyle = () => {
-                                    if (!theme.footerShadowType || theme.footerShadowType === 'none') return null;
-                                    if (theme.footerShadowType === 'solid') return null;
-
-                                    let shadowBg = { backgroundColor: theme.footerShadowColor || 'rgba(0,0,0,0.5)' };
-                                    if (theme.footerShadowType === 'gradient') {
-                                        shadowBg = { backgroundImage: `linear-gradient(135deg, ${theme.footerShadowColorGradient1 || '#000'}, ${theme.footerShadowColorGradient2 || '#000'})` };
-                                    } else if (theme.footerShadowType === 'pattern') {
-                                        if (theme.footerShadowPattern === 'dots') {
-                                            shadowBg = {
-                                                backgroundImage: `radial-gradient(${theme.footerShadowColor} 1.5px, transparent 1.5px)`,
-                                                backgroundSize: '12px 12px'
-                                            };
-                                        } else if (theme.footerShadowPattern === 'stripes') {
-                                            shadowBg = {
-                                                backgroundImage: `linear-gradient(45deg, ${theme.footerShadowColor} 25%, transparent 25%, transparent 50%, ${theme.footerShadowColor} 50%, ${theme.footerShadowColor} 75%, transparent 75%, transparent)`,
-                                                backgroundSize: '24px 24px'
-                                            };
-                                        } else if (theme.footerShadowPattern === 'noise') {
-                                            shadowBg = { backgroundImage: NOISE_TEXTURE, backgroundBlendMode: 'overlay' };
-                                        } else if (theme.footerShadowPattern === 'custom' && theme.footerShadowCustomPattern) {
-                                            shadowBg = { backgroundImage: `url(${theme.footerShadowCustomPattern})`, backgroundSize: 'cover', backgroundBlendMode: 'overlay' };
-                                        }
-                                    }
-
-                                    const spread = theme.footerShadowSpread || 0;
-                                    return {
-                                        position: 'absolute',
-                                        zIndex: 5,
-                                        top: `${-spread}px`,
-                                        bottom: `${-spread}px`,
-                                        left: `${-spread}px`,
-                                        right: `${-spread}px`,
-                                        transform: `translate(${theme.footerShadowX || 0}px, ${theme.footerShadowY || 0}px)`,
-                                        filter: `blur(${theme.footerShadowBlur || 0}px)`,
-                                        opacity: theme.footerShadowOpacity ?? 0.5,
-                                        borderRadius: `${theme.footerBtnRadius}px`,
-                                        pointerEvents: 'none', ...shadowBg
-                                    };
-                                };
-
-                                const { className: bgClass, style: bgStyle } = getFooterBg();
-                                const shadowStyle = getFooterShadowStyle();
-
-                                return (
-                                    <div className="relative w-full">
-                                        {shadowStyle && <div style={shadowStyle} />}
-                                        <div
-                                            className={`p-4 flex flex-col items-start text-left gap-1.5 relative overflow-hidden group z-10 ${bgClass} ${theme.footerAnimation && theme.footerAnimation !== 'none' ? (theme.footerAnimation === 'sweep' ? 'animate-sweep' : `animate-${theme.footerAnimation}`) : ''}`}
-                                            style={{
-                                                borderRadius: `${theme.footerBtnRadius}px`,
-                                                boxShadow: theme.footerShadowType === 'solid' && theme.footerShadowColor
-                                                    ? `${theme.footerShadowX || 0}px ${theme.footerShadowY || 0}px ${theme.footerShadowBlur || 0}px ${theme.footerShadowSpread || 0}px ${theme.footerShadowColor}${Math.round((theme.footerShadowOpacity ?? 0.5) * 255).toString(16).padStart(2, '0')}`
-                                                    : 'none',
-                                                ...bgStyle
-                                            }}
-                                        >
-                                            <div className="flex items-center gap-2 relative z-10">
-                                                <Heart size={12} className="text-purple-400 fill-purple-400/10 shrink-0" />
-                                                <h3 className={`text-xs font-bold tracking-tight leading-tight ${theme.footerAnimation === 'sweep' ? 'animate-sweep-text' : ''}`} style={getFooterTextStyle()}>
-                                                    {theme.footerGreetingTitle}
-                                                </h3>
-                                            </div>
-                                            <p className={`text-[10px] font-medium leading-relaxed relative z-10 ${theme.footerAnimation === 'sweep' ? 'animate-sweep-text' : ''}`} style={getFooterTextStyle(true)}>
-                                                {theme.footerGreetingDesc}
-                                            </p>
-                                        </div>
-                                    </div>
-                                );
-                            })()}
-
-                            {/* Vlink Branding Preview - Minimalist */}
-                            {theme.showVlink && (
-                                <div className="flex flex-col items-center gap-2 mt-2">
-                                    <div className="h-px w-8 bg-white/5"></div>
-                                    <div className="flex items-center gap-1.5 opacity-30 hover:opacity-100 transition-opacity duration-300 cursor-default">
-                                        <span className="text-[10px] font-medium tracking-tight text-white/60">Made with</span>
-                                        <span className="text-[10px] font-bold text-white">Vlink.id x rizddf</span>
-                                    </div>
+                                        return (
+                                            <a
+                                                key={platform}
+                                                href={social.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                style={{
+                                                    color: theme.socialColorType === 'brand' ? undefined : color,
+                                                    fontFamily: theme.socialFont || 'Inter',
+                                                    fontWeight: theme.socialTextWeight || 700
+                                                }}
+                                                className={`opacity-70 hover:opacity-100 transition-all duration-300 flex items-center gap-2 transform-gpu ${hoverClass} ${theme.socialColorType === 'brand' ? (pData?.color || '') : ''} ${theme.socialAnimation && theme.socialAnimation !== 'none' ? (theme.socialAnimation === 'sweep' ? 'animate-sweep' : `animate-${theme.socialAnimation}`) : ''}`}
+                                            >
+                                                <Icon size={theme.socialSize || 18} strokeWidth={2} />
+                                                {theme.socialStyle === 'icon-text' && (
+                                                    <span className={`text-[10px] uppercase tracking-widest ${theme.socialAnimation === 'sweep' ? 'animate-sweep-text' : ''}`}>{platform}</span>
+                                                )}
+                                            </a>
+                                        );
+                                    })}
                                 </div>
                             )}
+
+                            {/* Links Area */}
+                            <div className={`w-full mt-2 ${layoutType === 'grid' ? 'grid grid-cols-2' :
+                                layoutType === 'carousel' ? 'flex overflow-x-auto pb-4 snap-x snap-mandatory hide-scrollbar' :
+                                    'flex flex-col'
+                                }`}
+                                style={{ gap: `${theme.btnSpacing || 12}px` }}
+                            >
+                                {links.filter(l => l.active).map((link, i) => (
+                                    <LinkItem key={link.id} link={link} i={i} layoutType={link.layout || layoutType} theme={theme} />
+                                ))}
+                            </div>
+
+                            {/* Social Icons - Bottom Position */}
+                            {theme.socialPosition === 'bottom' && (
+                                <div
+                                    className={`flex flex-wrap mt-auto pt-5 w-full border-t border-white/5 ${theme.socialAlignment === 'left' ? 'justify-start' : theme.socialAlignment === 'right' ? 'justify-end' : 'justify-center'}`}
+                                    style={{ gap: `${(theme.socialSpacing || 16) * 0.75}px` }}
+                                >
+                                    {socials.filter(s => s.url).map(social => {
+                                        const platform = social.platform;
+                                        const Icon = platform === 'instagram' ? Instagram :
+                                            platform === 'twitter' ? Twitter :
+                                                platform === 'youtube' ? Youtube :
+                                                    platform === 'github' ? Github :
+                                                        platform === 'linkedin' ? Linkedin :
+                                                            platform === 'tiktok' ? TikTok :
+                                                                Mail;
+                                        const pData = PLATFORMS.find(p => p.id === platform);
+                                        const color = theme.socialColorType === 'brand' && pData ? pData.color.replace('text-', '') :
+                                            theme.socialColorType === 'custom' ? theme.socialCustomColor : (theme.pageColor || '#ffffff');
+
+                                        const hoverClass = theme.socialHover === 'lift' ? 'hover:-translate-y-1' :
+                                            theme.socialHover === 'scale' ? 'hover:scale-110' :
+                                                theme.socialHover === 'glow' ? 'hover:drop-shadow-[0_0_8px_rgba(168,85,247,0.5)]' : '';
+
+                                        return (
+                                            <a
+                                                key={platform}
+                                                href={social.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                style={{
+                                                    color: theme.socialColorType === 'brand' ? undefined : color,
+                                                    fontFamily: theme.socialFont || 'Inter',
+                                                    fontWeight: theme.socialTextWeight || 700
+                                                }}
+                                                className={`opacity-70 hover:opacity-100 transition-all duration-300 flex items-center gap-2 transform-gpu ${hoverClass} ${theme.socialColorType === 'brand' ? (pData?.color || '') : ''} ${theme.socialAnimation && theme.socialAnimation !== 'none' ? (theme.socialAnimation === 'sweep' ? 'animate-sweep' : `animate-${theme.socialAnimation}`) : ''}`}
+                                            >
+                                                <Icon size={theme.socialSize || 20} strokeWidth={2} />
+                                                {theme.socialStyle === 'icon-text' && (
+                                                    <span className={`text-[10px] uppercase tracking-widest ${theme.socialAnimation === 'sweep' ? 'animate-sweep-text' : ''}`}>{platform}</span>
+                                                )}
+                                            </a>
+                                        );
+                                    })}
+                                </div>
+                            )}
+
+                            {/* Minimalist Footer Preview */}
+                            <div className="w-full flex flex-col gap-4 mt-2">
+                                {/* Greeting Card Preview */}
+                                {theme.showFooter && (() => {
+                                    // Background and Border Logic (Identical to LinkItem)
+                                    const getFooterBg = () => {
+                                        if (theme.footerBtnStyle === 'glass') {
+                                            return {
+                                                className: 'bg-white/5 backdrop-blur-md border border-white/10 shadow-lg',
+                                                style: { backgroundColor: theme.footerBtnColor ? `${theme.footerBtnColor}1A` : 'rgba(255,255,255,0.05)' }
+                                            };
+                                        }
+                                        if (theme.footerBtnStyle === 'outline') {
+                                            return {
+                                                className: 'bg-transparent border-2',
+                                                style: { borderColor: theme.footerBtnColor || '#ffffff' }
+                                            };
+                                        }
+                                        let bgStyle = { backgroundColor: theme.footerBtnColor || '#ffffff' };
+                                        if (theme.footerBtnColorType === 'gradient') {
+                                            bgStyle = { backgroundImage: `linear-gradient(135deg, ${theme.footerBtnColorGradient1 || '#8228d9'}, ${theme.footerBtnColorGradient2 || '#6366f1'})` };
+                                        } else if (theme.footerBtnColorType === 'pattern') {
+                                            if (theme.footerBtnColorPattern === 'dots') {
+                                                bgStyle = {
+                                                    backgroundColor: theme.footerBtnColor || '#ffffff',
+                                                    backgroundImage: `radial-gradient(rgba(255,255,255,0.3) 1.5px, transparent 1.5px)`,
+                                                    backgroundSize: '12px 12px'
+                                                };
+                                            } else if (theme.footerBtnColorPattern === 'stripes') {
+                                                bgStyle = {
+                                                    backgroundColor: theme.footerBtnColor || '#ffffff',
+                                                    backgroundImage: `linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent)`,
+                                                    backgroundSize: '24px 24px'
+                                                };
+                                            }
+                                        }
+                                        return { className: 'border-none', style: bgStyle };
+                                    };
+
+                                    // Text Style Logic
+                                    const getFooterTextStyle = (isDesc = false) => {
+                                        const baseStyle = {
+                                            fontFamily: theme.footerFont || 'Inter',
+                                            fontWeight: theme.footerWeight || 400,
+                                            textTransform: theme.footerTransform || 'none',
+                                            fontSize: isDesc ? `${Math.max(10, (theme.footerFontSize || 12) * 0.9)}px` : `${theme.footerFontSize || 12}px`
+                                        };
+
+                                        if (theme.footerBtnTextColorType === 'solid') {
+                                            const color = theme.footerBtnTextColor || (theme.footerBtnStyle === 'solid' ? '#000000' : '#ffffff');
+                                            return { ...baseStyle, color: isDesc ? color + '99' : color };
+                                        }
+                                        const textGradient = theme.footerBtnTextColorType === 'gradient'
+                                            ? `linear-gradient(135deg, ${theme.footerBtnTextColorGradient1 || '#ffffff'}, ${theme.footerBtnTextColorGradient2 || '#cbd5e1'})`
+                                            : theme.footerBtnTextColorType === 'pattern'
+                                                ? `radial-gradient(circle, ${theme.footerBtnTextColor || '#ffffff'} 2px, transparent 2px)`
+                                                : 'none';
+                                        const patternSize = theme.footerBtnTextColorType === 'pattern' ? '8px 8px' : 'auto';
+                                        return {
+                                            ...baseStyle,
+                                            backgroundImage: textGradient,
+                                            backgroundSize: patternSize,
+                                            WebkitBackgroundClip: 'text',
+                                            backgroundClip: 'text',
+                                            WebkitTextFillColor: 'transparent',
+                                            color: 'transparent',
+                                            opacity: isDesc ? 0.8 : 1
+                                        };
+                                    };
+
+                                    // Shadow Logic
+                                    const getFooterShadowStyle = () => {
+                                        if (!theme.footerShadowType || theme.footerShadowType === 'none') return null;
+                                        if (theme.footerShadowType === 'solid') return null;
+
+                                        let shadowBg = { backgroundColor: theme.footerShadowColor || 'rgba(0,0,0,0.5)' };
+                                        if (theme.footerShadowType === 'gradient') {
+                                            shadowBg = { backgroundImage: `linear-gradient(135deg, ${theme.footerShadowColorGradient1 || '#000'}, ${theme.footerShadowColorGradient2 || '#000'})` };
+                                        } else if (theme.footerShadowType === 'pattern') {
+                                            if (theme.footerShadowPattern === 'dots') {
+                                                shadowBg = {
+                                                    backgroundImage: `radial-gradient(${theme.footerShadowColor} 1.5px, transparent 1.5px)`,
+                                                    backgroundSize: '12px 12px'
+                                                };
+                                            } else if (theme.footerShadowPattern === 'stripes') {
+                                                shadowBg = {
+                                                    backgroundImage: `linear-gradient(45deg, ${theme.footerShadowColor} 25%, transparent 25%, transparent 50%, ${theme.footerShadowColor} 50%, ${theme.footerShadowColor} 75%, transparent 75%, transparent)`,
+                                                    backgroundSize: '24px 24px'
+                                                };
+                                            } else if (theme.footerShadowPattern === 'noise') {
+                                                shadowBg = { backgroundImage: NOISE_TEXTURE, backgroundBlendMode: 'overlay' };
+                                            } else if (theme.footerShadowPattern === 'custom' && theme.footerShadowCustomPattern) {
+                                                shadowBg = { backgroundImage: `url(${theme.footerShadowCustomPattern})`, backgroundSize: 'cover', backgroundBlendMode: 'overlay' };
+                                            }
+                                        }
+
+                                        const spread = theme.footerShadowSpread || 0;
+                                        return {
+                                            position: 'absolute',
+                                            zIndex: 5,
+                                            top: `${-spread}px`,
+                                            bottom: `${-spread}px`,
+                                            left: `${-spread}px`,
+                                            right: `${-spread}px`,
+                                            transform: `translate(${theme.footerShadowX || 0}px, ${theme.footerShadowY || 0}px)`,
+                                            filter: `blur(${theme.footerShadowBlur || 0}px)`,
+                                            opacity: theme.footerShadowOpacity ?? 0.5,
+                                            borderRadius: `${theme.footerBtnRadius}px`,
+                                            pointerEvents: 'none', ...shadowBg
+                                        };
+                                    };
+
+                                    const { className: bgClass, style: bgStyle } = getFooterBg();
+                                    const shadowStyle = getFooterShadowStyle();
+
+                                    return (
+                                        <div className="relative w-full">
+                                            {shadowStyle && <div style={shadowStyle} />}
+                                            <div
+                                                className={`p-4 flex flex-col items-start text-left gap-1.5 relative overflow-hidden group z-10 ${bgClass} ${theme.footerAnimation && theme.footerAnimation !== 'none' ? (theme.footerAnimation === 'sweep' ? 'animate-sweep' : `animate-${theme.footerAnimation}`) : ''}`}
+                                                style={{
+                                                    borderRadius: `${theme.footerBtnRadius}px`,
+                                                    boxShadow: theme.footerShadowType === 'solid' && theme.footerShadowColor
+                                                        ? `${theme.footerShadowX || 0}px ${theme.footerShadowY || 0}px ${theme.footerShadowBlur || 0}px ${theme.footerShadowSpread || 0}px ${theme.footerShadowColor}${Math.round((theme.footerShadowOpacity ?? 0.5) * 255).toString(16).padStart(2, '0')}`
+                                                        : 'none',
+                                                    ...bgStyle
+                                                }}
+                                            >
+                                                <div className="flex items-center gap-2 relative z-10">
+                                                    <Heart size={12} className="text-purple-400 fill-purple-400/10 shrink-0" />
+                                                    <h3 className={`text-xs font-bold tracking-tight leading-tight ${theme.footerAnimation === 'sweep' ? 'animate-sweep-text' : ''}`} style={getFooterTextStyle()}>
+                                                        {theme.footerGreetingTitle}
+                                                    </h3>
+                                                </div>
+                                                <p className={`text-[10px] font-medium leading-relaxed relative z-10 ${theme.footerAnimation === 'sweep' ? 'animate-sweep-text' : ''}`} style={getFooterTextStyle(true)}>
+                                                    {theme.footerGreetingDesc}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    );
+                                })()}
+
+                                {/* Vlink Branding Preview - Minimalist */}
+                                {theme.showVlink && (
+                                    <div className="flex flex-col items-center gap-2 mt-2">
+                                        <div className="h-px w-8 bg-white/5"></div>
+                                        <div className="flex items-center gap-1.5 opacity-30 hover:opacity-100 transition-opacity duration-300 cursor-default">
+                                            <span className="text-[10px] font-medium tracking-tight text-white/60">Made with</span>
+                                            <span className="text-[10px] font-bold text-white">Vlink.id x rizddf</span>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    );
+            );
 });
 
-export default PreviewSection;
+            export default PreviewSection;
