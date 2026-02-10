@@ -13,21 +13,21 @@ const DEVICE_CONFIG = {
     mobile: {
         width: 320,
         height: 640,
-        scale: 1,
+        scale: 0.85, // Reduced from 1 to fit better
         frameClass: 'rounded-[3.5rem] border-12 border-[#121212]',
         bezelClass: 'rounded-[2.7rem]'
     },
     tablet: {
         width: 768,
         height: 1024,
-        scale: 0.6, // Increased from 0.44
+        scale: 0.55, // Adjusted from 0.6
         frameClass: 'rounded-[2.5rem] border-[14px] border-[#181818]',
         bezelClass: 'rounded-[1.8rem]'
     },
     desktop: {
         width: 1280,
         height: 800,
-        scale: 0.55, // Increased from 0.31
+        scale: 0.5, // Adjusted from 0.55
         frameClass: 'rounded-xl border-[10px] border-[#222222]',
         bezelClass: 'rounded-lg'
     }
@@ -37,7 +37,7 @@ const PreviewSection = memo(({ theme, profile, links, socials, layoutType, previ
     const config = DEVICE_CONFIG[previewDevice] || DEVICE_CONFIG.mobile;
 
     return (
-        <section className={`flex ${isMobileView || isEditorHidden ? 'flex-1 justify-center' : 'hidden xl:flex'} ${isMobileView ? 'h-screen overflow-hidden' : ''} ${!isMobileView && !isEditorHidden ? (previewDevice === 'mobile' ? 'w-[480px]' : (previewDevice === 'tablet' ? 'w-[640px]' : 'w-[850px]')) : ''} border-l border-white/5 flex-col items-center pt-8 md:pt-8 pb-15 px-4 md:px-6 bg-transparent relative z-10 transition-all duration-500 ease-in-out`}>
+        <section className={`flex ${isMobileView || isEditorHidden ? 'flex-1 justify-center' : 'hidden xl:flex'} ${isMobileView ? 'h-screen overflow-hidden' : ''} ${!isMobileView && !isEditorHidden ? (previewDevice === 'mobile' ? 'w-[480px]' : (previewDevice === 'tablet' ? 'w-[640px]' : 'w-[850px]')) : ''} border-l border-white/5 flex-col items-center justify-center py-8 px-4 md:px-6 bg-transparent relative z-10 transition-all duration-500 ease-in-out`}>
             {/* Device Switcher */}
             <div className="flex items-center gap-1 p-1 bg-white/5 border border-white/10 rounded-2xl mb-8 backdrop-blur-md shadow-xl z-70">
                 {[
