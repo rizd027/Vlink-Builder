@@ -693,7 +693,7 @@ function App() {
                     </div>
                 </header>
 
-                <div className={`flex-1 ${activeTab === 'appearance' ? 'overflow-hidden p-0' : 'overflow-y-auto p-4 md:p-8 pb-30 md:pb-8'} custom-scrollbar gpu-scroll scroll-smooth`}>
+                <div className={`flex-1 ${activeTab === 'appearance' ? 'overflow-hidden p-0' : 'overflow-y-auto p-4 md:p-8 pb-30 md:pb-20'} custom-scrollbar gpu-scroll scroll-smooth`}>
                     {activeTab === 'links' && <LinkEditor links={links} setLinks={setLinks} layoutType={layoutType} setLayoutType={setLayoutType} profile={profile} setProfile={setProfile} theme={theme} setTheme={setTheme} socials={socials} setSocials={setSocials} setAppearanceSubTab={setAppearanceSubTab} setActiveTab={setActiveTab} />}
                     {activeTab === 'appearance' && <AppearanceEditor theme={theme} setTheme={setTheme} profile={profile} setProfile={setProfile} socials={socials} setSocials={setSocials} subTab={appearanceSubTab} setSubTab={setAppearanceSubTab} />}
                     {activeTab === 'settings' && <SettingsEditor links={links} setLinks={setLinks} profile={profile} setProfile={setProfile} theme={theme} setTheme={setTheme} socials={socials} setSocials={setSocials} />}
