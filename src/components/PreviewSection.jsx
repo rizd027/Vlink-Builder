@@ -37,7 +37,7 @@ const PreviewSection = memo(({ theme, profile, links, socials, layoutType, previ
     const config = DEVICE_CONFIG[previewDevice] || DEVICE_CONFIG.mobile;
 
     return (
-        <section className={`flex ${isMobileView || isEditorHidden ? 'flex-1 justify-center' : 'hidden xl:flex'} ${isMobileView ? 'h-screen overflow-hidden' : ''} ${!isMobileView && !isEditorHidden ? (previewDevice === 'mobile' ? 'w-[380px]' : (previewDevice === 'tablet' ? 'w-[560px]' : 'w-[750px]')) : ''} border-l border-white/5 flex-col items-center justify-center py-8 px-4 md:px-6 bg-transparent relative z-10 transition-all duration-500 ease-in-out`}>
+        <section className={`flex ${isMobileView || isEditorHidden ? 'flex-1 justify-center' : 'hidden xl:flex'} ${isMobileView ? 'h-screen overflow-hidden' : ''} ${!isMobileView && !isEditorHidden ? (previewDevice === 'mobile' ? 'w-[380px]' : (previewDevice === 'tablet' ? 'w-[520px]' : 'w-[750px]')) : ''} border-l border-white/5 flex-col items-center justify-center py-8 px-4 md:px-6 bg-transparent relative z-10 transition-all duration-500 ease-in-out`}>
             {/* Device Switcher */}
             <div className="flex items-center gap-1 p-1 bg-white/5 border border-white/10 rounded-2xl mb-8 backdrop-blur-md shadow-xl z-70">
                 {[
