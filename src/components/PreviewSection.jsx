@@ -374,12 +374,12 @@ const PreviewSection = memo(({ theme, profile, links, socials, layoutType, previ
                                 </div>
                                     )}
                                 <p
-                                    className={`leading-relaxed opacity-80 ${profile.headerSize === 'large' ? 'text-xs' : 'text-[10px]'} ${theme.pageAnimation && theme.pageAnimation !== 'none' ? (theme.pageAnimation === 'sweep' ? 'animate-sweep-text' : `animate-${theme.pageAnimation}`) : ''}`}
+                                    className={`leading-relaxed opacity-80 ${theme.pageAnimation && theme.pageAnimation !== 'none' ? (theme.pageAnimation === 'sweep' ? 'animate-sweep-text' : `animate-${theme.pageAnimation}`) : ''}`}
                                     style={{
                                         fontFamily: theme.pageFont || 'Inter',
                                         fontWeight: theme.pageWeight || 400,
                                         textTransform: theme.pageTransform || 'none',
-                                        fontSize: theme.pageSize ? `${theme.pageSize}px` : undefined,
+                                        fontSize: theme.pageSize ? `${theme.pageSize}px` : `${0.875 * ((typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100))) / 100)}rem`,
                                         ...(theme.pageColorType === 'gradient' ? {
                                             backgroundImage: `linear-gradient(135deg, ${theme.pageColorGradient1 || '#8228d9'}, ${theme.pageColorGradient2 || '#6366f1'})`,
                                             WebkitBackgroundClip: 'text',
