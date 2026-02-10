@@ -1573,9 +1573,10 @@ const LinkEditor = memo(function LinkEditor({ links, setLinks, layoutType, setLa
                             </div>
                             <button
                                 onClick={() => setTheme({ ...theme, showFooter: !theme.showFooter })}
-                                className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border ${theme.showFooter ? 'bg-purple-500/10 border-purple-500/30 text-purple-400' : 'bg-white/5 border-white/10 text-white/40'}`}
+                                className={`px-4 py-2.5 rounded-full border border-white/10 hover:bg-white/5 text-[11px] font-bold flex items-center gap-2 transition-all hover:scale-105 shadow-xl shadow-white/5 ${theme.showFooter ? 'text-white' : 'text-white/40'}`}
                             >
-                                {theme.showFooter ? 'Active' : 'Hidden'}
+                                {theme.showFooter ? <EyeOff size={12} /> : <Eye size={12} />}
+                                {theme.showFooter ? 'Hide' : 'Show'}
                             </button>
                         </div>
 
@@ -1621,9 +1622,10 @@ const LinkEditor = memo(function LinkEditor({ links, setLinks, layoutType, setLa
                             </div>
                             <button
                                 onClick={() => setTheme({ ...theme, showVlink: !theme.showVlink })}
-                                className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border ${theme.showVlink ? 'bg-indigo-500/10 border-indigo-500/30 text-indigo-400' : 'bg-white/5 border-white/10 text-white/40'}`}
+                                className={`px-4 py-2.5 rounded-full border border-white/10 hover:bg-white/5 text-[11px] font-bold flex items-center gap-2 transition-all hover:scale-105 shadow-xl shadow-white/5 ${theme.showVlink ? 'text-white' : 'text-white/40'}`}
                             >
-                                {theme.showVlink ? 'Visible' : 'Hidden'}
+                                {theme.showVlink ? <EyeOff size={12} /> : <Eye size={12} />}
+                                {theme.showVlink ? 'Hide' : 'Show'}
                             </button>
                         </div>
                     </div>
@@ -1838,16 +1840,11 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                     <div className="flex items-center justify-between px-1">
                                         <label htmlFor="editor-profile-title" className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Display Title</label>
                                         <button
-                                            onClick={() => setProfile({ ...profile, showTitle: profile.showTitle === false ? true : false })}
-                                            className={`w-8 h-4 rounded-full relative transition-colors duration-300 ease-in-out ${profile.showTitle !== false ? 'bg-green-500' : 'bg-white/10 hover:bg-white/20'}`}
-                                            title={profile.showTitle !== false ? "Hide Title" : "Show Title"}
+                                            onClick={() => setProfile({ ...profile, showTitle: !profile.showTitle })}
+                                            className={`px-4 py-2.5 rounded-full border border-white/10 hover:bg-white/5 text-[11px] font-bold flex items-center gap-2 transition-all hover:scale-105 shadow-xl shadow-white/5 ${profile.showTitle !== false ? 'text-white' : 'text-white/40'}`}
                                         >
-                                            <div className={`
-                                                absolute top-0.5 left-0.5 w-3 h-3 rounded-full bg-white shadow-sm 
-                                                transition-transform duration-500 
-                                                ease-[cubic-bezier(0.2,0.8,0.2,1)] 
-                                                ${profile.showTitle !== false ? 'translate-x-4' : 'translate-x-0'}
-                                            `} />
+                                            {profile.showTitle !== false ? <EyeOff size={12} /> : <Eye size={12} />}
+                                            {profile.showTitle !== false ? 'Hide' : 'Show'}
                                         </button>
                                     </div>
                                     <input
@@ -2186,16 +2183,11 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         <div className="flex items-center justify-between px-1">
                                             <label htmlFor="editor-profile-bio" className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Bio Description</label>
                                             <button
-                                                onClick={() => setProfile({ ...profile, showBio: profile.showBio === false ? true : false })}
-                                                className={`w-8 h-4 rounded-full relative transition-colors duration-300 ease-in-out ${profile.showBio !== false ? 'bg-green-500' : 'bg-white/10 hover:bg-white/20'}`}
-                                                title={profile.showBio !== false ? "Hide Bio" : "Show Bio"}
+                                                onClick={() => setProfile({ ...profile, showBio: !profile.showBio })}
+                                                className={`px-4 py-2.5 rounded-full border border-white/10 hover:bg-white/5 text-[11px] font-bold flex items-center gap-2 transition-all hover:scale-105 shadow-xl shadow-white/5 ${profile.showBio !== false ? 'text-white' : 'text-white/40'}`}
                                             >
-                                                <div className={`
-                                                    absolute top-0.5 left-0.5 w-3 h-3 rounded-full bg-white shadow-sm 
-                                                    transition-transform duration-500 
-                                                    ease-[cubic-bezier(0.2,0.8,0.2,1)] 
-                                                    ${profile.showBio !== false ? 'translate-x-4' : 'translate-x-0'}
-                                                `} />
+                                                {profile.showBio !== false ? <EyeOff size={12} /> : <Eye size={12} />}
+                                                {profile.showBio !== false ? 'Hide' : 'Show'}
                                             </button>
                                         </div>
                                         <textarea
