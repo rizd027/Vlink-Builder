@@ -2099,7 +2099,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
 
                                         {theme.titleColorType === 'gradient' && (
                                             <div className="flex flex-col gap-4">
-                                                <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Gradient Colors</label>
+                                                <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Gradient Colors</span>
                                                 <div className="grid grid-cols-2 gap-3">
                                                     <div className="flex items-center gap-2 p-3 rounded-xl bg-black/20 border border-white/5">
                                                         <input
@@ -2129,7 +2129,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
 
                                         {theme.titleColorType === 'pattern' && (
                                             <div className="flex flex-col gap-4">
-                                                <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Pattern Style</label>
+                                                <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Pattern Style</span>
                                                 <div className="grid grid-cols-3 gap-2">
                                                     {['dots', 'stripes', 'custom'].map((p) => (
                                                         <button
@@ -2359,7 +2359,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
 
                                         {theme.pageColorType === 'gradient' && (
                                             <div className="flex flex-col gap-4">
-                                                <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Gradient Colors</label>
+                                                <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Gradient Colors</span>
                                                 <div className="grid grid-cols-2 gap-3">
                                                     <div className="flex items-center gap-2 p-3 rounded-xl bg-black/20 border border-white/5">
                                                         <input
@@ -2389,7 +2389,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
 
                                         {theme.pageColorType === 'pattern' && (
                                             <div className="flex flex-col gap-4">
-                                                <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Pattern Style</label>
+                                                <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Pattern Style</span>
                                                 <div className="grid grid-cols-3 gap-2">
                                                     {['dots', 'stripes', 'custom'].map((p) => (
                                                         <button
