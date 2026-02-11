@@ -260,10 +260,10 @@ const ReorderLinkItem = memo(({
                         e.preventDefault();
                         controls.start(e);
                     }}
-                    className="w-10 flex items-center justify-center border-r border-white/5 text-white/20 hover:text-white/60 rounded-l-[inherit] cursor-grab active:cursor-grabbing transition-all select-none active:bg-white/5"
+                    className="w-14 md:w-10 flex items-center justify-center border-r border-white/5 text-white/20 hover:text-white/60 rounded-l-[inherit] cursor-grab active:cursor-grabbing transition-all select-none active:bg-white/5 touch-none"
                 >
                     <motion.div whileTap={{ scale: 1.2 }}>
-                        <GripVertical size={16} />
+                        <GripVertical className="size-5 md:size-4" />
                     </motion.div>
                 </div>
 
