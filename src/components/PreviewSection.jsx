@@ -459,7 +459,7 @@ const PreviewSection = memo(({ theme, profile, links, socials, layoutType, previ
                                                     <div className="absolute inset-0 bg-purple-500/20 blur-3xl rounded-full -z-10 animate-pulse"></div>
                                                     <ProfileAvatar profile={profile} theme={theme} className="shadow-[0_20px_40px_rgba(0,0,0,0.4)] border-white/20 hover:scale-105 transition-transform" />
                                                 </div>
-                                                <div className="bg-white/5 backdrop-blur-md w-full py-8 px-6 rounded-[2.5rem] border border-white/10 shadow-xl text-center flex flex-col gap-2">
+                                                <div className="bg-white/5 backdrop-blur-md w-full py-8 px-6 rounded-3xl border border-white/10 shadow-xl text-center flex flex-col gap-2">
                                                     <ProfileTitle profile={profile} theme={theme} />
                                                     <ProfileBio profile={profile} theme={theme} />
                                                 </div>
