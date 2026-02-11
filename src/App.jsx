@@ -1048,6 +1048,91 @@ const LogoImageModal = memo(function LogoImageModal({ isOpen, onClose, theme, se
     );
 });
 
+const ProfileImageModal = memo(function ProfileImageModal({ isOpen, onClose, profile, setProfile }) {
+    if (!isOpen) return null;
+
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setProfile({ ...profile, avatar: reader.result });
+                onClose();
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleDelete = () => {
+        setProfile({ ...profile, avatar: null });
+        onClose();
+    };
+
+    const fileInputRef = useRef(null);
+
+    return (
+        <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/80 p-4 animate-in fade-in duration-200" onClick={onClose}>
+            <div className="w-full max-w-sm bg-[#0a0a0a] border border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
+                {/* Header */}
+                <div className="px-8 pt-8 pb-4 flex items-center justify-between">
+                    <h2 className="text-xl font-black text-white italic tracking-tight">Profile Image</h2>
+                    <button
+                        onClick={onClose}
+                        className="p-3 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-all"
+                    >
+                        <X size={20} />
+                    </button>
+                </div>
+
+                {/* Content */}
+                <div className="p-8 pt-2 flex flex-col gap-3">
+                    <div
+                        onClick={() => fileInputRef.current?.click()}
+                        className="flex items-center justify-between p-4 -mx-2 rounded-2xl hover:bg-white/5 transition-all text-left group cursor-pointer border border-transparent hover:border-white/5"
+                    >
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:bg-purple-500/20 transition-all">
+                                <Image size={24} />
+                            </div>
+                            <div className="flex flex-col">
+                                <span className="font-bold text-white text-sm">Upload Picture</span>
+                                <span className="text-[10px] text-white/30 font-black uppercase tracking-widest">Supports JPG, PNG, SVG</span>
+                            </div>
+                        </div>
+                        <ArrowRight size={18} className="text-white/10 group-hover:text-purple-400 transition-all" />
+                        <input
+                            id="profile-upload"
+                            name="profile-upload"
+                            ref={fileInputRef}
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageUpload}
+                            className="hidden"
+                            onClick={(e) => e.target.value = null}
+                        />
+                    </div>
+
+                    <button
+                        onClick={handleDelete}
+                        className="flex items-center justify-between p-4 -mx-2 rounded-2xl hover:bg-red-500/5 transition-all text-left group border border-transparent hover:border-red-500/10"
+                    >
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500 group-hover:bg-red-500/20 transition-all">
+                                <Trash2 size={24} />
+                            </div>
+                            <div className="flex flex-col">
+                                <span className="font-bold text-white text-sm">Remove Picture</span>
+                                <span className="text-[10px] text-red-500/40 font-black uppercase tracking-widest">Revert to default</span>
+                            </div>
+                        </div>
+                        <ArrowRight size={18} className="text-white/10 group-hover:text-red-500 transition-all" />
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+});
+
 const TitleBioModal = memo(function TitleBioModal({ isOpen, onClose, profile, setProfile }) {
     const [title, setTitle] = useState(profile?.username || '');
     const [bio, setBio] = useState(profile?.bio || '');
