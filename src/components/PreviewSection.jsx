@@ -106,13 +106,35 @@ const ProfileTitle = ({ profile, theme }) => {
                 </h2>
             ) : (
                 <div
+                    className="flex items-center justify-center"
                     style={{
-                        width: `${110 * (size / 100)}px`,
-                        height: `${36 * (size / 100)}px`
+                        width: '100%',
+                        transform: `scale(${(theme.titleLogoSize || 100) / 100})`,
+                        transformOrigin: 'center'
                     }}
-                    className={`bg-white/20 rounded-lg p-2 flex items-center justify-center`}
                 >
-                    <span className="text-[10px] font-black uppercase tracking-widest opacity-40 italic">Your Logo</span>
+                    {theme.titleLogo ? (
+                        <img
+                            src={theme.titleLogo}
+                            alt="Logo"
+                            style={{
+                                width: `${110 * (size / 100)}px`,
+                                maxHeight: `${60 * (size / 100)}px`,
+                                objectFit: 'contain'
+                            }}
+                            className={`${theme.titleAnimation && theme.titleAnimation !== 'none' ? `animate-${theme.titleAnimation}` : ''}`}
+                        />
+                    ) : (
+                        <div
+                            style={{
+                                width: `${110 * (size / 100)}px`,
+                                height: `${36 * (size / 100)}px`
+                            }}
+                            className={`bg-white/20 rounded-lg p-2 flex items-center justify-center`}
+                        >
+                            <span className="text-[10px] font-black uppercase tracking-widest opacity-40 italic">Your Logo</span>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
