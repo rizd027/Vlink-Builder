@@ -288,126 +288,76 @@ const PreviewSection = memo(({ theme, profile, links, socials, layoutType, previ
 
                         <div className={`relative z-10 flex flex-col items-center px-6 py-10 gap-5 min-h-full mx-auto ${previewDevice === 'desktop' ? 'max-w-4xl' : previewDevice === 'tablet' ? 'max-w-2xl' : 'w-full'}`}>
                             {/* Profile Area */}
-                            <div className={`flex flex-col items-center w-full transition-all duration-300 ${profile.headerLayout === 'hero' ? 'gap-0 mb-3' : 'gap-3.5'}`}>
-                                <div className={`relative ${profile.headerLayout === 'hero' ? 'rounded-b-none' : 'rounded-full'} ${theme.headerAnimation && theme.headerAnimation !== 'none' ? `animate-${theme.headerAnimation}` : ''} ${theme.headerAnimation === 'sweep' ? 'overflow-hidden' : ''} ${profile.showAvatar === false ? 'hidden' : ''}`}>
-                                    {/* Removed heavy blur-xl behind avatar */}
-                                    {profile.avatar ? (
-                                        <img
-                                            src={profile.avatar}
-                                            alt="Avatar"
-                                            loading="lazy"
-                                            decoding="async"
-                                            width="112"
-                                            height="112"
-                                            style={{
-                                                width: `${96 * ((typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100))) / 100)}px`,
-                                                height: `${96 * ((typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100))) / 100)}px`
-                                            }}
-                                            className={`rounded-full border-2 border-white/10 shadow-md relative z-10 object-cover 
-                                                ${profile.headerLayout === 'hero' ? 'rounded-b-none border-b-0' : ''}
-                                            `}
-                                            onError={(e) => {
-                                                e.target.style.display = 'none';
-                                                e.target.nextSibling.style.display = 'flex';
-                                            }}
-                                        />
-                                    ) : null}
-                                    <div
-                                        style={{
-                                            width: `${96 * ((typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100))) / 100)}px`,
-                                            height: `${96 * ((typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100))) / 100)}px`
-                                        }}
-                                        className={`rounded-full border-2 border-white/10 shadow-md relative z-10 flex items-center justify-center bg-white/5 
-                                            ${profile.headerLayout === 'hero' ? 'rounded-b-none border-b-0' : ''}
-                                            ${profile.avatar ? 'hidden' : 'flex'}
-                                        `}>
-                                        <User size={40 * ((typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100))) / 100)} className="text-white/20" />
-                                    </div>
-                                </div>
-                                <div className={`flex flex-col items-center gap-1 text-center px-3 
-                                    ${profile.headerLayout === 'hero' ? 'bg-black/20 w-full py-6 rounded-2xl -mt-2 border border-white/5' : ''}
-                                `}>
-                                    <div className={`${profile.showTitle === false ? 'hidden' : ''} w-full flex justify-center`}>
-                                        {theme.titleStyle === 'text' ? (
-                                            <h2
-                                                className={`${theme.titleAnimation && theme.titleAnimation !== 'none' ? (theme.titleAnimation === 'sweep' ? 'animate-sweep-text' : `animate-${theme.titleAnimation}`) : ''}`}
-                                                style={{
-                                                    fontFamily: theme.titleFont || 'Inter',
-                                                    fontWeight: theme.titleWeight || 700,
-                                                    textTransform: theme.titleTransform || 'none',
-                                                    fontSize: theme.titleSize ? `${theme.titleSize}px` : `${1.25 * ((typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100))) / 100)}rem`,
-                                                    ...(theme.titleColorType === 'gradient' ? {
-                                                        backgroundImage: `linear-gradient(135deg, ${theme.titleColorGradient1 || '#8228d9'}, ${theme.titleColorGradient2 || '#6366f1'})`,
-                                                        WebkitBackgroundClip: 'text',
-                                                        backgroundClip: 'text',
-                                                        WebkitTextFillColor: 'transparent',
-                                                        color: 'transparent'
-                                                    } : theme.titleColorType === 'pattern' ? {
-                                                        backgroundImage: theme.titleColorPattern === 'dots'
-                                                            ? `radial-gradient(circle, ${theme.titleColor || '#ffffff'} 1px, transparent 1px)`
-                                                            : theme.titleColorPattern === 'stripes'
-                                                                ? `linear-gradient(45deg, ${theme.titleColor || '#ffffff'} 25%, transparent 25%, transparent 50%, ${theme.titleColor || '#ffffff'} 50%, ${theme.titleColor || '#ffffff'} 75%, transparent 75%, transparent)`
-                                                                : theme.titleColorPattern === 'custom' && theme.titleColorCustomPattern
-                                                                    ? `url(${theme.titleColorCustomPattern})`
-                                                                    : 'none',
-                                                        backgroundSize: theme.titleColorPattern === 'dots' ? '6px 6px' : theme.titleColorPattern === 'stripes' ? '10px 10px' : 'cover',
-                                                        WebkitBackgroundClip: 'text',
-                                                        backgroundClip: 'text',
-                                                        WebkitTextFillColor: 'transparent',
-                                                        color: 'transparent'
-                                                    } : {
-                                                        color: theme.titleColor || '#ffffff'
-                                                    })
-                                                }}
-                                            >
-                                                {profile.username}
-                                            </h2>
-                                        ) : (
-                                            <div
-                                                style={{
-                                                    width: `${110 * ((typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100))) / 100)}px`,
-                                                    height: `${36 * ((typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100))) / 100)}px`
-                                                }}
-                                                className={`bg-white/20 rounded-lg p-2 flex items-center justify-center`}
-                                            >
-                                                <span className="text-[10px] font-black uppercase tracking-widest opacity-40 italic">Your Logo</span>
+                            <div className={`flex flex-col items-center w-full transition-all duration-300 ${profile.headerLayout === 'hero' ? 'mb-6' : 'gap-3.5'}`}>
+                                {profile.headerLayout === 'hero' ? (
+                                    <div className="w-full relative flex flex-col items-center">
+                                        {/* Hero Variant Controller */}
+                                        {profile.heroModel === 'joined' && (
+                                            <div className="w-full flex flex-col items-center">
+                                                <div className={`relative z-20 ${theme.headerAnimation && theme.headerAnimation !== 'none' ? `animate-${theme.headerAnimation}` : ''} ${profile.showAvatar === false ? 'hidden' : ''}`}>
+                                                    <ProfileAvatar profile={profile} theme={theme} className="rounded-b-none border-b-0" />
+                                                </div>
+                                                <div className="bg-black/30 backdrop-blur-xl w-full py-8 px-6 rounded-3xl -mt-5 border border-white/10 shadow-2xl relative z-10 text-center flex flex-col gap-2">
+                                                    <ProfileTitle profile={profile} theme={theme} />
+                                                    <ProfileBio profile={profile} theme={theme} />
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {profile.heroModel === 'float' && (
+                                            <div className="w-full flex flex-col items-center gap-6">
+                                                <div className={`relative z-20 ${theme.headerAnimation && theme.headerAnimation !== 'none' ? `animate-${theme.headerAnimation}` : ''} ${profile.showAvatar === false ? 'hidden' : ''}`}>
+                                                    <div className="absolute inset-0 bg-purple-500/20 blur-3xl rounded-full -z-10 animate-pulse"></div>
+                                                    <ProfileAvatar profile={profile} theme={theme} className="shadow-[0_20px_40px_rgba(0,0,0,0.4)] border-white/20 hover:scale-105 transition-transform" />
+                                                </div>
+                                                <div className="bg-white/5 backdrop-blur-md w-full py-8 px-6 rounded-[2.5rem] border border-white/10 shadow-xl text-center flex flex-col gap-2">
+                                                    <ProfileTitle profile={profile} theme={theme} />
+                                                    <ProfileBio profile={profile} theme={theme} />
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {profile.heroModel === 'minimal' && (
+                                            <div className="w-full flex flex-col items-center gap-6 py-4">
+                                                <div className={`relative z-20 ${theme.headerAnimation && theme.headerAnimation !== 'none' ? `animate-${theme.headerAnimation}` : ''} ${profile.showAvatar === false ? 'hidden' : ''}`}>
+                                                    <ProfileAvatar profile={profile} theme={theme} className="border-white/5 shadow-sm" />
+                                                </div>
+                                                <div className="text-center flex flex-col gap-2 w-full px-4">
+                                                    <ProfileTitle profile={profile} theme={theme} />
+                                                    <ProfileBio profile={profile} theme={theme} />
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {profile.heroModel === 'glass' && (
+                                            <div className="w-full relative py-12 px-6 flex flex-col items-center gap-6">
+                                                {/* Background backlight glow */}
+                                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 bg-purple-500/30 blur-[100px] rounded-full -z-10"></div>
+
+                                                <div className={`relative z-20 ${theme.headerAnimation && theme.headerAnimation !== 'none' ? `animate-${theme.headerAnimation}` : ''} ${profile.showAvatar === false ? 'hidden' : ''}`}>
+                                                    <ProfileAvatar profile={profile} theme={theme} className="border-white/30 ring-4 ring-white/5" />
+                                                </div>
+                                                <div className="bg-white/10 backdrop-blur-2xl w-full py-10 px-8 rounded-[3rem] border border-white/20 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] text-center flex flex-col gap-3 relative overflow-hidden">
+                                                    {/* Subtle glass reflection */}
+                                                    <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-white/30 to-transparent"></div>
+                                                    <ProfileTitle profile={profile} theme={theme} />
+                                                    <ProfileBio profile={profile} theme={theme} />
+                                                </div>
                                             </div>
                                         )}
                                     </div>
-                                </div>
-                                <p
-                                    className={`leading-relaxed opacity-80 ${theme.pageAnimation && theme.pageAnimation !== 'none' ? (theme.pageAnimation === 'sweep' ? 'animate-sweep-text' : `animate-${theme.pageAnimation}`) : ''} ${profile.showBio === false ? 'hidden' : ''}`}
-                                    style={{
-                                        fontFamily: theme.pageFont || 'Inter',
-                                        fontWeight: theme.pageWeight || 400,
-                                        textTransform: theme.pageTransform || 'none',
-                                        fontSize: theme.pageSize ? `${theme.pageSize}px` : `${0.875 * ((typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100))) / 100)}rem`,
-                                        ...(theme.pageColorType === 'gradient' ? {
-                                            backgroundImage: `linear-gradient(135deg, ${theme.pageColorGradient1 || '#8228d9'}, ${theme.pageColorGradient2 || '#6366f1'})`,
-                                            WebkitBackgroundClip: 'text',
-                                            backgroundClip: 'text',
-                                            WebkitTextFillColor: 'transparent',
-                                            color: 'transparent'
-                                        } : theme.pageColorType === 'pattern' ? {
-                                            backgroundImage: theme.pageColorPattern === 'dots'
-                                                ? `radial-gradient(circle, ${theme.pageColor || theme.bioColor || 'rgba(255,255,255,0.7)'} 1px, transparent 1px)`
-                                                : theme.pageColorPattern === 'stripes'
-                                                    ? `linear-gradient(45deg, ${theme.pageColor || theme.bioColor || 'rgba(255,255,255,0.7)'} 25%, transparent 25%, transparent 50%, ${theme.pageColor || theme.bioColor || 'rgba(255,255,255,0.7)'} 50%, ${theme.pageColor || theme.bioColor || 'rgba(255,255,255,0.7)'} 75%, transparent 75%, transparent)`
-                                                    : theme.pageColorPattern === 'custom' && theme.pageColorCustomPattern
-                                                        ? `url(${theme.pageColorCustomPattern})`
-                                                        : 'none',
-                                            backgroundSize: theme.pageColorPattern === 'dots' ? '6px 6px' : theme.pageColorPattern === 'stripes' ? '10px 10px' : 'cover',
-                                            WebkitBackgroundClip: 'text',
-                                            backgroundClip: 'text',
-                                            WebkitTextFillColor: 'transparent',
-                                            color: 'transparent'
-                                        } : {
-                                            color: theme.pageColor || theme.bioColor || 'rgba(255,255,255,0.7)'
-                                        })
-                                    }}
-                                >
-                                    {profile.bio}
-                                </p>
+                                ) : (
+                                    /* Classic Layout */
+                                    <>
+                                        <div className={`relative ${theme.headerAnimation && theme.headerAnimation !== 'none' ? `animate-${theme.headerAnimation}` : ''} ${profile.showAvatar === false ? 'hidden' : ''}`}>
+                                            <ProfileAvatar profile={profile} theme={theme} />
+                                        </div>
+                                        <div className="flex flex-col items-center gap-1 text-center px-3">
+                                            <ProfileTitle profile={profile} theme={theme} />
+                                        </div>
+                                        <ProfileBio profile={profile} theme={theme} />
+                                    </>
+                                )}
                             </div>
 
                             {/* Social Icons - Top Position */}
