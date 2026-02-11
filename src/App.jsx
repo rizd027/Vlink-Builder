@@ -608,14 +608,7 @@ function App() {
     const [appearanceSubTab, setAppearanceSubTab] = useState('header');
     const [isEditorHidden, setIsEditorHidden] = useState(false);
     const [isMobilePreview, setIsMobilePreview] = useState(false);
-    const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
     const [isExportModalOpen, setIsExportModalOpen] = useState(false);
-
-    useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth < 768);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
 
     const handleTabClick = (tabId) => {
         if (activeTab === tabId) {
@@ -639,7 +632,7 @@ function App() {
                 }}
             >
                 <div className="flex items-center gap-3">
-                    {activeTab === 'appearance' && isMobile && !isMobilePreview ? (
+                    {activeTab === 'appearance' && !isMobilePreview ? (
                         <button
                             onClick={() => setActiveTab('links')}
                             className="p-2 -ml-2 text-white/40 hover:text-white"
@@ -658,7 +651,7 @@ function App() {
                             V
                         </button>
                     )}
-                    {activeTab === 'appearance' && isMobile && !isMobilePreview && (
+                    {activeTab === 'appearance' && !isMobilePreview && (
                         <h1 className="text-lg font-bold text-white">Appearance</h1>
                     )}
                 </div>
@@ -685,7 +678,7 @@ function App() {
                 </button>
 
                 <nav className="flex flex-row md:flex-col shrink-0 items-center w-full md:w-auto justify-around md:justify-start px-2 md:px-0 h-full overflow-x-auto no-scrollbar">
-                    {activeTab === 'appearance' && isMobile && !isMobilePreview ? (
+                    {activeTab === 'appearance' && !isMobilePreview ? (
                         SIDEBAR_ITEMS.map((item) => (
                             <NavItem
                                 key={item.id}
