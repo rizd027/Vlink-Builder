@@ -740,7 +740,15 @@ function App() {
             >
                 {/* Editor Header */}
                 <header className="h-16 md:h-20 px-6 md:px-8 border-b border-white/5 flex items-center justify-between bg-transparent shrink-0">
-                    <div className="flex items-center gap-4 md:gap-6">
+                    <div className="flex items-center gap-4">
+                        {activeTab === 'appearance' && (
+                            <button
+                                onClick={() => setActiveTab('links')}
+                                className="p-2 -ml-2 text-white/40 hover:text-white transition-colors"
+                            >
+                                <ChevronLeft size={24} className="text-purple-500" />
+                            </button>
+                        )}
                         <div className="flex flex-col gap-0.5 md:gap-1">
                             <h1 className="text-lg md:text-xl font-bold capitalize flex items-center gap-2 text-white/90">
                                 <span className="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
