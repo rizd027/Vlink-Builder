@@ -1966,6 +1966,59 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                             );
                                         })}
                                     </div>
+
+                                    {theme.titleStyle === 'logo' && (
+                                        <div className="flex flex-col gap-6 pt-4 border-t border-white/5 animate-in slide-in-from-top-2 duration-300">
+                                            <div className="flex items-center gap-4">
+                                                <div className="relative group">
+                                                    <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105">
+                                                        {theme.titleLogo ? (
+                                                            <img
+                                                                src={theme.titleLogo}
+                                                                alt="Logo Preview"
+                                                                className="w-full h-full object-contain p-2"
+                                                            />
+                                                        ) : (
+                                                            <Image size={24} className="text-white/10" />
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <div className="flex flex-col gap-2 flex-1">
+                                                    <button
+                                                        onClick={() => setLogoImageModalOpen(true)}
+                                                        className="w-full px-4 py-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20 hover:bg-blue-500/20 text-blue-400 text-[10px] font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2"
+                                                    >
+                                                        <Edit3 size={12} />
+                                                        {theme.titleLogo ? 'Change Logo' : 'Upload Logo'}
+                                                    </button>
+                                                    {theme.titleLogo && (
+                                                        <button
+                                                            onClick={() => setTheme({ ...theme, titleLogo: null })}
+                                                            className="w-full px-4 py-2 rounded-xl hover:bg-red-500/5 text-red-500/40 hover:text-red-500 text-[9px] font-bold uppercase tracking-widest transition-all"
+                                                        >
+                                                            Remove Logo
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            <div className="flex flex-col gap-3">
+                                                <div className="flex items-center justify-between px-1">
+                                                    <span className="text-[9px] font-bold uppercase tracking-widest text-white/20">Logo Size</span>
+                                                    <span className="text-[10px] font-bold text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/10">{theme.titleLogoSize || 100}%</span>
+                                                </div>
+                                                <input
+                                                    type="range"
+                                                    min="20"
+                                                    max="200"
+                                                    step="5"
+                                                    value={theme.titleLogoSize || 100}
+                                                    onChange={(e) => setTheme({ ...theme, titleLogoSize: parseInt(e.target.value) })}
+                                                    className="w-full h-1.5 bg-white/5 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-400 transition-all"
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Size Section */}
