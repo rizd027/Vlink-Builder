@@ -678,7 +678,7 @@ function App() {
                 </button>
 
                 <nav className="flex flex-row md:flex-col shrink-0 items-center w-full md:w-auto justify-around md:justify-start px-2 md:px-0 h-full overflow-x-auto no-scrollbar md:gap-2">
-                    {activeTab === 'appearance' && !isMobilePreview ? (
+                    {activeTab === 'appearance' ? (
                         SIDEBAR_ITEMS.map((item) => (
                             <NavItem
                                 key={item.id}
@@ -1786,33 +1786,6 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
     return (
         <>
             <div className="flex flex-col md:flex-row overflow-hidden h-full text-white">
-                {/* Appearance Sub-Sidebar - Vertical on Desktop, Horizontal on Mobile */}
-                <aside className={`hidden md:flex relative bg-white/5 border-b md:border-b-0 md:border-r border-white/5 py-2 md:py-8 flex flex-row md:flex-col gap-2 transition-all duration-300 ease-in-out shrink-0 overflow-x-auto md:overflow-x-visible no-scrollbar ${isSubSidebarCollapsed ? 'md:w-16' : 'md:w-48'}`}>
-                    {/* Desktop Collapse Toggle */}
-                    <button
-                        onClick={() => setIsSubSidebarCollapsed(!isSubSidebarCollapsed)}
-                        className="hidden md:flex absolute -right-3 top-2 w-6 h-6 rounded-full bg-[#1a1a1a] border border-white/10 items-center justify-center text-white/40 hover:text-white hover:border-purple-500/50 transition-all z-50 shadow-lg"
-                    >
-                        <ChevronLeft size={12} className={`transition-transform duration-300 ${isSubSidebarCollapsed ? 'rotate-180' : 'rotate-0'}`} />
-                    </button>
-
-                    {SIDEBAR_ITEMS.map((item) => (
-                        <button
-                            key={item.id}
-                            onClick={() => setSubTab(item.id)}
-                            className={`flex items-center gap-3 px-4 md:px-6 py-2.5 md:py-3 transition-all duration-300 group whitespace-nowrap ${subTab === item.id ? 'bg-purple-500/10 text-purple-400 border-b-2 md:border-b-0 md:border-r-2 border-purple-500' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
-                            title={isSubSidebarCollapsed ? item.label : ''}
-                        >
-                            <div className="shrink-0">
-                                <item.icon size={18} />
-                            </div>
-                            <span className={`text-[11px] md:text-sm font-bold truncate transition-all duration-300 ${isSubSidebarCollapsed ? 'md:opacity-0 md:w-0 md:invisible' : 'opacity-100 w-auto visible'}`}>
-                                {item.label}
-                            </span>
-                        </button>
-                    ))}
-                </aside>
-
                 {/* Main Content Area */}
                 <main className="flex-1 p-4 md:p-12 pb-24 md:pb-12 bg-[#0a0a0a] flex flex-col gap-8 md:gap-12 overflow-y-auto custom-scrollbar gpu-scroll">
                     <>
