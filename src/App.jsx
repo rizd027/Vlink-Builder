@@ -1837,6 +1837,27 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                             <div className="absolute inset-0 bg-white/10 rounded-[2rem] opacity-0 group-hover:opacity-100" />
                                         </div>
                                     </div>
+                                    <div className="flex flex-col gap-3">
+                                        <div className="flex items-center justify-between w-full px-1">
+                                            <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Profile Avatar</span>
+                                        </div>
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            <button
+                                                onClick={() => setProfileImageModalOpen(true)}
+                                                className="px-6 py-2.5 rounded-full border border-white/10 hover:bg-white/5 text-[11px] font-bold flex items-center gap-2 text-white transition-all hover:scale-105 shadow-xl shadow-white/5"
+                                            >
+                                                <Edit3 size={12} />
+                                                Change Image
+                                            </button>
+                                            <button
+                                                onClick={() => setProfile({ ...profile, showAvatar: !profile.showAvatar })}
+                                                className={`px-4 py-2.5 rounded-full border border-white/10 hover:bg-white/5 text-[11px] font-bold flex items-center gap-2 transition-all hover:scale-105 shadow-xl shadow-white/5 ${profile.showAvatar ? 'text-white' : 'text-white/40'}`}
+                                            >
+                                                {profile.showAvatar ? <EyeOff size={12} /> : <Eye size={12} />}
+                                                {profile.showAvatar ? 'Hide' : 'Show'}
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div className="flex flex-col gap-4 p-6 rounded-[2rem] bg-white/3 border border-white/5">
@@ -1865,37 +1886,6 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                         })}
                                     </div>
                                 </div>
-
-                                {profile.headerLayout === 'hero' && (
-                                    <div className="flex flex-col gap-4 p-6 rounded-[2rem] bg-white/3 border border-white/5">
-                                        <div className="flex items-center gap-2 px-1">
-                                            <div className="w-6 h-6 rounded-lg bg-pink-500/10 flex items-center justify-center border border-pink-500/10">
-                                                <Zap size={12} className="text-pink-400" />
-                                            </div>
-                                            <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Hero Model Style</span>
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-2">
-                                            {[
-                                                { id: 'joined', label: 'Joined', icon: Layers },
-                                                { id: 'float', label: 'Float', icon: MousePointer2 },
-                                                { id: 'minimal', label: 'Minimal', icon: Square },
-                                                { id: 'glass', label: 'Glass', icon: Box }
-                                            ].map(option => {
-                                                const Icon = option.icon;
-                                                return (
-                                                    <button
-                                                        key={option.id}
-                                                        onClick={() => setProfile({ ...profile, heroModel: option.id })}
-                                                        className={`flex items-center justify-center gap-2 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${profile.heroModel === option.id ? 'bg-pink-500/20 border-pink-500/40 text-white shadow-xl shadow-pink-500/5' : 'bg-black/20 border-transparent text-white/40 hover:text-white/60'}`}
-                                                    >
-                                                        <Icon size={14} />
-                                                        {option.label}
-                                                    </button>
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
-                                )}
 
                                 {profile.headerLayout === 'hero' && (
                                     <div className="flex-none flex flex-col gap-4 p-6 rounded-[2rem] bg-white/3 border border-white/5">
