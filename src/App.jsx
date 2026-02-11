@@ -677,7 +677,7 @@ function App() {
                     <PanelLeft size={20} className="absolute transition-all opacity-0 group-hover:opacity-100" />
                 </button>
 
-                <nav className="flex flex-row md:flex-col shrink-0 items-center w-full md:w-auto justify-around md:justify-start px-2 md:px-0 h-full overflow-x-auto no-scrollbar">
+                <nav className="flex flex-row md:flex-col shrink-0 items-center w-full md:w-auto justify-around md:justify-start px-2 md:px-0 h-full overflow-x-auto no-scrollbar md:gap-2">
                     {activeTab === 'appearance' && !isMobilePreview ? (
                         SIDEBAR_ITEMS.map((item) => (
                             <NavItem
@@ -798,7 +798,7 @@ function NavItem({ icon, active, onClick, label, className = "" }) {
     return (
         <button
             onClick={onClick}
-            className={`group relative flex-1 flex flex-col items-center justify-center gap-1 transition-all duration-300 h-full ${active ? 'text-purple-500' : 'text-white/40 hover:text-white/60'} ${className}`}
+            className={`group relative flex-1 md:flex-none flex flex-col items-center justify-center gap-1 transition-all duration-300 h-full md:h-auto md:py-4 md:w-full ${active ? 'text-purple-500' : 'text-white/40 hover:text-white/60'} ${className}`}
         >
             <div className={`px-6 py-2 rounded-2xl transition-all duration-500 relative flex items-center justify-center
                 ${active && 'border border-purple-500/50 bg-purple-500/5 shadow-[0_0_20px_rgba(168,85,247,0.15)]'}
