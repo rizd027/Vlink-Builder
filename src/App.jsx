@@ -629,7 +629,7 @@ function App() {
 
             {/* Mobile/Tablet Header */}
             <header
-                className="md:hidden fixed top-0 left-0 right-0 h-16 px-6 bg-[#080808]/80 backdrop-blur-xl border-b border-white/5 flex items-center justify-between z-[60] shadow-[0_4px_30px_rgba(130,40,217,0.1)]"
+                className="md:hidden fixed top-0 left-0 right-0 h-16 px-6 bg-[#080808]/80 backdrop-blur-xl border-b border-white/5 flex items-center justify-between z-60 shadow-[0_4px_30px_rgba(130,40,217,0.1)]"
                 style={{
                     boxShadow: '0 1px 0 0 rgba(130,40,217,0.3)',
                 }}
