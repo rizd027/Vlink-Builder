@@ -568,6 +568,8 @@ function App() {
             footerAnimation: 'none',
             socialAnimation: 'none',
             pageAnimation: 'none',
+            titleLogo: null,
+            titleLogoSize: 100,
         };
         if (saved) {
             const parsed = JSON.parse(saved);
