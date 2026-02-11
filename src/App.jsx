@@ -1749,7 +1749,6 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
     const [buttonDesignSubTab, setButtonDesignSubTab] = useState('body');
     const [footerDesignSubTab, setFooterDesignSubTab] = useState('body');
     const [profileImageModalOpen, setProfileImageModalOpen] = useState(false);
-    const [isSubSidebarCollapsed, setIsSubSidebarCollapsed] = useState(false);
 
 
 
