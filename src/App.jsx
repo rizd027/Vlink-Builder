@@ -444,6 +444,7 @@ function App() {
             bio: 'Your Bio',
             avatar: null, // Default to null for icon
             headerLayout: 'classic',
+            heroModel: 'joined',
             headerSize: 'small',
             showAvatar: true,
             showTitle: true,
