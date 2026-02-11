@@ -33,6 +33,133 @@ const DEVICE_CONFIG = {
     }
 };
 
+const ProfileAvatar = ({ profile, theme, className = '' }) => {
+    const size = typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100));
+    const finalSize = 96 * (size / 100);
+
+    return (
+        <>
+            {profile.avatar ? (
+                <img
+                    src={profile.avatar}
+                    alt="Avatar"
+                    loading="lazy"
+                    decoding="async"
+                    width="112"
+                    height="112"
+                    style={{ width: `${finalSize}px`, height: `${finalSize}px` }}
+                    className={`rounded-full border-2 border-white/10 shadow-md relative z-10 object-cover ${className}`}
+                    onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                    }}
+                />
+            ) : null}
+            <div
+                style={{ width: `${finalSize}px`, height: `${finalSize}px` }}
+                className={`rounded-full border-2 border-white/10 shadow-md relative z-10 flex items-center justify-center bg-white/5 ${profile.avatar ? 'hidden' : 'flex'} ${className}`}>
+                <User size={40 * (size / 100)} className="text-white/20" />
+            </div>
+        </>
+    );
+};
+
+const ProfileTitle = ({ profile, theme }) => {
+    if (!profile.showTitle) return null;
+    const size = typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100));
+
+    return (
+        <div className="w-full flex justify-center">
+            {theme.titleStyle === 'text' ? (
+                <h2
+                    className={`${theme.titleAnimation && theme.titleAnimation !== 'none' ? (theme.titleAnimation === 'sweep' ? 'animate-sweep-text' : `animate-${theme.titleAnimation}`) : ''}`}
+                    style={{
+                        fontFamily: theme.titleFont || 'Inter',
+                        fontWeight: theme.titleWeight || 700,
+                        textTransform: theme.titleTransform || 'none',
+                        fontSize: theme.titleSize ? `${theme.titleSize}px` : `${1.25 * (size / 100)}rem`,
+                        ...(theme.titleColorType === 'gradient' ? {
+                            backgroundImage: `linear-gradient(135deg, ${theme.titleColorGradient1 || '#8228d9'}, ${theme.titleColorGradient2 || '#6366f1'})`,
+                            WebkitBackgroundClip: 'text',
+                            backgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            color: 'transparent'
+                        } : theme.titleColorType === 'pattern' ? {
+                            backgroundImage: theme.titleColorPattern === 'dots'
+                                ? `radial-gradient(circle, ${theme.titleColor || '#ffffff'} 1px, transparent 1px)`
+                                : theme.titleColorPattern === 'stripes'
+                                    ? `linear-gradient(45deg, ${theme.titleColor || '#ffffff'} 25%, transparent 25%, transparent 50%, ${theme.titleColor || '#ffffff'} 50%, ${theme.titleColor || '#ffffff'} 75%, transparent 75%, transparent)`
+                                    : theme.titleColorPattern === 'custom' && theme.titleColorCustomPattern
+                                        ? `url(${theme.titleColorCustomPattern})`
+                                        : 'none',
+                            backgroundSize: theme.titleColorPattern === 'dots' ? '6px 6px' : theme.titleColorPattern === 'stripes' ? '10px 10px' : 'cover',
+                            WebkitBackgroundClip: 'text',
+                            backgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            color: 'transparent'
+                        } : {
+                            color: theme.titleColor || '#ffffff'
+                        })
+                    }}
+                >
+                    {profile.username}
+                </h2>
+            ) : (
+                <div
+                    style={{
+                        width: `${110 * (size / 100)}px`,
+                        height: `${36 * (size / 100)}px`
+                    }}
+                    className={`bg-white/20 rounded-lg p-2 flex items-center justify-center`}
+                >
+                    <span className="text-[10px] font-black uppercase tracking-widest opacity-40 italic">Your Logo</span>
+                </div>
+            )}
+        </div>
+    );
+};
+
+const ProfileBio = ({ profile, theme }) => {
+    if (!profile.showBio) return null;
+    const size = typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'large' ? 120 : (profile.headerSize === 'small' ? 80 : 100));
+
+    return (
+        <p
+            className={`leading-relaxed opacity-80 ${theme.pageAnimation && theme.pageAnimation !== 'none' ? (theme.pageAnimation === 'sweep' ? 'animate-sweep-text' : `animate-${theme.pageAnimation}`) : ''}`}
+            style={{
+                fontFamily: theme.pageFont || 'Inter',
+                fontWeight: theme.pageWeight || 400,
+                textTransform: theme.pageTransform || 'none',
+                fontSize: theme.pageSize ? `${theme.pageSize}px` : `${0.875 * (size / 100)}rem`,
+                ...(theme.pageColorType === 'gradient' ? {
+                    backgroundImage: `linear-gradient(135deg, ${theme.pageColorGradient1 || '#8228d9'}, ${theme.pageColorGradient2 || '#6366f1'})`,
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    color: 'transparent'
+                } : theme.pageColorType === 'pattern' ? {
+                    backgroundImage: theme.pageColorPattern === 'dots'
+                        ? `radial-gradient(circle, ${theme.pageColor || theme.bioColor || 'rgba(255,255,255,0.7)'} 1px, transparent 1px)`
+                        : theme.pageColorPattern === 'stripes'
+                            ? `linear-gradient(45deg, ${theme.pageColor || theme.bioColor || 'rgba(255,255,255,0.7)'} 25%, transparent 25%, transparent 50%, ${theme.pageColor || theme.bioColor || 'rgba(255,255,255,0.7)'} 50%, ${theme.pageColor || theme.bioColor || 'rgba(255,255,255,0.7)'} 75%, transparent 75%, transparent)`
+                            : theme.pageColorPattern === 'custom' && theme.pageColorCustomPattern
+                                ? `url(${theme.pageColorCustomPattern})`
+                                : 'none',
+                    backgroundSize: theme.pageColorPattern === 'dots' ? '6px 6px' : theme.pageColorPattern === 'stripes' ? '10px 10px' : 'cover',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    color: 'transparent'
+                } : {
+                    color: theme.pageColor || theme.bioColor || 'rgba(255,255,255,0.7)'
+                })
+            }}
+        >
+            {profile.bio}
+        </p>
+    );
+};
+
 const PreviewSection = memo(({ theme, profile, links, socials, layoutType, previewDevice = 'mobile', setPreviewDevice, isEditorHidden, isMobileView }) => {
     const config = DEVICE_CONFIG[previewDevice] || DEVICE_CONFIG.mobile;
 
