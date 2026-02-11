@@ -1837,2351 +1837,260 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                             <div className="absolute inset-0 bg-white/10 rounded-[2rem] opacity-0 group-hover:opacity-100" />
                                         </div>
                                     </div>
-                                    <div className="flex flex-col gap-3">
-                                        <div className="flex items-center justify-between w-full px-1">
-                                            <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Profile Avatar</span>
+                                </div>
+
+                                <div className="flex flex-col gap-4 p-6 rounded-[2rem] bg-white/3 border border-white/5">
+                                    <div className="flex items-center gap-2 px-1">
+                                        <div className="w-6 h-6 rounded-lg bg-purple-500/10 flex items-center justify-center border border-purple-500/10">
+                                            <User size={12} className="text-purple-400" />
                                         </div>
-                                        <div className="flex flex-wrap items-center gap-2">
-                                            <button
-                                                onClick={() => setProfileImageModalOpen(true)}
-                                                className="px-6 py-2.5 rounded-full border border-white/10 hover:bg-white/5 text-[11px] font-bold flex items-center gap-2 text-white transition-all hover:scale-105 shadow-xl shadow-white/5"
-                                            >
-                                                <Edit3 size={12} />
-                                                Change Image
-                                            </button>
-                                            <button
-                                                onClick={() => setProfile({ ...profile, showAvatar: !profile.showAvatar })}
-                                                className={`px-4 py-2.5 rounded-full border border-white/10 hover:bg-white/5 text-[11px] font-bold flex items-center gap-2 transition-all hover:scale-105 shadow-xl shadow-white/5 ${profile.showAvatar ? 'text-white' : 'text-white/40'}`}
-                                            >
-                                                {profile.showAvatar ? <EyeOff size={12} /> : <Eye size={12} />}
-                                                {profile.showAvatar ? 'Hide' : 'Show'}
-                                            </button>
-                                        </div>
+                                        <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Profile image layout</span>
+                                    </div>
+                                    <div className="flex p-1 bg-black/20 rounded-xl border border-white/5">
+                                        {[
+                                            { id: 'classic', label: 'Classic', icon: User },
+                                            { id: 'hero', label: 'Hero', icon: LayoutGrid }
+                                        ].map(option => {
+                                            const Icon = option.icon;
+                                            return (
+                                                <button
+                                                    key={option.id}
+                                                    onClick={() => setProfile({ ...profile, headerLayout: option.id })}
+                                                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${profile.headerLayout === option.id ? 'bg-purple-500/20 border-purple-500/40 text-white shadow-xl shadow-purple-500/5' : 'bg-transparent border-transparent text-white/40 hover:text-white/60'}`}
+                                                >
+                                                    <Icon size={14} />
+                                                    {option.label}
+                                                </button>
+                                            );
+                                        })}
                                     </div>
                                 </div>
 
-                            </div>
-                                </div>
-
-                    {profile.headerLayout === 'hero' && (
-                        <div className="flex-none flex flex-col gap-4 p-6 rounded-[2rem] bg-white/3 border border-white/5">
-                            <div className="flex items-center gap-2 px-1">
-                                <div className="w-6 h-6 rounded-lg bg-pink-500/10 flex items-center justify-center border border-pink-500/10">
-                                    <Zap size={12} className="text-pink-400" />
-                                </div>
-                                <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Hero Model Style</span>
-                            </div>
-                            <div className="grid grid-cols-2 gap-2">
-                                {[
-                                    { id: 'joined', label: 'Joined', icon: Layers },
-                                    { id: 'float', label: 'Float', icon: MousePointer2 },
-                                    { id: 'minimal', label: 'Minimal', icon: Square },
-                                    { id: 'glass', label: 'Glass', icon: Box }
-                                ].map(option => {
-                                    const Icon = option.icon;
-                                    return (
-                                        <button
-                                            key={option.id}
-                                            onClick={() => setProfile({ ...profile, heroModel: option.id })}
-                                            className={`flex items-center justify-center gap-2 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${profile.heroModel === option.id ? 'bg-pink-500/20 border-pink-500/40 text-white shadow-xl shadow-pink-500/5' : 'bg-black/20 border-transparent text-white/40 hover:text-white/60'}`}
-                                        >
-                                            <Icon size={14} />
-                                            {option.label}
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Title Section */}
-                    <div className="flex flex-col gap-2 px-2">
-                        <div className="flex items-center justify-between px-1">
-                            <label htmlFor="editor-profile-title" className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Display Title</label>
-                            <button
-                                onClick={() => setProfile({ ...profile, showTitle: !profile.showTitle })}
-                                className={`px-4 py-2.5 rounded-full border border-white/10 hover:bg-white/5 text-[11px] font-bold flex items-center gap-2 transition-all hover:scale-105 shadow-xl shadow-white/5 ${profile.showTitle !== false ? 'text-white' : 'text-white/40'}`}
-                            >
-                                {profile.showTitle !== false ? <EyeOff size={12} /> : <Eye size={12} />}
-                                {profile.showTitle !== false ? 'Hide' : 'Show'}
-                            </button>
-                        </div>
-                        <input
-                            id="editor-profile-title"
-                            name="editor-profile-title"
-                            value={profile.username}
-                            onChange={(e) => setProfile({ ...profile, username: e.target.value })}
-                            className="w-full bg-white/3 border border-white/5 rounded-xl px-5 py-3 text-sm font-bold text-white outline-none focus:border-purple-500/20 focus:bg-white/5 transition-all placeholder:text-white/10"
-                            placeholder="@username"
-                        />
-                    </div>
-
-                    {/* Title Style Section */}
-                    <div className="flex flex-col gap-4 p-6 rounded-[2rem] bg-white/3 border border-white/5">
-                        <div className="flex items-center gap-2 px-1">
-                            <div className="w-6 h-6 rounded-lg bg-blue-500/10 flex items-center justify-center border border-blue-500/10">
-                                <Layers size={12} className="text-blue-400" />
-                            </div>
-                            <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Title style</span>
-                        </div>
-                        <div className="flex p-1 bg-black/20 rounded-xl border border-white/5">
-                            {[
-                                { id: 'text', label: 'Text', icon: Type },
-                                { id: 'logo', label: 'Logo', icon: Image }
-                            ].map(option => {
-                                const Icon = option.icon;
-                                return (
-                                    <button
-                                        key={option.id}
-                                        onClick={() => setTheme({ ...theme, titleStyle: option.id })}
-                                        className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${theme.titleStyle === option.id ? 'bg-blue-500/20 border-blue-500/40 text-white shadow-xl shadow-blue-500/5' : 'bg-transparent border-transparent text-white/40 hover:text-white/60'}`}
-                                    >
-                                        <Icon size={14} />
-                                        {option.label}
-                                    </button>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    {/* Size Section */}
-                    <div className="flex flex-col gap-4 p-6 rounded-[2rem] bg-white/3 border border-white/5">
-                        <div className="flex items-center justify-between px-1">
-                            <div className="flex items-center gap-2">
-                                <div className="w-6 h-6 rounded-lg bg-orange-500/10 flex items-center justify-center border border-orange-500/10">
-                                    <LayoutGrid size={12} className="text-orange-400" />
-                                </div>
-                                <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Header Size</span>
-                            </div>
-                            <div className="text-[10px] font-bold text-white/40 bg-white/5 px-2 py-1 rounded-md border border-white/5">
-                                {typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'small' ? 80 : 100)}%
-                            </div>
-                        </div>
-
-                        <div className="flex items-center gap-4 px-1">
-                            <label htmlFor="header-size-range" className="sr-only">Header Size Range</label>
-                            <span className="text-[10px] font-bold text-white/30">20%</span>
-                            <input
-                                id="header-size-range"
-                                name="header-size-range"
-                                type="range"
-                                min="20"
-                                max="150"
-                                step="5"
-                                value={typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'small' ? 80 : (profile.headerSize === 'large' ? 120 : 100))}
-                                onChange={(e) => setProfile({ ...profile, headerSize: parseInt(e.target.value) })}
-                                className="flex-1 h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-orange-500 hover:accent-orange-400 transition-all"
-                            />
-                            <span className="text-[10px] font-bold text-white/30">150%</span>
-                        </div>
-
-                        <div className="flex gap-2">
-                            {[80, 100, 120].map(size => (
-                                <button
-                                    key={size}
-                                    onClick={() => setProfile({ ...profile, headerSize: size })}
-                                    className={`px-3 py-1.5 rounded-lg text-[10px] font-bold border transition-all ${(typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'small' ? 80 : (profile.headerSize === 'large' ? 120 : 100))) === size
-                                        ? 'bg-orange-500/20 border-orange-500/40 text-orange-400'
-                                        : 'bg-white/5 border-white/5 text-white/40 hover:bg-white/10'
-                                        }`}
-                                >
-                                    {size === 80 ? 'Small' : size === 100 ? 'Normal' : 'Large'}
-                                </button>
-                            ))}
-                            <div className="flex-1"></div>
-                            <label htmlFor="header-size-number" className="sr-only">Header Size Number</label>
-                            <input
-                                id="header-size-number"
-                                name="header-size-number"
-                                type="number"
-                                min="20"
-                                max="150"
-                                value={typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'small' ? 80 : (profile.headerSize === 'large' ? 120 : 100))}
-                                onChange={(e) => {
-                                    let val = parseInt(e.target.value);
-                                    if (val > 150) val = 150;
-                                    if (val < 20) val = 20;
-                                    setProfile({ ...profile, headerSize: val });
-                                }}
-                                className="w-16 bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-center text-xs font-bold text-white outline-none focus:border-orange-500/50 transition-all"
-                            />
-                        </div>
-                    </div>
-
-                    {/* Animation Section */}
-                    <div className="flex flex-col gap-4 p-6 rounded-[2rem] bg-white/3 border border-white/5">
-                        <div className="flex items-center gap-3 px-1">
-                            <div className="w-8 h-8 rounded-lg bg-pink-500/10 border border-pink-500/20 flex items-center justify-center">
-                                <Wand2 size={16} className="text-pink-400" />
-                            </div>
-                            <div className="flex flex-col">
-                                <span className="text-sm font-bold text-white">Profile Animation</span>
-                                <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Visual Effects</span>
-                            </div>
-                        </div>
-                        <div className="p-1 bg-black/20 rounded-xl border border-white/5">
-                            <SelectField
-                                id="header-animation-select"
-                                label=""
-                                value={theme.headerAnimation || 'none'}
-                                onChange={(e) => setTheme({ ...theme, headerAnimation: e.target.value })}
-                                className="bg-transparent border-none text-[11px] font-bold"
-                            >
-                                {ANIMATION_OPTIONS.map(opt => (
-                                    <option key={opt.id} value={opt.id} className="bg-[#121212]">{opt.label}</option>
-                                ))}
-                            </SelectField>
-                        </div>
-                    </div>
-
-                    {/* Typography Section */}
-                    <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5">
-                        <div className="flex items-center gap-3 px-1">
-                            <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                                <Type size={16} className="text-blue-400" />
-                            </div>
-                            <div className="flex flex-col">
-                                <span className="text-sm font-bold text-white">Typography</span>
-                                <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Font & Style</span>
-                            </div>
-                        </div>
-
-                        {/* Profile Title Settings */}
-                        <div className="flex flex-col gap-6 pt-4 border-t border-white/5">
-                            <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Title Text Appearance</span>
-
-                            <div className="grid grid-cols-1 gap-4">
-                                <SelectField
-                                    id="title-font-select"
-                                    name="title-font"
-                                    label="Font Family"
-                                    value={theme.titleFont || 'Inter'}
-                                    onChange={(e) => setTheme({ ...theme, titleFont: e.target.value })}
-                                >
-                                    {FONTS.map(font => (
-                                        <option key={font} value={font} className="bg-[#121212]">{font}</option>
-                                    ))}
-                                </SelectField>
-
-                                <div className="grid grid-cols-2 gap-3">
-                                    <SelectField
-                                        id="title-weight-select"
-                                        name="title-weight"
-                                        label="Weight"
-                                        value={theme.titleWeight || 700}
-                                        onChange={(e) => setTheme({ ...theme, titleWeight: parseInt(e.target.value) })}
-                                    >
-                                        <option value="300" className="bg-[#121212]">Light</option>
-                                        <option value="400" className="bg-[#121212]">Regular</option>
-                                        <option value="500" className="bg-[#121212]">Medium</option>
-                                        <option value="600" className="bg-[#121212]">Semibold</option>
-                                        <option value="700" className="bg-[#121212]">Bold</option>
-                                        <option value="800" className="bg-[#121212]">Extra Bold</option>
-                                        <option value="900" className="bg-[#121212]">Black</option>
-                                    </SelectField>
-                                    <SelectField
-                                        id="title-transform-select"
-                                        name="title-transform"
-                                        label="Transform"
-                                        value={theme.titleTransform || 'none'}
-                                        onChange={(e) => setTheme({ ...theme, titleTransform: e.target.value })}
-                                    >
-                                        <option value="none" className="bg-[#121212]">None</option>
-                                        <option value="uppercase" className="bg-[#121212]">Uppercase</option>
-                                        <option value="lowercase" className="bg-[#121212]">Lowercase</option>
-                                        <option value="capitalize" className="bg-[#121212]">Capitalize</option>
-                                    </SelectField>
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col gap-3 px-1">
-                                <div className="flex items-center justify-between">
-                                    <label htmlFor="title-size-slider" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Font Size</label>
-                                    <span className="text-[10px] font-bold text-white">{theme.titleSize || 20}px</span>
-                                </div>
-                                <input
-                                    id="title-size-slider"
-                                    name="title-size"
-                                    type="range"
-                                    min="12"
-                                    max="64"
-                                    value={theme.titleSize || 20}
-                                    onChange={(e) => setTheme({ ...theme, titleSize: parseInt(e.target.value) })}
-                                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white"
-                                />
-                            </div>
-
-                            {/* Title Animation */}
-                            <div className="flex flex-col gap-2">
-                                <SelectField
-                                    id="title-animation-select"
-                                    name="title-animation"
-                                    label="Title Animation"
-                                    value={theme.titleAnimation || 'none'}
-                                    onChange={(e) => setTheme({ ...theme, titleAnimation: e.target.value })}
-                                >
-                                    {ANIMATION_OPTIONS.map(opt => (
-                                        <option key={opt.id} value={opt.id} className="bg-[#121212]">{opt.label}</option>
-                                    ))}
-                                </SelectField>
-                            </div>
-
-
-                            {/* Title Color Mode Selector */}
-                            <div className="flex flex-col gap-4">
-                                <div className="flex items-center justify-between px-1">
-                                    <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Title Color Mode</label>
-                                </div>
-                                <ModeSelector
-                                    mode={theme.titleColorType || 'solid'}
-                                    onChange={(mode) => setTheme({ ...theme, titleColorType: mode })}
-                                    activeColor="purple"
-                                />
-                            </div>
-
-                            {/* Title Color Controls */}
-                            {(!theme.titleColorType || theme.titleColorType === 'solid') && (
-                                <ColorPickerRow
-                                    label="Title Color"
-                                    value={theme.titleColor || '#ffffff'}
-                                    onChange={(val) => setTheme({ ...theme, titleColor: val })}
-                                    colorId="title-color"
-                                    activeColor="purple"
-                                />
-                            )}
-
-                            {theme.titleColorType === 'gradient' && (
-                                <div className="flex flex-col gap-4">
-                                    <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Gradient Colors</span>
-                                    <div className="grid grid-cols-2 gap-3">
-                                        <div className="flex items-center gap-2 p-3 rounded-xl bg-black/20 border border-white/5">
-                                            <input
-                                                type="color"
-                                                id="title-color-gradient-1"
-                                                name="title-color-gradient-1"
-                                                value={theme.titleColorGradient1 || '#8228d9'}
-                                                onChange={(e) => setTheme({ ...theme, titleColorGradient1: e.target.value })}
-                                                className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer border border-white/10"
-                                            />
-                                            <span className="text-[10px] font-mono font-bold text-white uppercase">{theme.titleColorGradient1 || '#8228d9'}</span>
-                                        </div>
-                                        <div className="flex items-center gap-2 p-3 rounded-xl bg-black/20 border border-white/5">
-                                            <input
-                                                type="color"
-                                                id="title-color-gradient-2"
-                                                name="title-color-gradient-2"
-                                                value={theme.titleColorGradient2 || '#6366f1'}
-                                                onChange={(e) => setTheme({ ...theme, titleColorGradient2: e.target.value })}
-                                                className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer border border-white/10"
-                                            />
-                                            <span className="text-[10px] font-mono font-bold text-white uppercase">{theme.titleColorGradient2 || '#6366f1'}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-
-                            {theme.titleColorType === 'pattern' && (
-                                <div className="flex flex-col gap-4">
-                                    <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Pattern Style</span>
-                                    <div className="grid grid-cols-3 gap-2">
-                                        {['dots', 'stripes', 'custom'].map((p) => (
-                                            <button
-                                                key={p}
-                                                disabled={p === 'custom' && !theme.titleColorCustomPattern}
-                                                onClick={() => setTheme({ ...theme, titleColorPattern: p })}
-                                                className={`py-2.5 px-2 rounded-xl text-[9px] font-bold uppercase tracking-widest transition-all ${theme.titleColorPattern === p
-                                                    ? 'bg-purple-500/20 text-purple-400 border border-purple-500/20'
-                                                    : 'bg-white/5 text-white/40 hover:bg-white/10 hover:text-white border border-white/5'
-                                                    } ${p === 'custom' && !theme.titleColorCustomPattern ? 'opacity-20 cursor-not-allowed' : ''}`}
-                                            >
-                                                {p}
-                                            </button>
-                                        ))}
-                                    </div>
-                                    <ColorPickerRow
-                                        label="Pattern Color"
-                                        value={theme.titleColor || '#ffffff'}
-                                        onChange={(val) => setTheme({ ...theme, titleColor: val })}
-                                        colorId="title-pattern-color"
-                                        activeColor="purple"
-                                    />
-                                    {theme.titleColorPattern === 'custom' && (
-                                        <div className="flex items-center gap-2">
-                                            <input
-                                                type="file"
-                                                id="title-pattern-upload"
-                                                name="title-pattern-upload"
-                                                className="hidden"
-                                                accept="image/*"
-                                                onChange={(e) => {
-                                                    const file = e.target.files[0];
-                                                    if (file) {
-                                                        const reader = new FileReader();
-                                                        reader.onloadend = () => {
-                                                            setTheme({ ...theme, titleColorCustomPattern: reader.result, titleColorPattern: 'custom' });
-                                                        };
-                                                        reader.readAsDataURL(file);
-                                                    }
-                                                }}
-                                            />
-                                            <label
-                                                htmlFor="title-pattern-upload"
-                                                className="w-full text-center px-4 py-3 rounded-xl bg-white/5 border border-dashed border-white/20 hover:border-purple-500/40 text-[10px] font-bold text-white/40 uppercase cursor-pointer transition-all"
-                                            >
-                                                Upload Pattern +
-                                            </label>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Bio Settings */}
-                        {/* Bio Input Section */}
-                        <div className="flex flex-col gap-2 px-2 pb-6">
-                            <div className="flex items-center justify-between px-1">
-                                <label htmlFor="editor-profile-bio" className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Bio Description</label>
-                                <button
-                                    onClick={() => setProfile({ ...profile, showBio: !profile.showBio })}
-                                    className={`px-4 py-2.5 rounded-full border border-white/10 hover:bg-white/5 text-[11px] font-bold flex items-center gap-2 transition-all hover:scale-105 shadow-xl shadow-white/5 ${profile.showBio !== false ? 'text-white' : 'text-white/40'}`}
-                                >
-                                    {profile.showBio !== false ? <EyeOff size={12} /> : <Eye size={12} />}
-                                    {profile.showBio !== false ? 'Hide' : 'Show'}
-                                </button>
-                            </div>
-                            <textarea
-                                id="editor-profile-bio"
-                                name="editor-profile-bio"
-                                value={profile.bio}
-                                onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
-                                rows={2}
-                                className="w-full bg-white/3 border border-white/5 rounded-xl px-5 py-3 text-sm font-medium text-white outline-none focus:border-purple-500/20 focus:bg-white/5 transition-all placeholder:text-white/10 resize-none"
-                                placeholder="Tell us about yourself..."
-                            />
-                        </div>
-
-                        <div className="flex flex-col gap-6 pt-6 border-t border-white/5">
-                            <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Bio Text Appearance</span>
-
-                            <div className="flex flex-col gap-2">
-                                <SelectField
-                                    id="header-layout-select"
-                                    name="header-layout"
-                                    label="Header Layout"
-                                    value={profile.headerLayout || 'classic'}
-                                    onChange={(e) => setProfile({ ...profile, headerLayout: e.target.value })}
-                                >
-                                    <option value="classic" className="bg-[#121212]">Classic</option>
-                                    <option value="modern" className="bg-[#121212]">Modern</option>
-                                    <option value="minimal" className="bg-[#121212]">Minimal</option>
-                                </SelectField>
-                            </div>
-
-                            <div className="flex flex-col gap-2">
-                                <SelectField
-                                    id="header-size-select"
-                                    name="header-size"
-                                    label="Header Size"
-                                    value={profile.headerSize || 'small'}
-                                    onChange={(e) => setProfile({ ...profile, headerSize: e.target.value })}
-                                >
-                                    <option value="small" className="bg-[#121212]">Small</option>
-                                    <option value="medium" className="bg-[#121212]">Medium</option>
-                                    <option value="large" className="bg-[#121212]">Large</option>
-                                </SelectField>
-                            </div>
-                            <div className="grid grid-cols-1 gap-4">
-                                <SelectField
-                                    id="bio-font-select"
-                                    name="bio-font"
-                                    label="Font Family"
-                                    value={theme.pageFont || 'Inter'}
-                                    onChange={(e) => setTheme({ ...theme, pageFont: e.target.value })}
-                                >
-                                    {FONTS.map(font => (
-                                        <option key={font} value={font} className="bg-[#121212]">{font}</option>
-                                    ))}
-                                </SelectField>
-
-                                <div className="grid grid-cols-2 gap-3">
-                                    <SelectField
-                                        id="bio-weight-select"
-                                        name="bio-weight"
-                                        label="Weight"
-                                        value={theme.pageWeight || 400}
-                                        onChange={(e) => setTheme({ ...theme, pageWeight: parseInt(e.target.value) })}
-                                    >
-                                        <option value="300" className="bg-[#121212]">Light</option>
-                                        <option value="400" className="bg-[#121212]">Regular</option>
-                                        <option value="500" className="bg-[#121212]">Medium</option>
-                                        <option value="600" className="bg-[#121212]">Semibold</option>
-                                        <option value="700" className="bg-[#121212]">Bold</option>
-                                    </SelectField>
-                                    <SelectField
-                                        id="bio-transform-select"
-                                        name="bio-transform"
-                                        label="Transform"
-                                        value={theme.pageTransform || 'none'}
-                                        onChange={(e) => setTheme({ ...theme, pageTransform: e.target.value })}
-                                    >
-                                        <option value="none" className="bg-[#121212]">None</option>
-                                        <option value="uppercase" className="bg-[#121212]">Uppercase</option>
-                                        <option value="lowercase" className="bg-[#121212]">Lowercase</option>
-                                        <option value="capitalize" className="bg-[#121212]">Capitalize</option>
-                                    </SelectField>
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col gap-3 px-1">
-                                <div className="flex items-center justify-between">
-                                    <label htmlFor="bio-size-slider" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Bio Size</label>
-                                    <span className="text-[10px] font-bold text-white">{theme.pageSize || 14}px</span>
-                                </div>
-                                <input
-                                    id="bio-size-slider"
-                                    name="bio-size"
-                                    type="range"
-                                    min="10"
-                                    max="32"
-                                    value={theme.pageSize || 14}
-                                    onChange={(e) => setTheme({ ...theme, pageSize: parseInt(e.target.value) })}
-                                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white"
-                                />
-                            </div>
-
-                            <div className="flex flex-col gap-3">
-                                <div className="flex items-center justify-between px-1">
-                                    <label htmlFor="header-spacing-input" className="text-[10px] font-black text-white/20 uppercase tracking-widest">Header Spacing</label>
-                                    <span className="text-[10px] font-bold text-white">{profile.headerSpacing || 24}px</span>
-                                </div>
-                                <input
-                                    id="header-spacing-input"
-                                    name="header-spacing"
-                                    type="range"
-                                    min="0"
-                                    max="100"
-                                    value={profile.headerSpacing || 24}
-                                    onChange={(e) => setProfile({ ...profile, headerSpacing: parseInt(e.target.value) })}
-                                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white"
-                                />
-                            </div>
-
-                            {/* Bio Animation */}
-                            <div className="flex flex-col gap-2">
-                                <SelectField
-                                    id="bio-animation-select"
-                                    name="bio-animation"
-                                    label="Bio Animation"
-                                    value={theme.pageAnimation || 'none'}
-                                    onChange={(e) => setTheme({ ...theme, pageAnimation: e.target.value })}
-                                >
-                                    {ANIMATION_OPTIONS.map(opt => (
-                                        <option key={opt.id} value={opt.id} className="bg-[#121212]">{opt.label}</option>
-                                    ))}
-                                </SelectField>
-                            </div>
-
-
-                            {/* Bio Color Mode Selector */}
-                            <div className="flex flex-col gap-4">
-                                <div className="flex items-center justify-between px-1">
-                                    <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Bio Color Mode</span>
-                                </div>
-                                <ModeSelector
-                                    mode={theme.pageColorType || 'solid'}
-                                    onChange={(mode) => setTheme({ ...theme, pageColorType: mode })}
-                                    activeColor="purple"
-                                />
-                            </div>
-
-                            {/* Bio Color Controls */}
-                            {(!theme.pageColorType || theme.pageColorType === 'solid') && (
-                                <ColorPickerRow
-                                    label="Bio Color"
-                                    value={theme.pageColor || '#ffffff'}
-                                    onChange={(val) => setTheme({ ...theme, pageColor: val })}
-                                    colorId="bio-color"
-                                    activeColor="purple"
-                                />
-                            )}
-
-                            {theme.pageColorType === 'gradient' && (
-                                <div className="flex flex-col gap-4">
-                                    <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Gradient Colors</span>
-                                    <div className="grid grid-cols-2 gap-3">
-                                        <div className="flex items-center gap-2 p-3 rounded-xl bg-black/20 border border-white/5">
-                                            <input
-                                                type="color"
-                                                id="page-color-gradient-1"
-                                                name="page-color-gradient-1"
-                                                value={theme.pageColorGradient1 || '#8228d9'}
-                                                onChange={(e) => setTheme({ ...theme, pageColorGradient1: e.target.value })}
-                                                className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer border border-white/10"
-                                            />
-                                            <span className="text-[10px] font-mono font-bold text-white uppercase">{theme.pageColorGradient1 || '#8228d9'}</span>
-                                        </div>
-                                        <div className="flex items-center gap-2 p-3 rounded-xl bg-black/20 border border-white/5">
-                                            <input
-                                                type="color"
-                                                id="page-color-gradient-2"
-                                                name="page-color-gradient-2"
-                                                value={theme.pageColorGradient2 || '#6366f1'}
-                                                onChange={(e) => setTheme({ ...theme, pageColorGradient2: e.target.value })}
-                                                className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer border border-white/10"
-                                            />
-                                            <span className="text-[10px] font-mono font-bold text-white uppercase">{theme.pageColorGradient2 || '#6366f1'}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-
-                            {theme.pageColorType === 'pattern' && (
-                                <div className="flex flex-col gap-4">
-                                    <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Pattern Style</span>
-                                    <div className="grid grid-cols-3 gap-2">
-                                        {['dots', 'stripes', 'custom'].map((p) => (
-                                            <button
-                                                key={p}
-                                                disabled={p === 'custom' && !theme.pageColorCustomPattern}
-                                                onClick={() => setTheme({ ...theme, pageColorPattern: p })}
-                                                className={`py-2.5 px-2 rounded-xl text-[9px] font-bold uppercase tracking-widest transition-all ${theme.pageColorPattern === p
-                                                    ? 'bg-purple-500/20 text-purple-400 border border-purple-500/20'
-                                                    : 'bg-white/5 text-white/40 hover:bg-white/10 hover:text-white border border-white/5'
-                                                    } ${p === 'custom' && !theme.pageColorCustomPattern ? 'opacity-20 cursor-not-allowed' : ''}`}
-                                            >
-                                                {p}
-                                            </button>
-                                        ))}
-                                    </div>
-                                    <ColorPickerRow
-                                        label="Pattern Color"
-                                        value={theme.pageColor || '#ffffff'}
-                                        onChange={(val) => setTheme({ ...theme, pageColor: val })}
-                                        colorId="bio-pattern-color"
-                                        activeColor="purple"
-                                    />
-                                    {theme.pageColorPattern === 'custom' && (
-                                        <div className="flex items-center gap-2">
-                                            <input
-                                                type="file"
-                                                id="bio-pattern-upload"
-                                                name="bio-pattern-upload"
-                                                className="hidden"
-                                                accept="image/*"
-                                                onChange={(e) => {
-                                                    const file = e.target.files[0];
-                                                    if (file) {
-                                                        const reader = new FileReader();
-                                                        reader.onloadend = () => {
-                                                            setTheme({ ...theme, pageColorCustomPattern: reader.result, pageColorPattern: 'custom' });
-                                                        };
-                                                        reader.readAsDataURL(file);
-                                                    }
-                                                }}
-                                            />
-                                            <label
-                                                htmlFor="bio-pattern-upload"
-                                                className="w-full text-center px-4 py-3 rounded-xl bg-white/5 border border-dashed border-white/20 hover:border-purple-500/40 text-[10px] font-bold text-white/40 uppercase cursor-pointer transition-all"
-                                            >
-                                                Upload Pattern +
-                                            </label>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-            </div>
-                        )}
-
-            {subTab === 'theme' && (
-                <div className="flex flex-col gap-10">
-                    <div className="flex items-center gap-4 px-1">
-                        <div className="w-12 h-12 rounded-2xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center shadow-xl shadow-orange-500/5">
-                            <Palette size={24} className="text-orange-400" />
-                        </div>
-                        <div className="flex flex-col">
-                            <h2 className="text-xl font-bold text-white tracking-tight">Themes</h2>
-                            <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em]">Select a visual preset</p>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
-                        {THEMES.map(t => (
-                            <button
-                                key={t.id}
-                                onClick={() => setTheme({ ...theme, ...t, pageColor: t.color, titleColor: t.color })}
-                                className="flex flex-col items-center gap-4 group relative"
-                            >
-                                <div
-                                    className={`w-full aspect-4/5 rounded-[2rem] border-2 p-4 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-500 ${theme.id === t.id ? 'border-orange-500/40 bg-orange-500/5 shadow-2xl shadow-orange-500/10' : 'border-white/5 bg-white/2 group-hover:border-white/10 group-hover:bg-white/5 group-hover:scale-[1.02]'}`}
-                                    style={{
-                                        background: theme.id === t.id ? undefined : t.bg,
-                                        backgroundImage: t.bg.includes('gradient') ? t.bg : undefined
-                                    }}
-                                >
-                                    {t.id === 'custom' ? (
-                                        <div className="flex flex-col items-center gap-3">
-                                            <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-                                                <Paintbrush size={24} className="text-white/40" />
+                                {profile.headerLayout === 'hero' && (
+                                    <div className="flex flex-col gap-4 p-6 rounded-[2rem] bg-white/3 border border-white/5">
+                                        <div className="flex items-center gap-2 px-1">
+                                            <div className="w-6 h-6 rounded-lg bg-pink-500/10 flex items-center justify-center border border-pink-500/10">
+                                                <Zap size={12} className="text-pink-400" />
                                             </div>
-                                            <span className="text-[10px] font-black uppercase tracking-widest text-white/20">Create Custom</span>
+                                            <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Hero Model Style</span>
                                         </div>
-                                    ) : (
-                                        <div className="flex flex-col items-center w-full gap-4">
-                                            <span className="text-3xl font-black mb-2 filter drop-shadow-lg" style={{ color: t.color }}>Aa</span>
-                                            <div className="w-full flex flex-col gap-2 p-2 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
-                                                <div className="w-full h-4 rounded-lg shadow-sm" style={{ backgroundColor: t.accentColor, border: t.btnStyle === 'outline' ? `1px solid ${t.color}` : 'none' }} />
-                                                <div className="w-2/3 h-1.5 rounded-full bg-white/10" />
-                                                <div className="w-1/2 h-1.5 rounded-full bg-white/10" />
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {theme.id === t.id && (
-                                        <div className="absolute top-4 right-4 w-6 h-6 rounded-full bg-orange-500 border border-orange-400 flex items-center justify-center shadow-lg shadow-orange-500/50 scale-110 active:scale-95 transition-transform">
-                                            <Zap size={12} className="text-white fill-white" />
-                                        </div>
-                                    )}
-
-                                    <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                </div>
-                                <span className={`text-[10px] font-black uppercase tracking-widest transition-colors ${theme.id === t.id ? 'text-orange-400' : 'text-white/20 group-hover:text-white/40'}`}>{t.name}</span>
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            )}
-
-            {subTab === 'wallpaper' && (
-                <div className="flex flex-col gap-10">
-                    <div className="flex items-center gap-4 px-1">
-                        <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shadow-xl shadow-emerald-500/5">
-                            <Image size={24} className="text-emerald-400" />
-                        </div>
-                        <div className="flex flex-col">
-                            <h2 className="text-xl font-bold text-white tracking-tight">Wallpaper</h2>
-                            <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em]">Customize your background</p>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col gap-6 p-6 rounded-3xl bg-white/3 border border-white/5">
-                        <div className="flex items-center gap-2 px-1">
-                            <div className="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center border border-emerald-500/10">
-                                <Layers size={12} className="text-emerald-400" />
-                            </div>
-                            <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Wallpaper Style</span>
-                        </div>
-
-                        <div className="grid grid-cols-6 gap-3">
-                            {[
-                                { id: 'fill', label: 'Fill', icon: Square },
-                                { id: 'gradient', label: 'Gradient', icon: Layers },
-                                { id: 'blur', label: 'Blur', icon: Wand2 },
-                                { id: 'pattern', label: 'Pattern', icon: LayoutGrid },
-                                { id: 'image', label: 'Image', icon: Image, premium: true },
-                                { id: 'video', label: 'Video', icon: Video, premium: true }
-                            ].map(style => {
-                                const Icon = style.icon;
-                                return (
-                                    <div key={style.id} className="flex flex-col items-center gap-2">
-                                        <button
-                                            onClick={() => setTheme({ ...theme, wallpaperStyle: style.id })}
-                                            className={`w-full aspect-square rounded-2xl border-2 flex flex-col items-center justify-center relative transition-all duration-300 ${theme.wallpaperStyle === style.id ? 'border-emerald-500/40 bg-emerald-500/10 shadow-lg shadow-emerald-500/5' : 'border-white/5 bg-white/2 hover:border-white/10 hover:bg-white/5'}`}
-                                        >
-                                            {style.id === 'fill' && <div className="w-6 h-6 rounded-lg bg-gray-400/50 shadow-sm" />}
-                                            {style.id === 'gradient' && <div className="w-6 h-6 rounded-lg bg-linear-to-br from-gray-300/50 to-gray-600/50 shadow-sm" />}
-                                            {style.id === 'blur' && (
-                                                <div className="relative w-6 h-6 flex items-center justify-center">
-                                                    <div className="w-5 h-5 rounded-full bg-gray-400/40 blur-[2px]" />
-                                                </div>
-                                            )}
-                                            {style.id === 'pattern' && (
-                                                <div className="grid grid-cols-2 gap-0.5 opacity-40">
-                                                    {[1, 2, 3, 4].map(i => <div key={i} className="w-2.5 h-2.5 bg-gray-300 rounded-[1px]" />)}
-                                                </div>
-                                            )}
-                                            {(style.id === 'image' || style.id === 'video') && <Icon size={20} className="text-white/20" />}
-
-                                            {style.premium && (
-                                                <div className="absolute top-1.5 right-1.5 p-1 bg-emerald-500 rounded-full shadow-lg shadow-emerald-500/20">
-                                                    <Zap size={6} className="text-white fill-white" />
-                                                </div>
-                                            )}
-                                        </button>
-                                        <span className={`text-[9px] font-black uppercase tracking-widest transition-colors ${theme.wallpaperStyle === style.id ? 'text-emerald-400' : 'text-white/10'}`}>{style.label}</span>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    {/* Fill Specific Controls */}
-                    {theme.wallpaperStyle === 'fill' && (
-                        <div className="flex flex-col gap-4 p-6 rounded-[2rem] bg-white/3 border border-white/5">
-                            <div className="flex items-center gap-2 px-1">
-                                <div className="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center border border-emerald-500/10">
-                                    <Square size={12} className="text-emerald-400" />
-                                </div>
-                                <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Solid Background</span>
-                            </div>
-                            <div className="flex items-center justify-between p-3 rounded-xl bg-black/20 border border-white/5 group focus-within:border-emerald-500/20 transition-all">
-                                <div className="flex flex-col gap-1">
-                                    <label htmlFor="bg-fill-color" className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Color Hex</label>
-                                    <input
-                                        id="bg-fill-color"
-                                        name="bg-fill-color"
-                                        type="text"
-                                        value={theme.bg || '#ffffff'}
-                                        onChange={(e) => setTheme({ ...theme, bg: e.target.value })}
-                                        className="bg-transparent border-none outline-none font-mono text-sm uppercase w-full text-white"
-                                    />
-                                </div>
-                                <div className="relative w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-white/10 shadow-lg">
-                                    <input
-                                        id="bg-fill-color-picker"
-                                        name="bg-fill-color-picker"
-                                        type="color"
-                                        value={theme.bg || '#ffffff'}
-                                        onChange={(e) => setTheme({ ...theme, bg: e.target.value })}
-                                        className="absolute inset-0 w-[150%] h-[150%] -translate-x-1/4 -translate-y-1/4 cursor-pointer"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Gradient Specific Controls */}
-                    {theme.wallpaperStyle === 'gradient' && (
-                        <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5">
-                            <div className="flex items-center gap-2 px-1">
-                                <div className="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center border border-emerald-500/10">
-                                    <Layers size={12} className="text-emerald-400" />
-                                </div>
-                                <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Gradient Config</span>
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-4">
-                                {[
-                                    { id: 'start', key: '1', val: theme.gradientColor1 || '#ffffff', label: 'Start' },
-                                    { id: 'end', key: '2', val: theme.gradientColor2 || '#000000', label: 'End' }
-                                ].map(c => (
-                                    <div key={c.key} className="flex items-center justify-between p-3 rounded-xl bg-black/10 border border-white/5">
-                                        <div className="flex flex-col gap-0.5">
-                                            <label htmlFor={`gradient-${c.id}-color`} className="text-[8px] font-black text-white/20 uppercase tracking-widest">{c.label}</label>
-                                            <span className="text-[10px] font-mono text-white/60 uppercase">{c.val}</span>
-                                        </div>
-                                        <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-white/10">
-                                            <input
-                                                id={`gradient-${c.id}-color`}
-                                                name={`gradient-${c.id}-color`}
-                                                type="color"
-                                                value={c.val}
-                                                onChange={(e) => setTheme({ ...theme, [`gradientColor${c.key}`]: e.target.value })}
-                                                className="absolute inset-0 w-[150%] h-[150%] -translate-x-1/4 -translate-y-1/4 cursor-pointer"
-                                            />
+                                        <div className="grid grid-cols-2 gap-2">
+                                            {[
+                                                { id: 'joined', label: 'Joined', icon: Layers },
+                                                { id: 'float', label: 'Float', icon: MousePointer2 },
+                                                { id: 'minimal', label: 'Minimal', icon: Square },
+                                                { id: 'glass', label: 'Glass', icon: Box }
+                                            ].map(option => {
+                                                const Icon = option.icon;
+                                                return (
+                                                    <button
+                                                        key={option.id}
+                                                        onClick={() => setProfile({ ...profile, heroModel: option.id })}
+                                                        className={`flex items-center justify-center gap-2 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${profile.heroModel === option.id ? 'bg-pink-500/20 border-pink-500/40 text-white shadow-xl shadow-pink-500/5' : 'bg-black/20 border-transparent text-white/40 hover:text-white/60'}`}
+                                                    >
+                                                        <Icon size={14} />
+                                                        {option.label}
+                                                    </button>
+                                                );
+                                            })}
                                         </div>
                                     </div>
-                                ))}
-                            </div>
-
-                            <div className="flex flex-col gap-4">
-                                <div className="flex items-center justify-between px-1">
-                                    <label htmlFor="gradient-angle-slider" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Direction / Angle</label>
-                                    <span className="text-[10px] font-bold text-white">{theme.gradientAngle || 135}°</span>
-                                </div>
-                                <input
-                                    id="gradient-angle-slider"
-                                    name="gradient-angle"
-                                    type="range"
-                                    min="0"
-                                    max="360"
-                                    value={theme.gradientAngle || 135}
-                                    onChange={(e) => setTheme({ ...theme, gradientAngle: parseInt(e.target.value) })}
-                                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
-                                />
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Blur Specific Controls */}
-                    {theme.wallpaperStyle === 'blur' && (
-                        <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5">
-                            <div className="flex items-center gap-2 px-1">
-                                <div className="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center border border-emerald-500/10">
-                                    <Wand2 size={12} className="text-emerald-400" />
-                                </div>
-                                <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Aurora Design</span>
-                            </div>
-
-                            <div className="flex items-center justify-between p-3 rounded-xl bg-black/20 border border-white/5 group focus-within:border-emerald-500/20 transition-all">
-                                <div className="flex flex-col gap-1">
-                                    <label htmlFor="aurora-tint-color" className="text-[8px] font-black text-white/20 uppercase tracking-widest">Base Tint</label>
-                                    <span className="text-[10px] font-mono text-white/60 uppercase">{theme.blurColor || '#ffffff'}</span>
-                                </div>
-                                <div className="relative w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-white/10">
-                                    <input
-                                        id="aurora-tint-color"
-                                        name="aurora-tint-color"
-                                        type="color"
-                                        value={theme.blurColor || '#ffffff'}
-                                        onChange={(e) => setTheme({ ...theme, blurColor: e.target.value })}
-                                        className="absolute inset-0 w-[150%] h-[150%] -translate-x-1/4 -translate-y-1/4 cursor-pointer"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col gap-4">
-                                <div className="flex items-center justify-between px-1">
-                                    <label htmlFor="aurora-intensity-slider" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Intensity</label>
-                                    <span className="text-[10px] font-bold text-white">{theme.blurIntensity}%</span>
-                                </div>
-                                <input
-                                    id="aurora-intensity-slider"
-                                    name="aurora-intensity"
-                                    type="range"
-                                    min="0"
-                                    max="100"
-                                    value={theme.blurIntensity}
-                                    onChange={(e) => setTheme({ ...theme, blurIntensity: parseInt(e.target.value) })}
-                                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
-                                />
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Pattern Specific Controls */}
-                    {theme.wallpaperStyle === 'pattern' && (
-                        <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5">
-                            <div className="flex items-center gap-2 px-1">
-                                <div className="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center border border-emerald-500/10">
-                                    <LayoutGrid size={12} className="text-emerald-400" />
-                                </div>
-                                <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Pattern Config</span>
-                            </div>
-
-                            {/* Pattern Style Selector */}
-                            <div className="flex flex-col gap-4">
-                                <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Pattern Style</label>
-                                <div className="grid grid-cols-5 gap-2">
-                                    {[
-                                        { id: 'dots', label: 'Dots' },
-                                        { id: 'stripes', label: 'Stripes' },
-                                        { id: 'grid', label: 'Grid' },
-                                        { id: 'diagonal', label: 'Diagonal' },
-                                        { id: 'waves', label: 'Waves' },
-                                        { id: 'circles', label: 'Circles' },
-                                        { id: 'hexagon', label: 'Hexagon' },
-                                        { id: 'triangles', label: 'Triangles' },
-                                        { id: 'zigzag', label: 'Zigzag' },
-                                        { id: 'checkerboard', label: 'Checker' },
-                                        { id: 'custom', label: 'Custom' }
-                                    ].map((p) => (
-                                        <button
-                                            key={p.id}
-                                            disabled={p.id === 'custom' && !theme.customPatternImage}
-                                            onClick={() => setTheme({ ...theme, patternType: p.id })}
-                                            className={`py-2.5 px-2 rounded-xl text-[9px] font-bold uppercase tracking-widest transition-all ${theme.patternType === p.id
-                                                ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 shadow-lg'
-                                                : 'bg-white/5 text-white/40 hover:bg-white/10 hover:text-white border border-white/5'
-                                                } ${p.id === 'custom' && !theme.customPatternImage ? 'opacity-30 cursor-not-allowed' : ''}`}
-                                        >
-                                            {p.label}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Upload Custom Pattern */}
-                            {theme.patternType === 'custom' ? (
-                                <div className="flex flex-col gap-3">
-                                    <input
-                                        type="file"
-                                        id="wallpaper-pattern-upload"
-                                        name="wallpaper-pattern-upload"
-                                        className="hidden"
-                                        accept="image/*"
-                                        onChange={(e) => {
-                                            const file = e.target.files[0];
-                                            if (file) {
-                                                const reader = new FileReader();
-                                                reader.onloadend = () => {
-                                                    setTheme({ ...theme, customPatternImage: reader.result, patternType: 'custom' });
-                                                };
-                                                reader.readAsDataURL(file);
-                                            }
-                                        }}
-                                    />
-                                    {theme.customPatternImage ? (
-                                        <div className="relative rounded-xl overflow-hidden border border-emerald-500/20 group">
-                                            <img src={theme.customPatternImage} alt="Custom pattern" className="w-full h-24 object-cover" />
-                                            <button
-                                                onClick={() => setTheme({ ...theme, customPatternImage: null, patternType: 'dots' })}
-                                                className="absolute top-2 right-2 w-8 h-8 bg-black/60 hover:bg-red-500/80 text-white rounded-full transition-all flex items-center justify-center backdrop-blur-md border border-white/10 opacity-0 group-hover:opacity-100"
-                                            >
-                                                <X size={14} />
-                                            </button>
-                                        </div>
-                                    ) : (
-                                        <label
-                                            htmlFor="wallpaper-pattern-upload"
-                                            className="w-full text-center px-4 py-6 rounded-xl bg-white/5 border-2 border-dashed border-emerald-500/30 hover:border-emerald-500/60 text-[10px] font-bold text-white/40 uppercase cursor-pointer transition-all flex flex-col items-center gap-2"
-                                        >
-                                            <Upload size={20} className="text-emerald-400" />
-                                            Upload Custom Pattern
-                                        </label>
-                                    )}
-                                </div>
-                            ) : null}
-
-                            <div className="flex items-center justify-between p-3 rounded-xl bg-black/20 border border-white/5 group focus-within:border-emerald-500/20 transition-all">
-                                <div className="flex flex-col gap-1">
-                                    <label htmlFor="pattern-base-color" className="text-[8px] font-black text-white/20 uppercase tracking-widest">Base Color</label>
-                                    <span className="text-[10px] font-mono text-white/60 uppercase">{theme.patternColor || '#000000'}</span>
-                                </div>
-                                <div className="relative w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-white/10">
-                                    <input
-                                        id="pattern-base-color"
-                                        name="pattern-base-color"
-                                        type="color"
-                                        value={theme.patternColor || '#000000'}
-                                        onChange={(e) => setTheme({ ...theme, patternColor: e.target.value })}
-                                        className="absolute inset-0 w-[150%] h-[150%] -translate-x-1/4 -translate-y-1/4 cursor-pointer"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="flex items-center justify-between p-3 rounded-xl bg-black/20 border border-white/5 group focus-within:border-emerald-500/20 transition-all">
-                                <div className="flex flex-col gap-1">
-                                    <label htmlFor="pattern-bg-color" className="text-[8px] font-black text-white/20 uppercase tracking-widest">Background Color</label>
-                                    <span className="text-[10px] font-mono text-white/60 uppercase">{theme.patternBackgroundColor || theme.bg || '#000000'}</span>
-                                </div>
-                                <div className="relative w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-white/10">
-                                    <input
-                                        id="pattern-bg-color"
-                                        name="pattern-bg-color"
-                                        type="color"
-                                        value={theme.patternBackgroundColor || theme.bg || '#000000'}
-                                        onChange={(e) => setTheme({ ...theme, patternBackgroundColor: e.target.value })}
-                                        className="absolute inset-0 w-[150%] h-[150%] -translate-x-1/4 -translate-y-1/4 cursor-pointer"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="flex flex-col gap-4">
-                                    <div className="flex items-center justify-between px-1">
-                                        <label htmlFor="pattern-opacity-slider" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Opacity</label>
-                                        <span className="text-[10px] font-bold text-white">{Math.round((theme.patternOpacity ?? 0.1) * 100)}%</span>
-                                    </div>
-                                    <input
-                                        id="pattern-opacity-slider"
-                                        name="pattern-opacity"
-                                        type="range"
-                                        min="0"
-                                        max="1"
-                                        step="0.01"
-                                        value={theme.patternOpacity ?? 0.1}
-                                        onChange={(e) => setTheme({ ...theme, patternOpacity: parseFloat(e.target.value) })}
-                                        className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
-                                    />
-                                </div>
-                                <div className="flex flex-col gap-4">
-                                    <div className="flex items-center justify-between px-1">
-                                        <label htmlFor="pattern-blur-slider" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Blur</label>
-                                        <span className="text-[10px] font-bold text-white">{theme.patternBlur ?? 0}px</span>
-                                    </div>
-                                    <input
-                                        id="pattern-blur-slider"
-                                        name="pattern-blur"
-                                        type="range"
-                                        min="0"
-                                        max="20"
-                                        value={theme.patternBlur ?? 0}
-                                        onChange={(e) => setTheme({ ...theme, patternBlur: parseInt(e.target.value) })}
-                                        className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Image Specific Controls */}
-
-
-                    {/* Image Specific Controls */}
-                    {theme.wallpaperStyle === 'image' && (
-                        <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5">
-                            <div className="flex items-center gap-2 px-1">
-                                <div className="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center border border-emerald-500/10">
-                                    <Image size={12} className="text-emerald-400" />
-                                </div>
-                                <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Background Image</span>
-                            </div>
-
-                            <div className="flex flex-col gap-4">
-                                {theme.backgroundImage ? (
-                                    <div className="flex flex-col gap-6">
-                                        <div className="relative aspect-video rounded-2xl overflow-hidden group border border-white/10">
-                                            <img src={theme.backgroundImage} className="w-full h-full object-cover" alt="Wallpaper" />
-                                            <button
-                                                onClick={() => setTheme({ ...theme, backgroundImage: null })}
-                                                className="absolute top-4 right-4 w-10 h-10 bg-black/60 hover:bg-red-500/80 text-white rounded-full transition-all flex items-center justify-center backdrop-blur-md border border-white/10 opacity-0 group-hover:opacity-100"
-                                            >
-                                                <Trash2 size={16} />
-                                            </button>
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div className="flex flex-col gap-4">
-                                                <div className="flex items-center justify-between px-1">
-                                                    <label htmlFor="wallpaper-image-opacity" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Opacity</label>
-                                                    <span className="text-[10px] font-bold text-white">{Math.round((theme.imageOpacity ?? 1) * 100)}%</span>
-                                                </div>
-                                                <input
-                                                    id="wallpaper-image-opacity"
-                                                    name="wallpaper-image-opacity"
-                                                    type="range"
-                                                    min="0"
-                                                    max="1"
-                                                    step="0.01"
-                                                    value={theme.imageOpacity ?? 1}
-                                                    onChange={(e) => setTheme({ ...theme, imageOpacity: parseFloat(e.target.value) })}
-                                                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
-                                                />
-                                            </div>
-                                            <div className="flex flex-col gap-4">
-                                                <div className="flex items-center justify-between px-1">
-                                                    <label htmlFor="wallpaper-image-blur" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Blur</label>
-                                                    <span className="text-[10px] font-bold text-white">{theme.imageBlur ?? 0}px</span>
-                                                </div>
-                                                <input
-                                                    id="wallpaper-image-blur"
-                                                    name="wallpaper-image-blur"
-                                                    type="range"
-                                                    min="0"
-                                                    max="100"
-                                                    value={theme.imageBlur ?? 0}
-                                                    onChange={(e) => setTheme({ ...theme, imageBlur: parseInt(e.target.value) })}
-                                                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <label htmlFor="bg-image-upload" className="flex flex-col items-center justify-center aspect-video rounded-[2rem] border-2 border-dashed border-white/5 bg-white/2 hover:bg-white/5 hover:border-emerald-500/20 transition-all cursor-pointer group">
-                                        <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center border border-white/5 mb-3 group-hover:scale-110 group-hover:border-emerald-500/20 transition-all">
-                                            <Upload size={20} className="text-white/20 group-hover:text-emerald-400" />
-                                        </div>
-                                        <span className="text-xs font-bold text-white/60">Choose Wallpaper Image</span>
-                                        <span className="text-[9px] text-white/20 font-black uppercase tracking-widest mt-1">PNG, JPG up to 10MB</span>
-                                        <input
-                                            id="bg-image-upload"
-                                            name="bg-image-upload"
-                                            type="file"
-                                            accept="image/*"
-                                            className="hidden"
-                                            onChange={(e) => {
-                                                const file = e.target.files[0];
-                                                if (file) {
-                                                    const url = URL.createObjectURL(file);
-                                                    setTheme({ ...theme, backgroundImage: url });
-                                                }
-                                            }}
-                                        />
-                                    </label>
                                 )}
-                            </div>
-                        </div>
-                    )}
 
-                    {/* Video Specific Controls */}
-                    {theme.wallpaperStyle === 'video' && (
-                        <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5">
-                            <div className="flex items-center gap-2 px-1">
-                                <div className="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center border border-emerald-500/10">
-                                    <Video size={12} className="text-emerald-400" />
-                                </div>
-                                <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Background Video</span>
-                            </div>
-
-                            <div className="flex flex-col gap-4">
-                                {theme.backgroundVideo ? (
-                                    <div className="flex flex-col gap-6">
-                                        <div className="relative aspect-video rounded-2xl overflow-hidden group border border-white/10">
-                                            <video src={theme.backgroundVideo} className="w-full h-full object-cover" autoPlay muted loop />
-                                            <button
-                                                onClick={() => setTheme({ ...theme, backgroundVideo: null })}
-                                                className="absolute top-4 right-4 w-10 h-10 bg-black/60 hover:bg-red-500/80 text-white rounded-full transition-all flex items-center justify-center backdrop-blur-md border border-white/10 opacity-0 group-hover:opacity-100"
-                                            >
-                                                <Trash2 size={16} />
-                                            </button>
+                                {profile.headerLayout === 'hero' && (
+                                    <div className="flex-none flex flex-col gap-4 p-6 rounded-[2rem] bg-white/3 border border-white/5">
+                                        <div className="flex items-center gap-2 px-1">
+                                            <div className="w-6 h-6 rounded-lg bg-pink-500/10 flex items-center justify-center border border-pink-500/10">
+                                                <Zap size={12} className="text-pink-400" />
+                                            </div>
+                                            <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Hero Model Style</span>
                                         </div>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div className="flex flex-col gap-4">
-                                                <div className="flex items-center justify-between px-1">
-                                                    <label htmlFor="wallpaper-video-opacity" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Opacity</label>
-                                                    <span className="text-[10px] font-bold text-white">{Math.round((theme.videoOpacity ?? 1) * 100)}%</span>
-                                                </div>
-                                                <input
-                                                    id="wallpaper-video-opacity"
-                                                    name="wallpaper-video-opacity"
-                                                    type="range"
-                                                    min="0"
-                                                    max="1"
-                                                    step="0.01"
-                                                    value={theme.videoOpacity ?? 1}
-                                                    onChange={(e) => setTheme({ ...theme, videoOpacity: parseFloat(e.target.value) })}
-                                                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
-                                                />
-                                            </div>
-                                            <div className="flex flex-col gap-4">
-                                                <div className="flex items-center justify-between px-1">
-                                                    <label htmlFor="wallpaper-video-blur" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Blur</label>
-                                                    <span className="text-[10px] font-bold text-white">{theme.videoBlur ?? 0}px</span>
-                                                </div>
-                                                <input
-                                                    id="wallpaper-video-blur"
-                                                    name="wallpaper-video-blur"
-                                                    type="range"
-                                                    min="0"
-                                                    max="100"
-                                                    value={theme.videoBlur ?? 0}
-                                                    onChange={(e) => setTheme({ ...theme, videoBlur: parseInt(e.target.value) })}
-                                                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
-                                                />
-                                            </div>
+                                        <div className="grid grid-cols-2 gap-2">
+                                            {[
+                                                { id: 'joined', label: 'Joined', icon: Layers },
+                                                { id: 'float', label: 'Float', icon: MousePointer2 },
+                                                { id: 'minimal', label: 'Minimal', icon: Square },
+                                                { id: 'glass', label: 'Glass', icon: Box }
+                                            ].map(option => {
+                                                const Icon = option.icon;
+                                                return (
+                                                    <button
+                                                        key={option.id}
+                                                        onClick={() => setProfile({ ...profile, heroModel: option.id })}
+                                                        className={`flex items-center justify-center gap-2 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${profile.heroModel === option.id ? 'bg-pink-500/20 border-pink-500/40 text-white shadow-xl shadow-pink-500/5' : 'bg-black/20 border-transparent text-white/40 hover:text-white/60'}`}
+                                                    >
+                                                        <Icon size={14} />
+                                                        {option.label}
+                                                    </button>
+                                                );
+                                            })}
                                         </div>
                                     </div>
-                                ) : (
-                                    <label htmlFor="bg-video-upload" className="flex flex-col items-center justify-center aspect-video rounded-[2rem] border-2 border-dashed border-white/5 bg-white/2 hover:bg-white/5 hover:border-emerald-500/20 transition-all cursor-pointer group">
-                                        <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center border border-white/5 mb-3 group-hover:scale-110 group-hover:border-emerald-500/20 transition-all">
-                                            <Video size={20} className="text-white/20 group-hover:text-emerald-400" />
-                                        </div>
-                                        <span className="text-xs font-bold text-white/60">Choose Wallpaper Video</span>
-                                        <span className="text-[9px] text-white/20 font-black uppercase tracking-widest mt-1">MP4, MOV up to 50MB</span>
-                                        <input
-                                            id="bg-video-upload"
-                                            name="bg-video-upload"
-                                            type="file"
-                                            accept="video/*"
-                                            className="hidden"
-                                            onChange={(e) => {
-                                                const file = e.target.files[0];
-                                                if (file) {
-                                                    const url = URL.createObjectURL(file);
-                                                    setTheme({ ...theme, backgroundVideo: url });
-                                                }
-                                            }}
-                                        />
-                                    </label>
                                 )}
-                            </div>
-                        </div>
-                    )}
 
-                    {/* Noise Toggle */}
-                    <div className="flex items-center justify-between p-6 rounded-3xl bg-white/5 mt-4">
-                        <div className="flex flex-col gap-1">
-                            <span id="noise-toggle-label" className="text-sm font-bold text-white">Noise</span>
-                            <span className="text-xs text-white/40">Add a subtle grain texture</span>
-                        </div>
-                        <button
-                            id="noise-toggle"
-                            aria-labelledby="noise-toggle-label"
-                            onClick={() => setTheme({ ...theme, noise: !theme.noise })}
-                            className={`w-12 h-6 rounded-full relative ${theme.noise ? 'bg-white' : 'bg-white/10'}`}
-                        >
-                            <div className={`absolute top-1 w-4 h-4 rounded-full ${theme.noise ? 'left-7 bg-black' : 'left-1 bg-white/40'}`} />
-                        </button>
-                    </div>
-                </div>
-            )}
-
-            {subTab === 'buttons' && (
-                <div className="flex flex-col gap-8">
-                    {/* Tab Title */}
-                    <div className="flex items-center gap-4 px-1">
-                        <div className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shadow-xl shadow-purple-500/5">
-                            <MousePointer2 size={24} className="text-purple-400" />
-                        </div>
-                        <div className="flex flex-col">
-                            <h2 className="text-xl font-bold text-white tracking-tight">Buttons</h2>
-                            <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em]">Styles & Appearance</p>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col gap-6">
-                        <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5">
-                            <div className="flex items-center gap-3 px-1">
-                                <div className="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
-                                    <LayoutGrid size={16} className="text-purple-400" />
-                                </div>
-                                <div className="flex flex-col">
-                                    <span className="text-sm font-bold text-white">Button Design</span>
-                                    <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Base Styles</span>
-                                </div>
-                            </div>
-
-                            {/* Style Presets */}
-                            <div className="grid grid-cols-3 gap-3">
-                                {[
-                                    { id: 'solid', label: 'Solid', icon: <div className="w-8 h-4 bg-current rounded-sm shadow-sm" /> },
-                                    { id: 'glass', label: 'Glass', icon: <div className="w-8 h-4 bg-current/20 rounded-sm border border-current/20 shadow-sm" /> },
-                                    { id: 'outline', label: 'Outline', icon: <div className="w-8 h-4 bg-transparent border-2 border-current rounded-sm shadow-sm" /> }
-                                ].map(opt => (
-                                    <button
-                                        key={opt.id}
-                                        onClick={() => setTheme({ ...theme, btnStyle: opt.id })}
-                                        className={`flex flex-col items-center justify-center gap-3 p-5 rounded-2xl border transition-all duration-300 ${theme.btnStyle === opt.id
-                                            ? 'bg-purple-500/20 border-purple-500/40 text-white shadow-xl shadow-purple-500/10'
-                                            : 'bg-black/20 border-white/5 text-white/20 hover:border-white/10 hover:text-white/40'
-                                            }`}
-                                    >
-                                        {opt.icon}
-                                        <span className="text-[9px] font-black uppercase tracking-[0.15em]">{opt.label}</span>
-                                    </button>
-                                ))}
-                            </div>
-
-                            {/* Corner Roundness Slider */}
-                            <div className="flex flex-col gap-4 py-6 border-y border-white/5">
-                                <div className="flex items-center justify-between px-1">
-                                    <label htmlFor="btn-corner-roundness" className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Corner Roundness</label>
-                                    <span className="text-[10px] font-bold text-white">{theme.btnRadius}px</span>
-                                </div>
-                                <div className="flex flex-col gap-2">
+                                {/* Title Section */}
+                                <div className="flex flex-col gap-2 px-2">
+                                    <div className="flex items-center justify-between px-1">
+                                        <label htmlFor="editor-profile-title" className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Display Title</label>
+                                        <button
+                                            onClick={() => setProfile({ ...profile, showTitle: !profile.showTitle })}
+                                            className={`px-4 py-2.5 rounded-full border border-white/10 hover:bg-white/5 text-[11px] font-bold flex items-center gap-2 transition-all hover:scale-105 shadow-xl shadow-white/5 ${profile.showTitle !== false ? 'text-white' : 'text-white/40'}`}
+                                        >
+                                            {profile.showTitle !== false ? <EyeOff size={12} /> : <Eye size={12} />}
+                                            {profile.showTitle !== false ? 'Hide' : 'Show'}
+                                        </button>
+                                    </div>
                                     <input
-                                        id="btn-corner-roundness"
-                                        name="btn-corner-roundness"
-                                        type="range"
-                                        min="0"
-                                        max="50"
-                                        value={typeof theme.btnRadius === 'number' ? theme.btnRadius : 12}
-                                        onChange={(e) => setTheme({ ...theme, btnRadius: parseInt(e.target.value) })}
-                                        className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                                        id="editor-profile-title"
+                                        name="editor-profile-title"
+                                        value={profile.username}
+                                        onChange={(e) => setProfile({ ...profile, username: e.target.value })}
+                                        className="w-full bg-white/3 border border-white/5 rounded-xl px-5 py-3 text-sm font-bold text-white outline-none focus:border-purple-500/20 focus:bg-white/5 transition-all placeholder:text-white/10"
+                                        placeholder="@username"
                                     />
-                                    <div className="flex justify-between px-0.5">
-                                        <span className="text-[8px] font-black text-white/10 uppercase tracking-widest">Square</span>
-                                        <span className="text-[8px] font-black text-white/10 uppercase tracking-widest">Pill</span>
+                                </div>
+
+                                {/* Title Style Section */}
+                                <div className="flex flex-col gap-4 p-6 rounded-[2rem] bg-white/3 border border-white/5">
+                                    <div className="flex items-center gap-2 px-1">
+                                        <div className="w-6 h-6 rounded-lg bg-blue-500/10 flex items-center justify-center border border-blue-500/10">
+                                            <Layers size={12} className="text-blue-400" />
+                                        </div>
+                                        <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Title style</span>
+                                    </div>
+                                    <div className="flex p-1 bg-black/20 rounded-xl border border-white/5">
+                                        {[
+                                            { id: 'text', label: 'Text', icon: Type },
+                                            { id: 'logo', label: 'Logo', icon: Image }
+                                        ].map(option => {
+                                            const Icon = option.icon;
+                                            return (
+                                                <button
+                                                    key={option.id}
+                                                    onClick={() => setTheme({ ...theme, titleStyle: option.id })}
+                                                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${theme.titleStyle === option.id ? 'bg-blue-500/20 border-blue-500/40 text-white shadow-xl shadow-blue-500/5' : 'bg-transparent border-transparent text-white/40 hover:text-white/60'}`}
+                                                >
+                                                    <Icon size={14} />
+                                                    {option.label}
+                                                </button>
+                                            );
+                                        })}
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Body / Text Toggle */}
-                            <div className="flex flex-col gap-4 pt-4">
-                                <div className="flex bg-black/20 rounded-xl p-1 w-fit border border-white/5">
-                                    <button
-                                        onClick={() => setButtonDesignSubTab('body')}
-                                        className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${buttonDesignSubTab === 'body' ? 'bg-purple-500/20 text-white border border-purple-500/20 shadow-lg shadow-purple-500/5' : 'text-white/30 hover:text-white/50 border border-transparent'}`}
-                                    >
-                                        Body
-                                    </button>
-                                    <button
-                                        onClick={() => setButtonDesignSubTab('text')}
-                                        className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${buttonDesignSubTab === 'text' ? 'bg-purple-500/20 text-white border border-purple-500/20 shadow-lg shadow-purple-500/5' : 'text-white/30 hover:text-white/50 border border-transparent'}`}
-                                    >
-                                        Text
-                                    </button>
-                                </div>
+                                {/* Size Section */}
+                                <div className="flex flex-col gap-4 p-6 rounded-[2rem] bg-white/3 border border-white/5">
+                                    <div className="flex items-center justify-between px-1">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-6 h-6 rounded-lg bg-orange-500/10 flex items-center justify-center border border-orange-500/10">
+                                                <LayoutGrid size={12} className="text-orange-400" />
+                                            </div>
+                                            <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Header Size</span>
+                                        </div>
+                                        <div className="text-[10px] font-bold text-white/40 bg-white/5 px-2 py-1 rounded-md border border-white/5">
+                                            {typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'small' ? 80 : 100)}%
+                                        </div>
+                                    </div>
 
-                                {/* Mode Selector (Solid/Gradient/Pattern) */}
-                                {/* Mode Selector (Solid/Gradient/Pattern) */}
-                                <div className="flex items-center justify-between p-2 rounded-2xl bg-black/20 border border-white/5">
-                                    <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] px-2">Mode</span>
-                                    <div className="flex bg-white/5 rounded-xl p-0.5">
-                                        {['solid', 'gradient', 'pattern'].map((type) => (
+                                    <div className="flex items-center gap-4 px-1">
+                                        <label htmlFor="header-size-range" className="sr-only">Header Size Range</label>
+                                        <span className="text-[10px] font-bold text-white/30">20%</span>
+                                        <input
+                                            id="header-size-range"
+                                            name="header-size-range"
+                                            type="range"
+                                            min="20"
+                                            max="150"
+                                            step="5"
+                                            value={typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'small' ? 80 : (profile.headerSize === 'large' ? 120 : 100))}
+                                            onChange={(e) => setProfile({ ...profile, headerSize: parseInt(e.target.value) })}
+                                            className="flex-1 h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-orange-500 hover:accent-orange-400 transition-all"
+                                        />
+                                        <span className="text-[10px] font-bold text-white/30">150%</span>
+                                    </div>
+
+                                    <div className="flex gap-2">
+                                        {[80, 100, 120].map(size => (
                                             <button
-                                                key={type}
-                                                onClick={() => {
-                                                    const key = buttonDesignSubTab === 'body' ? 'btnColorType' : 'btnTextColorType';
-                                                    setTheme({ ...theme, [key]: type });
-                                                }}
-                                                className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${(buttonDesignSubTab === 'body' ? theme.btnColorType : theme.btnTextColorType) === type
-                                                    ? 'bg-purple-500/30 text-white shadow-xl shadow-purple-500/10 border border-purple-500/20'
-                                                    : 'text-white/20 hover:text-white'
+                                                key={size}
+                                                onClick={() => setProfile({ ...profile, headerSize: size })}
+                                                className={`px-3 py-1.5 rounded-lg text-[10px] font-bold border transition-all ${(typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'small' ? 80 : (profile.headerSize === 'large' ? 120 : 100))) === size
+                                                    ? 'bg-orange-500/20 border-orange-500/40 text-orange-400'
+                                                    : 'bg-white/5 border-white/5 text-white/40 hover:bg-white/10'
                                                     }`}
                                             >
-                                                {type}
+                                                {size === 80 ? 'Small' : size === 100 ? 'Normal' : 'Large'}
                                             </button>
                                         ))}
+                                        <div className="flex-1"></div>
+                                        <label htmlFor="header-size-number" className="sr-only">Header Size Number</label>
+                                        <input
+                                            id="header-size-number"
+                                            name="header-size-number"
+                                            type="number"
+                                            min="20"
+                                            max="150"
+                                            value={typeof profile.headerSize === 'number' ? profile.headerSize : (profile.headerSize === 'small' ? 80 : (profile.headerSize === 'large' ? 120 : 100))}
+                                            onChange={(e) => {
+                                                let val = parseInt(e.target.value);
+                                                if (val > 150) val = 150;
+                                                if (val < 20) val = 20;
+                                                setProfile({ ...profile, headerSize: val });
+                                            }}
+                                            className="w-16 bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-center text-xs font-bold text-white outline-none focus:border-orange-500/50 transition-all"
+                                        />
                                     </div>
                                 </div>
 
-                                {/* Sub-tab Content: BODY */}
-                                {buttonDesignSubTab === 'body' && (
-                                    <div className="flex flex-col gap-4">
-                                        {theme.btnColorType === 'solid' && (
-                                            <ColorPickerRow
-                                                label="Button Color"
-                                                value={theme.btnColor || theme.accentColor}
-                                                onChange={(color) => setTheme({ ...theme, btnColor: color })}
-                                                colorId="btn-body-color"
-                                                activeColor="purple"
-                                            />
-                                        )}
-
-                                        {theme.btnColorType === 'gradient' && (
-                                            <div className="flex flex-col gap-4 p-5 rounded-2xl bg-white/3 border border-white/5">
-                                                <ColorPickerRow
-                                                    label="Gradient Start"
-                                                    value={theme.btnColorGradient1 || '#8228d9'}
-                                                    onChange={(color) => setTheme({ ...theme, btnColorGradient1: color })}
-                                                    colorId="btn-body-gradient1"
-                                                    activeColor="purple"
-                                                />
-                                                <ColorPickerRow
-                                                    label="Gradient End"
-                                                    value={theme.btnColorGradient2 || '#6366f1'}
-                                                    onChange={(color) => setTheme({ ...theme, btnColorGradient2: color })}
-                                                    colorId="btn-body-gradient2"
-                                                    activeColor="purple"
-                                                />
-                                                <div className="flex flex-col gap-4 pt-4 border-t border-white/5">
-                                                    <div className="flex items-center justify-between px-1">
-                                                        <label htmlFor="btn-body-gradient-angle" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Gradient Angle</label>
-                                                        <span className="text-[10px] font-bold text-white">{theme.btnGradientAngle || 135}°</span>
-                                                    </div>
-                                                    <input
-                                                        id="btn-body-gradient-angle"
-                                                        name="btn-body-gradient-angle"
-                                                        type="range"
-                                                        min="0"
-                                                        max="360"
-                                                        value={theme.btnGradientAngle || 135}
-                                                        onChange={(e) => setTheme({ ...theme, btnGradientAngle: parseInt(e.target.value) })}
-                                                        className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
-                                                    />
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {theme.btnColorType === 'pattern' && (
-                                            <div className="flex flex-col gap-4 p-5 rounded-2xl bg-white/3 border border-white/5">
-                                                <div className="flex flex-col gap-3">
-                                                    <span className="text-[9px] font-black text-white/20 uppercase tracking-widest px-1">Pattern Type</span>
-                                                    <div className="grid grid-cols-4 gap-2">
-                                                        {['dots', 'stripes', 'noise', 'custom'].map((p) => (
-                                                            <button
-                                                                key={p}
-                                                                disabled={p === 'custom' && !theme.btnColorCustomPattern}
-                                                                onClick={() => setTheme({ ...theme, btnColorPattern: p })}
-                                                                className={`py-3 px-1 rounded-xl text-[9px] font-black uppercase tracking-widest border transition-all ${theme.btnColorPattern === p
-                                                                    ? 'bg-purple-500/20 border-purple-500/40 text-white shadow-xl shadow-purple-500/10'
-                                                                    : 'bg-black/20 border-white/5 text-white/20 hover:border-white/10 hover:text-white/40'
-                                                                    } ${p === 'custom' && !theme.btnColorCustomPattern ? 'opacity-20 cursor-not-allowed' : ''}`}
-                                                            >
-                                                                {p === 'custom' && theme.btnColorCustomPattern ? (
-                                                                    <div className="w-4 h-4 rounded-sm border border-white/10 mx-auto" style={{ background: `url(${theme.btnColorCustomPattern}) center/cover` }} />
-                                                                ) : p}
-                                                            </button>
-                                                        ))}
-                                                    </div>
-                                                </div>
-
-                                                <ColorPickerRow
-                                                    label="Pattern Color"
-                                                    value={theme.btnColor || theme.accentColor}
-                                                    onChange={(color) => setTheme({ ...theme, btnColor: color })}
-                                                    colorId="btn-body-pattern-color"
-                                                    activeColor="purple"
-                                                />
-
-                                                <div className="flex flex-col gap-2 pt-2 border-t border-white/5">
-                                                    <span className="text-[9px] font-black text-white/20 uppercase tracking-widest px-1">Upload Custom Pattern</span>
-                                                    <label htmlFor="btn-body-pattern-upload" className="flex items-center justify-center gap-2 p-3 rounded-xl bg-black/20 border border-white/10 cursor-pointer hover:bg-white/5 hover:border-purple-500/20 transition-all group">
-                                                        <Upload size={16} className="text-white/20 group-hover:text-purple-400" />
-                                                        <span className="text-[10px] font-bold text-white/40 group-hover:text-white">Choose Image</span>
-                                                        <input
-                                                            type="file"
-                                                            id="btn-body-pattern-upload"
-                                                            name="btn-body-pattern-upload"
-                                                            className="hidden"
-                                                            accept="image/*"
-                                                            onChange={(e) => {
-                                                                const file = e.target.files[0];
-                                                                if (file) {
-                                                                    const reader = new FileReader();
-                                                                    reader.onloadend = () => {
-                                                                        setTheme({ ...theme, btnColorCustomPattern: reader.result, btnColorPattern: 'custom' });
-                                                                    };
-                                                                    reader.readAsDataURL(file);
-                                                                }
-                                                            }}
-                                                        />
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {/* Button Dimensions */}
-                                        <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5">
-                                            <div className="flex items-center gap-3 px-1">
-                                                <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
-                                                    <Maximize size={16} className="text-emerald-400" />
-                                                </div>
-                                                <div className="flex flex-col">
-                                                    <span className="text-sm font-bold text-white">Sizing & Scale</span>
-                                                    <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Dimensions</span>
-                                                </div>
-                                            </div>
-
-                                            <div className="grid grid-cols-1 gap-6">
-                                                {/* Width Control */}
-                                                <div className="flex flex-col gap-4">
-                                                    <div className="flex items-center justify-between px-1">
-                                                        <label htmlFor="btn-width-slider" className="text-[10px] font-black text-white/20 uppercase tracking-widest">Width</label>
-                                                        <span className="text-[10px] font-bold text-white">{theme.btnWidth || 100}%</span>
-                                                    </div>
-                                                    <div className="flex items-center gap-4">
-                                                        <div className="flex-1">
-                                                            <input
-                                                                id="btn-width-slider"
-                                                                name="btn-width"
-                                                                type="range"
-                                                                min="50"
-                                                                max="100"
-                                                                value={theme.btnWidth || 100}
-                                                                onChange={(e) => setTheme({ ...theme, btnWidth: parseInt(e.target.value) })}
-                                                                className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
-                                                            />
-                                                        </div>
-                                                        <div className="w-16 h-10 rounded-xl bg-black/20 border border-white/5 flex items-center justify-center">
-                                                            <input
-                                                                id="btn-width-number"
-                                                                name="btn-width-number"
-                                                                type="number"
-                                                                min="50"
-                                                                max="100"
-                                                                value={theme.btnWidth || 100}
-                                                                onChange={(e) => setTheme({ ...theme, btnWidth: parseInt(e.target.value) })}
-                                                                className="w-full bg-transparent text-center text-xs font-bold text-white outline-none"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                {/* Height Control */}
-                                                <div className="flex flex-col gap-4 pt-4 border-t border-white/5">
-                                                    <div className="flex items-center justify-between px-1">
-                                                        <label htmlFor="btn-height-slider" className="text-[10px] font-black text-white/20 uppercase tracking-widest">Height (Vertical Padding)</label>
-                                                        <span className="text-[10px] font-bold text-white">{theme.btnHeight || 14}px</span>
-                                                    </div>
-                                                    <div className="flex items-center gap-4">
-                                                        <div className="flex-1">
-                                                            <input
-                                                                id="btn-height-slider"
-                                                                name="btn-height"
-                                                                type="range"
-                                                                min="8"
-                                                                max="32"
-                                                                value={theme.btnHeight || 14}
-                                                                onChange={(e) => setTheme({ ...theme, btnHeight: parseInt(e.target.value) })}
-                                                                className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
-                                                            />
-                                                        </div>
-                                                        <div className="w-16 h-10 rounded-xl bg-black/20 border border-white/5 flex items-center justify-center">
-                                                            <input
-                                                                id="btn-height-number"
-                                                                name="btn-height-number"
-                                                                type="number"
-                                                                min="8"
-                                                                max="32"
-                                                                value={theme.btnHeight || 14}
-                                                                onChange={(e) => setTheme({ ...theme, btnHeight: parseInt(e.target.value) })}
-                                                                className="w-full bg-transparent text-center text-xs font-bold text-white outline-none"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                {/* Animation Section */}
+                                <div className="flex flex-col gap-4 p-6 rounded-[2rem] bg-white/3 border border-white/5">
+                                    <div className="flex items-center gap-3 px-1">
+                                        <div className="w-8 h-8 rounded-lg bg-pink-500/10 border border-pink-500/20 flex items-center justify-center">
+                                            <Wand2 size={16} className="text-pink-400" />
                                         </div>
-                                        {/* Spacing Control */}
-                                        <div className="flex flex-col gap-4 pt-4 border-t border-white/5">
-                                            <div className="flex items-center justify-between px-1">
-                                                <label htmlFor="btn-spacing-slider" className="text-[10px] font-black text-white/20 uppercase tracking-widest">Button Spacing (Gap)</label>
-                                                <span className="text-[10px] font-bold text-white">{theme.btnSpacing || 12}px</span>
-                                            </div>
-                                            <input
-                                                id="btn-spacing-slider"
-                                                name="btn-spacing"
-                                                type="range"
-                                                min="8"
-                                                max="40"
-                                                value={theme.btnSpacing || 12}
-                                                onChange={(e) => setTheme({ ...theme, btnSpacing: parseInt(e.target.value) })}
-                                                className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
-                                            />
+                                        <div className="flex flex-col">
+                                            <span className="text-sm font-bold text-white">Profile Animation</span>
+                                            <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Visual Effects</span>
                                         </div>
                                     </div>
-                                )}
-
-                                {/* Sub-tab Content: TEXT */}
-                                {buttonDesignSubTab === 'text' && (
-                                    <div className="flex flex-col gap-4 mt-2">
-                                        {/* Helper / Info */}
-                                        <div className="flex items-center gap-2 pb-2 border-b border-white/5">
-                                            <Type size={14} className="text-white/40" />
-                                            <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Button Typography</span>
-                                        </div>
-
-                                        {/* Font Family */}
+                                    <div className="p-1 bg-black/20 rounded-xl border border-white/5">
                                         <SelectField
-                                            id="btn-font-select"
-                                            name="btn-font"
-                                            label="Font Family"
-                                            value={theme.btnFont || 'Inter'}
-                                            onChange={(e) => setTheme({ ...theme, btnFont: e.target.value })}
+                                            id="header-animation-select"
+                                            label=""
+                                            value={theme.headerAnimation || 'none'}
+                                            onChange={(e) => setTheme({ ...theme, headerAnimation: e.target.value })}
+                                            className="bg-transparent border-none text-[11px] font-bold"
                                         >
-                                            {FONTS.map(font => (
-                                                <option key={font} value={font} className="bg-[#121212]">{font}</option>
+                                            {ANIMATION_OPTIONS.map(opt => (
+                                                <option key={opt.id} value={opt.id} className="bg-[#121212]">{opt.label}</option>
                                             ))}
                                         </SelectField>
+                                    </div>
+                                </div>
 
-                                        <div className="grid grid-cols-2 gap-3">
-                                            {/* Font Weight */}
+                                {/* Typography Section */}
+                                <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5">
+                                    <div className="flex items-center gap-3 px-1">
+                                        <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                                            <Type size={16} className="text-blue-400" />
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="text-sm font-bold text-white">Typography</span>
+                                            <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Font & Style</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Profile Title Settings */}
+                                    <div className="flex flex-col gap-6 pt-4 border-t border-white/5">
+                                        <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Title Text Appearance</span>
+
+                                        <div className="grid grid-cols-1 gap-4">
                                             <SelectField
-                                                id="btn-weight-select"
-                                                name="btn-weight"
-                                                label="Weight"
-                                                value={theme.btnTextWeight || 600}
-                                                onChange={(e) => setTheme({ ...theme, btnTextWeight: parseInt(e.target.value) })}
-                                            >
-                                                <option value="300" className="bg-[#121212]">Light</option>
-                                                <option value="400" className="bg-[#121212]">Regular</option>
-                                                <option value="500" className="bg-[#121212]">Medium</option>
-                                                <option value="600" className="bg-[#121212]">Semibold</option>
-                                                <option value="700" className="bg-[#121212]">Bold</option>
-                                                <option value="800" className="bg-[#121212]">Extra Bold</option>
-                                            </SelectField>
-
-                                            {/* Text Transform */}
-                                            <SelectField
-                                                id="btn-transform-select"
-                                                name="btn-transform"
-                                                label="Transform"
-                                                value={theme.btnTextTransform || 'none'}
-                                                onChange={(e) => setTheme({ ...theme, btnTextTransform: e.target.value })}
-                                            >
-                                                <option value="none" className="bg-[#121212]">None</option>
-                                                <option value="uppercase" className="bg-[#121212]">Uppercase</option>
-                                                <option value="lowercase" className="bg-[#121212]">Lowercase</option>
-                                                <option value="capitalize" className="bg-[#121212]">Capitalize</option>
-                                            </SelectField>
-                                        </div>
-
-                                        {/* Font Size */}
-                                        <div className="flex flex-col gap-3">
-                                            <div className="flex items-center justify-between">
-                                                <label htmlFor="btn-font-size" className="text-[9px] font-bold text-white/30 uppercase tracking-wider">Size</label>
-                                                <span className="text-[9px] font-bold text-white">{theme.btnFontSize || 14}px</span>
-                                            </div>
-                                            <input
-                                                id="btn-font-size"
-                                                name="btn-font-size"
-                                                type="range"
-                                                min="10"
-                                                max="32"
-                                                value={theme.btnFontSize || 14}
-                                                onChange={(e) => setTheme({ ...theme, btnFontSize: parseInt(e.target.value) })}
-                                                className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white"
-                                            />
-                                        </div>
-
-                                        {/* Separator */}
-                                        <div className="h-px bg-white/5 my-2"></div>
-
-                                        {theme.btnTextColorType === 'solid' && (
-                                            <ColorPickerRow
-                                                label="Text Color"
-                                                value={theme.btnTextColor || '#FFFFFF'}
-                                                onChange={(color) => setTheme({ ...theme, btnTextColor: color })}
-                                                colorId="btn-text-color"
-                                                activeColor="purple"
-                                            />
-                                        )}
-
-                                        {theme.btnTextColorType === 'gradient' && (
-                                            <div className="flex flex-col gap-4 p-5 rounded-2xl bg-white/3 border border-white/5">
-                                                <ColorPickerRow
-                                                    label="Gradient Start"
-                                                    value={theme.btnTextColorGradient1 || '#ffffff'}
-                                                    onChange={(color) => setTheme({ ...theme, btnTextColorGradient1: color })}
-                                                    colorId="btn-text-gradient1"
-                                                    activeColor="purple"
-                                                />
-                                                <ColorPickerRow
-                                                    label="Gradient End"
-                                                    value={theme.btnTextColorGradient2 || '#cbd5e1'}
-                                                    onChange={(color) => setTheme({ ...theme, btnTextColorGradient2: color })}
-                                                    colorId="btn-text-gradient2"
-                                                    activeColor="purple"
-                                                />
-                                            </div>
-                                        )}
-
-                                        {theme.btnTextColorType === 'pattern' && (
-                                            <div className="flex flex-col gap-4 p-5 rounded-2xl bg-white/3 border border-white/5">
-                                                <div className="flex flex-col gap-3">
-                                                    <span className="text-[9px] font-black text-white/20 uppercase tracking-widest px-1">Pattern Type</span>
-                                                    <div className="grid grid-cols-4 gap-2">
-                                                        {['dots', 'stripes', 'noise', 'custom'].map((p) => (
-                                                            <button
-                                                                key={p}
-                                                                disabled={p === 'custom' && !theme.btnTextColorCustomPattern}
-                                                                onClick={() => setTheme({ ...theme, btnTextColorPattern: p })}
-                                                                className={`py-3 px-1 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${theme.btnTextColorPattern === p
-                                                                    ? 'bg-white text-black shadow-lg'
-                                                                    : 'text-white/30 hover:bg-white/5 hover:text-white'
-                                                                    } ${p === 'custom' && !theme.btnTextColorCustomPattern ? 'opacity-20 cursor-not-allowed' : ''}`}
-                                                            >
-                                                                {p === 'custom' && theme.btnTextColorCustomPattern ? (
-                                                                    <div className="w-4 h-4 rounded-sm border border-white/10 mx-auto" style={{ background: `url(${theme.btnTextColorCustomPattern}) center/cover` }} />
-                                                                ) : p}
-                                                            </button>
-                                                        ))}
-                                                    </div>
-                                                </div>
-
-                                                <ColorPickerRow
-                                                    label="Pattern Color"
-                                                    value={theme.btnTextColor}
-                                                    onChange={(color) => setTheme({ ...theme, btnTextColor: color })}
-                                                    colorId="btn-text-pattern-color"
-                                                    activeColor="purple"
-                                                />
-
-                                                <div className="flex flex-col gap-2 pt-2 border-t border-white/5">
-                                                    <span className="text-[9px] font-black text-white/20 uppercase tracking-widest px-1">Upload Custom Pattern</span>
-                                                    <label htmlFor="btn-text-pattern-upload" className="flex items-center justify-center gap-2 p-3 rounded-xl bg-black/20 border border-white/10 cursor-pointer hover:bg-white/5 hover:border-purple-500/20 transition-all group">
-                                                        <Upload size={16} className="text-white/20 group-hover:text-purple-400" />
-                                                        <span className="text-[10px] font-bold text-white/40 group-hover:text-white">Choose Image</span>
-                                                        <input
-                                                            type="file"
-                                                            id="btn-text-pattern-upload"
-                                                            name="btn-text-pattern-upload"
-                                                            className="hidden"
-                                                            accept="image/*"
-                                                            onChange={(e) => {
-                                                                const file = e.target.files[0];
-                                                                if (file) {
-                                                                    const reader = new FileReader();
-                                                                    reader.onloadend = () => {
-                                                                        setTheme({ ...theme, btnTextColorCustomPattern: reader.result, btnTextColorPattern: 'custom' });
-                                                                    };
-                                                                    reader.readAsDataURL(file);
-                                                                }
-                                                            }}
-                                                        />
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Button Shadow Panel */}
-                    <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5"
-                        style={{
-                            animation: 'fadeInUp 0.6s ease-out forwards',
-                            animationDelay: '0.15s',
-                            opacity: 0
-                        }}>
-                        <div className="flex items-center gap-3 px-1">
-                            <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
-                                <Box size={16} className="text-indigo-400" />
-                            </div>
-                            <div className="flex flex-col">
-                                <span className="text-sm font-bold text-white">Depth & Shadow</span>
-                                <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Button Elevation</span>
-                            </div>
-                        </div>
-
-                        <div className="flex flex-col gap-8">
-                            {/* Shadow Offset & Blur */}
-                            <div className="grid grid-cols-2 gap-6">
-                                <div className="flex flex-col gap-4">
-                                    <div className="flex items-center justify-between px-1">
-                                        <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">Offset X</span>
-                                        <span className="text-[10px] font-bold text-white">{theme.btnShadowX || 0}px</span>
-                                    </div>
-                                    <input
-                                        type="range" min="-20" max="20"
-                                        id="btn-shadow-x"
-                                        name="btn-shadow-x"
-                                        value={theme.btnShadowX || 0}
-                                        onChange={(e) => setTheme({ ...theme, btnShadowX: parseInt(e.target.value) })}
-                                        className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-indigo-500"
-                                    />
-                                </div>
-                                <div className="flex flex-col gap-4">
-                                    <div className="flex items-center justify-between px-1">
-                                        <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">Offset Y</span>
-                                        <span className="text-[10px] font-bold text-white">{theme.btnShadowY || 0}px</span>
-                                    </div>
-                                    <input
-                                        type="range" min="-20" max="20"
-                                        id="btn-shadow-y"
-                                        name="btn-shadow-y"
-                                        value={theme.btnShadowY || 0}
-                                        onChange={(e) => setTheme({ ...theme, btnShadowY: parseInt(e.target.value) })}
-                                        className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-indigo-500"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-6">
-                                <div className="flex flex-col gap-4">
-                                    <div className="flex items-center justify-between px-1">
-                                        <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">Blur</span>
-                                        <span className="text-[10px] font-bold text-white">{theme.btnShadowBlur || 0}px</span>
-                                    </div>
-                                    <input
-                                        type="range" min="0" max="50"
-                                        id="btn-shadow-blur"
-                                        name="btn-shadow-blur"
-                                        value={theme.btnShadowBlur || 0}
-                                        onChange={(e) => setTheme({ ...theme, btnShadowBlur: parseInt(e.target.value) })}
-                                        className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-indigo-500"
-                                    />
-                                </div>
-                                <div className="flex flex-col gap-4">
-                                    <div className="flex items-center justify-between px-1">
-                                        <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">Opacity</span>
-                                        <span className="text-[10px] font-bold text-white">{Math.round((theme.btnShadowOpacity || 0) * 100)}%</span>
-                                    </div>
-                                    <input
-                                        type="range" min="0" max="100"
-                                        id="btn-shadow-opacity"
-                                        name="btn-shadow-opacity"
-                                        value={(theme.btnShadowOpacity || 0) * 100}
-                                        onChange={(e) => setTheme({ ...theme, btnShadowOpacity: parseInt(e.target.value) / 100 })}
-                                        className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-indigo-500"
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Shadow Color Mode Selector */}
-                            <div className="flex flex-col gap-4 pt-4 border-t border-white/5">
-                                <div className="flex items-center justify-between p-2 rounded-2xl bg-black/20 border border-white/5">
-                                    <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] px-2">Shadow Mode</span>
-                                    <div className="flex bg-white/5 rounded-xl p-0.5">
-                                        {['solid', 'gradient', 'pattern'].map((type) => (
-                                            <button
-                                                key={type}
-                                                onClick={() => setTheme({ ...theme, btnShadowType: type })}
-                                                className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${(theme.btnShadowType || 'solid') === type
-                                                    ? 'bg-indigo-500/30 text-white shadow-xl shadow-indigo-500/10 border border-indigo-500/20'
-                                                    : 'text-white/20 hover:text-white'
-                                                    }`}
-                                            >
-                                                {type}
-                                            </button>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {(theme.btnShadowType === 'solid' || !theme.btnShadowType) && (
-                                    <ColorPickerRow
-                                        label="Shadow Color"
-                                        value={theme.btnShadowColor || '#000000'}
-                                        onChange={(color) => setTheme({ ...theme, btnShadowColor: color })}
-                                        colorId="btn-shadow-color"
-                                        activeColor="purple"
-                                    />
-                                )}
-
-                                {theme.btnShadowType === 'gradient' && (
-                                    <div className="flex flex-col gap-4 p-5 rounded-2xl bg-white/3 border border-white/5">
-                                        <ColorPickerRow
-                                            label="Gradient Start"
-                                            value={theme.btnShadowColorGradient1 || '#000000'}
-                                            onChange={(color) => setTheme({ ...theme, btnShadowColorGradient1: color })}
-                                            colorId="btn-shadow-gradient1"
-                                            activeColor="purple"
-                                        />
-                                        <ColorPickerRow
-                                            label="Gradient End"
-                                            value={theme.btnShadowColorGradient2 || '#000000'}
-                                            onChange={(color) => setTheme({ ...theme, btnShadowColorGradient2: color })}
-                                            colorId="btn-shadow-gradient2"
-                                            activeColor="purple"
-                                        />
-                                    </div>
-                                )}
-
-                                {theme.btnShadowType === 'pattern' && (
-                                    <div className="flex flex-col gap-4 p-5 rounded-2xl bg-white/3 border border-white/5">
-                                        <div className="flex flex-col gap-3">
-                                            <span className="text-[9px] font-black text-white/20 uppercase tracking-widest px-1">Pattern Type</span>
-                                            <div className="grid grid-cols-4 gap-2">
-                                                {['dots', 'stripes', 'noise', 'custom'].map((p) => (
-                                                    <button
-                                                        key={p}
-                                                        disabled={p === 'custom' && !theme.btnShadowCustomPattern}
-                                                        onClick={() => setTheme({ ...theme, btnShadowPattern: p })}
-                                                        className={`py-3 px-1 rounded-xl text-[9px] font-black uppercase tracking-widest border transition-all ${(theme.btnShadowPattern || 'dots') === p
-                                                            ? 'bg-indigo-500/20 border-indigo-500/40 text-white shadow-xl shadow-indigo-500/10'
-                                                            : 'bg-black/20 border-white/5 text-white/20 hover:border-white/10 hover:text-white/40'
-                                                            } ${p === 'custom' && !theme.btnShadowCustomPattern ? 'opacity-20 cursor-not-allowed' : ''}`}
-                                                    >
-                                                        {p === 'custom' && theme.btnShadowCustomPattern ? (
-                                                            <div className="w-4 h-4 rounded-sm border border-white/10 mx-auto" style={{ background: `url(${theme.btnShadowCustomPattern}) center/cover` }} />
-                                                        ) : p}
-                                                    </button>
-                                                ))}
-                                            </div>
-                                        </div>
-
-                                        <ColorPickerRow
-                                            label="Pattern Color"
-                                            value={theme.btnShadowColor || '#000000'}
-                                            onChange={(color) => setTheme({ ...theme, btnShadowColor: color })}
-                                            colorId="btn-shadow-pattern-color"
-                                            activeColor="purple"
-                                        />
-
-                                        <div className="flex flex-col gap-2 pt-2 border-t border-white/5">
-                                            <span className="text-[9px] font-black text-white/20 uppercase tracking-widest px-1">Upload Custom Pattern</span>
-                                            <label htmlFor="btn-shadow-pattern-upload" className="flex items-center justify-center gap-2 p-3 rounded-xl bg-black/20 border border-white/10 cursor-pointer hover:bg-white/5 hover:border-indigo-500/20 transition-all group">
-                                                <Upload size={16} className="text-white/20 group-hover:text-indigo-400" />
-                                                <span className="text-[10px] font-bold text-white/40 group-hover:text-white">Choose Image</span>
-                                                <input
-                                                    type="file"
-                                                    id="btn-shadow-pattern-upload"
-                                                    name="btn-shadow-pattern-upload"
-                                                    className="hidden"
-                                                    accept="image/*"
-                                                    onChange={(e) => {
-                                                        const file = e.target.files[0];
-                                                        if (file) {
-                                                            const reader = new FileReader();
-                                                            reader.onloadend = () => {
-                                                                setTheme({ ...theme, btnShadowCustomPattern: reader.result, btnShadowPattern: 'custom' });
-                                                            };
-                                                            reader.readAsDataURL(file);
-                                                        }
-                                                    }}
-                                                />
-                                            </label>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Shadow Animation Selector */}
-                            <div className="flex flex-col gap-3 pt-6 border-t border-white/5">
-                                <span className="text-[10px] font-black text-white/20 uppercase tracking-widest px-1">Shadow Animation</span>
-                                <div className="grid grid-cols-2 gap-2">
-                                    {ANIMATION_OPTIONS.map(opt => (
-                                        <button
-                                            key={opt.id}
-                                            onClick={() => setTheme({ ...theme, btnShadowAnimation: opt.id })}
-                                            className={`py-3 px-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all border ${(theme.btnShadowAnimation || 'none') === opt.id
-                                                ? 'bg-indigo-500/20 text-white border-indigo-500/40 shadow-xl shadow-indigo-500/10'
-                                                : 'bg-black/20 text-white/30 border-white/5 hover:border-white/10 hover:text-white/60 hover:bg-white/5'
-                                                }`}
-                                        >
-                                            {opt.label}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Button Interactions Panel */}
-                    <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5">
-                        <div className="flex items-center gap-3 px-1">
-                            <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
-                                <Zap size={16} className="text-amber-400" />
-                            </div>
-                            <div className="flex flex-col">
-                                <span className="text-sm font-bold text-white">Interactions</span>
-                                <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Hover & Effects</span>
-                            </div>
-                        </div>
-
-                        <div className="flex flex-col gap-8">
-                            {/* Hover Effect */}
-                            <div className="flex flex-col gap-3">
-                                <span className="text-[10px] font-black text-white/20 uppercase tracking-widest px-1">Hover Response</span>
-                                <div className="grid grid-cols-4 gap-2">
-                                    {['none', 'lift', 'scale', 'glow'].map(opt => (
-                                        <button
-                                            key={opt}
-                                            onClick={() => setTheme({ ...theme, btnHoverEffect: opt })}
-                                            className={`py-3 px-1 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${theme.btnHoverEffect === opt
-                                                ? 'bg-amber-500/20 text-white border-amber-500/40 shadow-xl shadow-amber-500/10'
-                                                : 'bg-black/20 text-white/20 border-white/5 hover:border-white/10 hover:text-white/40'
-                                                }`}
-                                        >
-                                            {opt}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Press Effect */}
-                            <div className="flex flex-col gap-3 pt-6 border-t border-white/5">
-                                <span className="text-[10px] font-black text-white/20 uppercase tracking-widest px-1">Press Response</span>
-                                <div className="grid grid-cols-3 gap-3">
-                                    {['none', 'push', 'inset'].map(opt => (
-                                        <button
-                                            key={opt}
-                                            onClick={() => setTheme({ ...theme, btnPressEffect: opt })}
-                                            className={`py-3 px-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${theme.btnPressEffect === opt
-                                                ? 'bg-amber-500/20 text-white border-amber-500/40 shadow-xl shadow-amber-500/10'
-                                                : 'bg-black/20 text-white/20 border-white/5 hover:border-white/10 hover:text-white/40'
-                                                }`}
-                                        >
-                                            {opt}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Animation Effect */}
-                            <div className="flex flex-col gap-3 pt-6 border-t border-white/5">
-                                <span className="text-[10px] font-black text-white/20 uppercase tracking-widest px-1">Entrance Animation</span>
-                                <div className="grid grid-cols-2 gap-2">
-                                    {ANIMATION_OPTIONS.map(opt => (
-                                        <button
-                                            key={opt.id}
-                                            onClick={() => setTheme({ ...theme, btnAnimation: opt.id })}
-                                            className={`py-3 px-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all border ${(theme.btnAnimation || 'none') === opt.id
-                                                ? 'bg-amber-500/20 text-white border-amber-500/40 shadow-xl shadow-amber-500/10'
-                                                : 'bg-black/20 text-white/30 border-white/5 hover:border-white/10 hover:text-white/60 hover:bg-white/5'
-                                                }`}
-                                        >
-                                            {opt.label}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {subTab === 'footer' && (
-                <div className="flex flex-col gap-8">
-                    <div className="flex items-center gap-4 px-1">
-                        <div className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shadow-xl shadow-purple-500/5">
-                            <Footprints size={24} className="text-purple-400" />
-                        </div>
-                        <div className="flex flex-col">
-                            <h2 className="text-xl font-bold text-white tracking-tight">Footer</h2>
-                            <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em]">Minimalist & Compact Layout</p>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-6">
-                        {/* Greeting Card Section */}
-                        <div className="flex flex-col gap-6 p-6 rounded-2xl bg-white/3 border border-white/5">
-                            <div className="flex items-center justify-between border-b border-white/5 pb-4">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
-                                        <Heart size={16} className="text-purple-400" />
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <span className="text-sm font-bold text-white">Greeting Card</span>
-                                        <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Visibility Control</span>
-                                    </div>
-                                </div>
-                                <button
-                                    onClick={() => setTheme({ ...theme, showFooter: !theme.showFooter })}
-                                    className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border ${theme.showFooter ? 'bg-purple-500/10 border-purple-500/30 text-purple-400' : 'bg-white/5 border-white/10 text-white/40'}`}
-                                >
-                                    {theme.showFooter ? 'Enabled' : 'Disabled'}
-                                </button>
-                            </div>
-
-                            {theme.showFooter && (
-                                <div className="flex flex-col gap-4">
-                                    <div className="flex flex-col gap-2">
-                                        <label htmlFor="footer-greeting-title" className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Greeting Title</label>
-                                        <input
-                                            id="footer-greeting-title"
-                                            name="footer-greeting-title"
-                                            type="text"
-                                            value={theme.footerGreetingTitle}
-                                            onChange={(e) => setTheme({ ...theme, footerGreetingTitle: e.target.value })}
-                                            placeholder="Enter title..."
-                                            className="w-full bg-white/2 border border-white/5 rounded-xl px-4 py-3 text-sm font-bold text-white outline-none focus:border-purple-500/30"
-                                        />
-                                    </div>
-                                    <div className="flex flex-col gap-2">
-                                        <label htmlFor="footer-greeting-desc" className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Message Description</label>
-                                        <textarea
-                                            id="footer-greeting-desc"
-                                            name="footer-greeting-desc"
-                                            value={theme.footerGreetingDesc}
-                                            onChange={(e) => setTheme({ ...theme, footerGreetingDesc: e.target.value })}
-                                            placeholder="Enter description..."
-                                            rows={2}
-                                            className="w-full bg-white/2 border border-white/5 rounded-xl px-4 py-3 text-sm font-medium text-white/60 outline-none focus:border-purple-500/30 resize-none leading-relaxed"
-                                        />
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Footer Styling Section */}
-                        <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/10">
-                            <div className="flex items-center gap-3 border-b border-white/5 pb-4">
-                                <div className="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center">
-                                    <Palette size={16} className="text-orange-400" />
-                                </div>
-                                <div className="flex flex-col">
-                                    <span className="text-sm font-bold text-white">Appearance</span>
-                                    <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Design & Aesthetics</span>
-                                </div>
-                            </div>
-
-                            {/* Style Presets */}
-                            <div className="flex flex-col gap-3">
-                                <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Style</label>
-                                <div className="grid grid-cols-3 gap-3">
-                                    {[
-                                        { id: 'solid', label: 'Solid', icon: <div className="w-10 h-5 bg-current rounded-sm" /> },
-                                        { id: 'glass', label: 'Glass', icon: <div className="w-10 h-5 bg-current/20 rounded-sm border border-current/20" /> },
-                                        { id: 'outline', label: 'Outline', icon: <div className="w-10 h-5 bg-transparent border-2 border-current rounded-sm" /> }
-                                    ].map(opt => (
-                                        <button
-                                            key={opt.id}
-                                            onClick={() => setTheme({ ...theme, footerBtnStyle: opt.id })}
-                                            className={`flex flex-col items-center gap-3 p-4 rounded-2xl border-2 ${theme.footerBtnStyle === opt.id
-                                                ? 'bg-white text-black border-white shadow-2xl shadow-white/10'
-                                                : 'bg-white/5 text-white/40 border-transparent hover:bg-white/10 hover:text-white'
-                                                }`}
-                                        >
-                                            {opt.icon}
-                                            <span className="text-[10px] font-bold uppercase tracking-widest">{opt.label}</span>
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Corner Roundness */}
-                            <div className="flex flex-col gap-3 py-6 border-y border-white/5">
-                                <div className="flex items-center justify-between">
-                                    <label htmlFor="footer-corner-roundness" className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Corner Roundness</label>
-                                    <span className="text-[10px] font-bold text-white">{theme.footerBtnRadius}px</span>
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <input
-                                        id="footer-corner-roundness"
-                                        name="footer-corner-roundness"
-                                        type="range"
-                                        min="0"
-                                        max="40"
-                                        value={theme.footerBtnRadius}
-                                        onChange={(e) => setTheme({ ...theme, footerBtnRadius: parseInt(e.target.value) })}
-                                        className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white"
-                                    />
-                                    <div className="flex justify-between px-0.5">
-                                        <span className="text-[8px] font-bold text-white/20 uppercase tracking-widest">Square</span>
-                                        <span className="text-[8px] font-bold text-white/20 uppercase tracking-widest">Full</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Animation */}
-                            <div className="py-6 border-t border-white/5">
-                                <SelectField
-                                    id="footer-animation-select"
-                                    name="footer-animation"
-                                    label="Animation"
-                                    value={theme.footerAnimation || 'none'}
-                                    onChange={(e) => setTheme({ ...theme, footerAnimation: e.target.value })}
-                                >
-                                    {ANIMATION_OPTIONS.map(opt => (
-                                        <option key={opt.id} value={opt.id} className="bg-[#121212]">{opt.label}</option>
-                                    ))}
-                                </SelectField>
-                            </div>
-
-                            {/* Body / Text Toggle */}
-                            <div className="flex flex-col gap-4">
-                                <div className="flex bg-white/5 rounded-2xl p-1.5 self-start">
-                                    <button
-                                        onClick={() => setFooterDesignSubTab('body')}
-                                        className={`px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest ${footerDesignSubTab === 'body' ? 'bg-white text-black shadow-lg' : 'text-white/40 hover:text-white'}`}
-                                    >
-                                        Body
-                                    </button>
-                                    <button
-                                        onClick={() => setFooterDesignSubTab('text')}
-                                        className={`px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest ${footerDesignSubTab === 'text' ? 'bg-white text-black shadow-lg' : 'text-white/40 hover:text-white'}`}
-                                    >
-                                        Text
-                                    </button>
-                                </div>
-
-                                {/* Mode Selector */}
-                                <div className="flex items-center justify-between mt-2">
-                                    <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest">
-                                        {footerDesignSubTab === 'body' ? 'Background Mode' : 'Text Mode'}
-                                    </label>
-                                    <div className="flex bg-white/5 rounded-lg p-0.5">
-                                        {['solid', 'gradient', 'pattern'].map((type) => (
-                                            <button
-                                                key={type}
-                                                onClick={() => {
-                                                    const key = footerDesignSubTab === 'body' ? 'footerBtnColorType' : 'footerBtnTextColorType';
-                                                    setTheme({ ...theme, [key]: type });
-                                                }}
-                                                className={`px-3 py-1.5 rounded-md text-[9px] font-bold uppercase tracking-widest ${(footerDesignSubTab === 'body' ? theme.footerBtnColorType : theme.footerBtnTextColorType) === type
-                                                    ? 'bg-white/20 text-white shadow-sm shadow-black/20'
-                                                    : 'text-white/30 hover:text-white'
-                                                    }`}
-                                            >
-                                                {type}
-                                            </button>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {/* Sub-tab Content: BODY */}
-                                {footerDesignSubTab === 'body' && (
-                                    <div className="flex flex-col gap-4 mt-2">
-                                        {theme.footerBtnColorType === 'solid' && (
-                                            <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 group focus-within:border-white/10">
-                                                <div className="relative w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-white/10">
-                                                    <input
-                                                        id="footer-body-color"
-                                                        name="footer-body-color"
-                                                        type="color"
-                                                        value={theme.footerBtnColor || '#ffffff'}
-                                                        onChange={(e) => setTheme({ ...theme, footerBtnColor: e.target.value })}
-                                                        className="absolute inset-0 w-[150%] h-[150%] -translate-x-[25%] -translate-y-[25%] cursor-pointer"
-                                                    />
-                                                </div>
-                                                <div className="flex flex-col gap-0.5">
-                                                    <input
-                                                        id="footer-body-color-hex"
-                                                        name="footer-body-color-hex"
-                                                        type="text"
-                                                        value={theme.footerBtnColor || '#ffffff'}
-                                                        onChange={(e) => setTheme({ ...theme, footerBtnColor: e.target.value })}
-                                                        className="bg-transparent text-sm font-bold text-white outline-none uppercase"
-                                                    />
-                                                    <span className="text-[10px] text-white/30 font-bold uppercase tracking-widest">Footer Base</span>
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {theme.footerBtnColorType === 'gradient' && (
-                                            <div className="grid grid-cols-2 gap-3">
-                                                <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/5">
-                                                    <input
-                                                        id="footer-body-gradient-1"
-                                                        name="footer-body-gradient-1"
-                                                        type="color"
-                                                        value={theme.footerBtnColorGradient1 || '#8228d9'}
-                                                        onChange={(e) => setTheme({ ...theme, footerBtnColorGradient1: e.target.value })}
-                                                        className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer"
-                                                    />
-                                                    <span className="text-[10px] font-bold text-white uppercase">{theme.footerBtnColorGradient1}</span>
-                                                </div>
-                                                <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/5">
-                                                    <input
-                                                        id="footer-body-gradient-2"
-                                                        name="footer-body-gradient-2"
-                                                        type="color"
-                                                        value={theme.footerBtnColorGradient2 || '#6366f1'}
-                                                        onChange={(e) => setTheme({ ...theme, footerBtnColorGradient2: e.target.value })}
-                                                        className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer"
-                                                    />
-                                                    <span className="text-[10px] font-bold text-white uppercase">{theme.footerBtnColorGradient2}</span>
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {theme.footerBtnColorType === 'pattern' && (
-                                            <div className="flex flex-col gap-4">
-                                                <div className="flex items-center justify-between p-1.5 rounded-2xl bg-white/5 border border-white/5">
-                                                    <div className="grid grid-cols-4 gap-2 w-full">
-                                                        {['dots', 'stripes', 'noise', 'custom'].map((p) => (
-                                                            <button
-                                                                key={p}
-                                                                disabled={p === 'custom' && !theme.footerBtnColorCustomPattern}
-                                                                onClick={() => setTheme({ ...theme, footerBtnColorPattern: p })}
-                                                                className={`py-2 px-1 rounded-xl text-[9px] font-bold uppercase tracking-widest ${theme.footerBtnColorPattern === p
-                                                                    ? 'bg-white text-black shadow-lg'
-                                                                    : 'text-white/30 hover:bg-white/5 hover:text-white'
-                                                                    } ${p === 'custom' && !theme.footerBtnColorCustomPattern ? 'opacity-20 cursor-not-allowed' : ''}`}
-                                                            >
-                                                                {p === 'custom' && theme.footerBtnColorCustomPattern ? (
-                                                                    <div className="w-4 h-4 rounded-sm border border-white/10 mx-auto" style={{ background: `url(${theme.footerBtnColorCustomPattern}) center/cover` }} />
-                                                                ) : p}
-                                                            </button>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                                <div className="flex items-center justify-between p-3 rounded-2xl bg-white/5 border border-white/5">
-                                                    <div className="flex flex-col gap-0.5">
-                                                        <span className="text-[9px] text-white/30 font-bold uppercase">Color Filter</span>
-                                                        <div className="flex items-center gap-2">
-                                                            <input
-                                                                id="footer-body-pattern-color"
-                                                                name="footer-body-pattern-color"
-                                                                type="color"
-                                                                value={theme.footerBtnColor || '#ffffff'}
-                                                                onChange={(e) => setTheme({ ...theme, footerBtnColor: e.target.value })}
-                                                                className="w-6 h-6 rounded-md overflow-hidden cursor-pointer border border-white/10"
-                                                            />
-                                                            <span className="text-[10px] font-bold text-white uppercase">{theme.footerBtnColor}</span>
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex items-center gap-2 border-l border-white/5 pl-4">
-                                                        <input
-                                                            type="file"
-                                                            id="footer-body-pattern-upload"
-                                                            name="footer-body-pattern-upload"
-                                                            className="hidden"
-                                                            accept="image/*"
-                                                            onChange={(e) => {
-                                                                const file = e.target.files[0];
-                                                                if (file) {
-                                                                    const reader = new FileReader();
-                                                                    reader.onloadend = () => {
-                                                                        setTheme({ ...theme, footerBtnColorCustomPattern: reader.result, footerBtnColorPattern: 'custom' });
-                                                                    };
-                                                                    reader.readAsDataURL(file);
-                                                                }
-                                                            }}
-                                                        />
-                                                        <label
-                                                            htmlFor="footer-body-pattern-upload"
-                                                            className="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-[9px] font-bold text-white uppercase cursor-pointer whitespace-nowrap"
-                                                        >
-                                                            Upload +
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-
-                                {/* Sub-tab Content: TEXT */}
-                                {footerDesignSubTab === 'text' && (
-                                    <div className="flex flex-col gap-4 mt-2">
-                                        {/* Footer Typography Settings */}
-                                        <div className="flex flex-col gap-4 border-b border-white/5 pb-4 mb-2">
-                                            <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Typography</label>
-
-                                            {/* Font Family */}
-                                            <SelectField
-                                                id="footer-font-select"
-                                                name="footer-font"
+                                                id="title-font-select"
+                                                name="title-font"
                                                 label="Font Family"
-                                                value={theme.footerFont || 'Inter'}
-                                                onChange={(e) => setTheme({ ...theme, footerFont: e.target.value })}
+                                                value={theme.titleFont || 'Inter'}
+                                                onChange={(e) => setTheme({ ...theme, titleFont: e.target.value })}
                                             >
                                                 {FONTS.map(font => (
                                                     <option key={font} value={font} className="bg-[#121212]">{font}</option>
@@ -4189,28 +2098,27 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                             </SelectField>
 
                                             <div className="grid grid-cols-2 gap-3">
-                                                {/* Font Weight */}
                                                 <SelectField
-                                                    id="footer-weight-select"
-                                                    name="footer-weight"
+                                                    id="title-weight-select"
+                                                    name="title-weight"
                                                     label="Weight"
-                                                    value={theme.footerWeight || 400}
-                                                    onChange={(e) => setTheme({ ...theme, footerWeight: parseInt(e.target.value) })}
+                                                    value={theme.titleWeight || 700}
+                                                    onChange={(e) => setTheme({ ...theme, titleWeight: parseInt(e.target.value) })}
                                                 >
                                                     <option value="300" className="bg-[#121212]">Light</option>
                                                     <option value="400" className="bg-[#121212]">Regular</option>
                                                     <option value="500" className="bg-[#121212]">Medium</option>
                                                     <option value="600" className="bg-[#121212]">Semibold</option>
                                                     <option value="700" className="bg-[#121212]">Bold</option>
+                                                    <option value="800" className="bg-[#121212]">Extra Bold</option>
+                                                    <option value="900" className="bg-[#121212]">Black</option>
                                                 </SelectField>
-
-                                                {/* Text Transform */}
                                                 <SelectField
-                                                    id="footer-transform-select"
-                                                    name="footer-transform"
+                                                    id="title-transform-select"
+                                                    name="title-transform"
                                                     label="Transform"
-                                                    value={theme.footerTransform || 'none'}
-                                                    onChange={(e) => setTheme({ ...theme, footerTransform: e.target.value })}
+                                                    value={theme.titleTransform || 'none'}
+                                                    onChange={(e) => setTheme({ ...theme, titleTransform: e.target.value })}
                                                 >
                                                     <option value="none" className="bg-[#121212]">None</option>
                                                     <option value="uppercase" className="bg-[#121212]">Uppercase</option>
@@ -4218,103 +2126,125 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                     <option value="capitalize" className="bg-[#121212]">Capitalize</option>
                                                 </SelectField>
                                             </div>
-
-                                            {/* Font Size */}
-                                            <div className="flex flex-col gap-3">
-                                                <div className="flex items-center justify-between">
-                                                    <label htmlFor="footer-font-size" className="text-[9px] font-bold text-white/30 uppercase tracking-wider">Size</label>
-                                                    <span className="text-[9px] font-bold text-white">{theme.footerFontSize || 12}px</span>
-                                                </div>
-                                                <input
-                                                    id="footer-font-size"
-                                                    name="footer-font-size"
-                                                    type="range"
-                                                    min="10"
-                                                    max="24"
-                                                    value={theme.footerFontSize || 12}
-                                                    onChange={(e) => setTheme({ ...theme, footerFontSize: parseInt(e.target.value) })}
-                                                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white"
-                                                />
-                                            </div>
                                         </div>
-                                        {theme.footerBtnTextColorType === 'solid' && (
-                                            <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 focus-within:border-white/10">
-                                                <div className="relative w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-white/10">
-                                                    <input
-                                                        id="footer-text-color"
-                                                        name="footer-text-color"
-                                                        type="color"
-                                                        value={theme.footerBtnTextColor || '#ffffff'}
-                                                        onChange={(e) => setTheme({ ...theme, footerBtnTextColor: e.target.value })}
-                                                        className="absolute inset-0 w-[150%] h-[150%] -translate-x-[25%] -translate-y-[25%] cursor-pointer"
-                                                    />
-                                                </div>
-                                                <div className="flex flex-col gap-0.5">
-                                                    <input
-                                                        id="footer-text-color-hex"
-                                                        name="footer-text-color-hex"
-                                                        type="text"
-                                                        value={theme.footerBtnTextColor || '#ffffff'}
-                                                        onChange={(e) => setTheme({ ...theme, footerBtnTextColor: e.target.value })}
-                                                        className="bg-transparent text-sm font-bold text-white outline-none uppercase"
-                                                    />
-                                                    <span className="text-[10px] text-white/30 font-bold uppercase tracking-widest">Text Style</span>
+
+                                        <div className="flex flex-col gap-3 px-1">
+                                            <div className="flex items-center justify-between">
+                                                <label htmlFor="title-size-slider" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Font Size</label>
+                                                <span className="text-[10px] font-bold text-white">{theme.titleSize || 20}px</span>
+                                            </div>
+                                            <input
+                                                id="title-size-slider"
+                                                name="title-size"
+                                                type="range"
+                                                min="12"
+                                                max="64"
+                                                value={theme.titleSize || 20}
+                                                onChange={(e) => setTheme({ ...theme, titleSize: parseInt(e.target.value) })}
+                                                className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white"
+                                            />
+                                        </div>
+
+                                        {/* Title Animation */}
+                                        <div className="flex flex-col gap-2">
+                                            <SelectField
+                                                id="title-animation-select"
+                                                name="title-animation"
+                                                label="Title Animation"
+                                                value={theme.titleAnimation || 'none'}
+                                                onChange={(e) => setTheme({ ...theme, titleAnimation: e.target.value })}
+                                            >
+                                                {ANIMATION_OPTIONS.map(opt => (
+                                                    <option key={opt.id} value={opt.id} className="bg-[#121212]">{opt.label}</option>
+                                                ))}
+                                            </SelectField>
+                                        </div>
+
+
+                                        {/* Title Color Mode Selector */}
+                                        <div className="flex flex-col gap-4">
+                                            <div className="flex items-center justify-between px-1">
+                                                <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Title Color Mode</label>
+                                            </div>
+                                            <ModeSelector
+                                                mode={theme.titleColorType || 'solid'}
+                                                onChange={(mode) => setTheme({ ...theme, titleColorType: mode })}
+                                                activeColor="purple"
+                                            />
+                                        </div>
+
+                                        {/* Title Color Controls */}
+                                        {(!theme.titleColorType || theme.titleColorType === 'solid') && (
+                                            <ColorPickerRow
+                                                label="Title Color"
+                                                value={theme.titleColor || '#ffffff'}
+                                                onChange={(val) => setTheme({ ...theme, titleColor: val })}
+                                                colorId="title-color"
+                                                activeColor="purple"
+                                            />
+                                        )}
+
+                                        {theme.titleColorType === 'gradient' && (
+                                            <div className="flex flex-col gap-4">
+                                                <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Gradient Colors</span>
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    <div className="flex items-center gap-2 p-3 rounded-xl bg-black/20 border border-white/5">
+                                                        <input
+                                                            type="color"
+                                                            id="title-color-gradient-1"
+                                                            name="title-color-gradient-1"
+                                                            value={theme.titleColorGradient1 || '#8228d9'}
+                                                            onChange={(e) => setTheme({ ...theme, titleColorGradient1: e.target.value })}
+                                                            className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer border border-white/10"
+                                                        />
+                                                        <span className="text-[10px] font-mono font-bold text-white uppercase">{theme.titleColorGradient1 || '#8228d9'}</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-2 p-3 rounded-xl bg-black/20 border border-white/5">
+                                                        <input
+                                                            type="color"
+                                                            id="title-color-gradient-2"
+                                                            name="title-color-gradient-2"
+                                                            value={theme.titleColorGradient2 || '#6366f1'}
+                                                            onChange={(e) => setTheme({ ...theme, titleColorGradient2: e.target.value })}
+                                                            className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer border border-white/10"
+                                                        />
+                                                        <span className="text-[10px] font-mono font-bold text-white uppercase">{theme.titleColorGradient2 || '#6366f1'}</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         )}
 
-                                        {theme.footerBtnTextColorType === 'gradient' && (
-                                            <div className="grid grid-cols-2 gap-3">
-                                                <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/5">
-                                                    <input
-                                                        id="footer-text-gradient-1"
-                                                        name="footer-text-gradient-1"
-                                                        type="color"
-                                                        value={theme.footerBtnTextColorGradient1 || '#ffffff'}
-                                                        onChange={(e) => setTheme({ ...theme, footerBtnTextColorGradient1: e.target.value })}
-                                                        className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer"
-                                                    />
-                                                    <span className="text-[10px] font-bold text-white uppercase">{theme.footerBtnTextColorGradient1}</span>
-                                                </div>
-                                                <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/5">
-                                                    <input
-                                                        id="footer-text-gradient-2"
-                                                        name="footer-text-gradient-2"
-                                                        type="color"
-                                                        value={theme.footerBtnTextColorGradient2 || '#cbd5e1'}
-                                                        onChange={(e) => setTheme({ ...theme, footerBtnTextColorGradient2: e.target.value })}
-                                                        className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer"
-                                                    />
-                                                    <span className="text-[10px] font-bold text-white uppercase">{theme.footerBtnTextColorGradient2}</span>
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {theme.footerBtnTextColorType === 'pattern' && (
-                                            <div className="flex flex-col gap-3">
-                                                <div className="grid grid-cols-4 gap-2">
-                                                    {['dots', 'stripes', 'noise', 'custom'].map((p) => (
+                                        {theme.titleColorType === 'pattern' && (
+                                            <div className="flex flex-col gap-4">
+                                                <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Pattern Style</span>
+                                                <div className="grid grid-cols-3 gap-2">
+                                                    {['dots', 'stripes', 'custom'].map((p) => (
                                                         <button
                                                             key={p}
-                                                            disabled={p === 'custom' && !theme.footerBtnTextColorCustomPattern}
-                                                            onClick={() => setTheme({ ...theme, footerBtnTextColorPattern: p })}
-                                                            className={`py-2 px-1 rounded-xl text-[9px] font-bold uppercase tracking-widest ${theme.footerBtnTextColorPattern === p
-                                                                ? 'bg-white text-black shadow-lg'
-                                                                : 'text-white/30 hover:bg-white/5 hover:text-white'
-                                                                } ${p === 'custom' && !theme.footerBtnTextColorCustomPattern ? 'opacity-20 cursor-not-allowed' : ''}`}
+                                                            disabled={p === 'custom' && !theme.titleColorCustomPattern}
+                                                            onClick={() => setTheme({ ...theme, titleColorPattern: p })}
+                                                            className={`py-2.5 px-2 rounded-xl text-[9px] font-bold uppercase tracking-widest transition-all ${theme.titleColorPattern === p
+                                                                ? 'bg-purple-500/20 text-purple-400 border border-purple-500/20'
+                                                                : 'bg-white/5 text-white/40 hover:bg-white/10 hover:text-white border border-white/5'
+                                                                } ${p === 'custom' && !theme.titleColorCustomPattern ? 'opacity-20 cursor-not-allowed' : ''}`}
                                                         >
-                                                            {p === 'custom' && theme.footerBtnTextColorCustomPattern ? (
-                                                                <div className="w-4 h-4 rounded-sm border border-white/10 mx-auto" style={{ background: `url(${theme.footerBtnTextColorCustomPattern}) center/cover` }} />
-                                                            ) : p}
+                                                            {p}
                                                         </button>
                                                     ))}
                                                 </div>
-                                                {theme.footerBtnTextColorPattern === 'custom' && (
-                                                    <div className="flex items-center gap-2 mt-1">
+                                                <ColorPickerRow
+                                                    label="Pattern Color"
+                                                    value={theme.titleColor || '#ffffff'}
+                                                    onChange={(val) => setTheme({ ...theme, titleColor: val })}
+                                                    colorId="title-pattern-color"
+                                                    activeColor="purple"
+                                                />
+                                                {theme.titleColorPattern === 'custom' && (
+                                                    <div className="flex items-center gap-2">
                                                         <input
                                                             type="file"
-                                                            id="footer-text-pattern-upload"
-                                                            name="footer-text-pattern-upload"
+                                                            id="title-pattern-upload"
+                                                            name="title-pattern-upload"
                                                             className="hidden"
                                                             accept="image/*"
                                                             onChange={(e) => {
@@ -4322,559 +2252,2663 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                                                                 if (file) {
                                                                     const reader = new FileReader();
                                                                     reader.onloadend = () => {
-                                                                        setTheme({ ...theme, footerBtnTextColorCustomPattern: reader.result, footerBtnTextColorPattern: 'custom' });
+                                                                        setTheme({ ...theme, titleColorCustomPattern: reader.result, titleColorPattern: 'custom' });
                                                                     };
                                                                     reader.readAsDataURL(file);
                                                                 }
                                                             }}
                                                         />
                                                         <label
-                                                            htmlFor="footer-text-pattern-upload"
-                                                            className="w-full text-center px-4 py-3 rounded-xl bg-white/5 border border-dashed border-white/20 hover:border-white/40 text-[10px] font-bold text-white/40 uppercase cursor-pointer"
+                                                            htmlFor="title-pattern-upload"
+                                                            className="w-full text-center px-4 py-3 rounded-xl bg-white/5 border border-dashed border-white/20 hover:border-purple-500/40 text-[10px] font-bold text-white/40 uppercase cursor-pointer transition-all"
                                                         >
-                                                            Change Custom Pattern
+                                                            Upload Pattern +
                                                         </label>
                                                     </div>
                                                 )}
                                             </div>
                                         )}
                                     </div>
-                                )}
-                            </div>
 
-                            {/* Shadow Section */}
-                            <div className="flex flex-col gap-6 pt-6 border-t border-white/5">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-8 h-8 rounded-lg bg-pink-500/10 border border-pink-500/20 flex items-center justify-center">
-                                        <Layers size={16} className="text-pink-400" />
+                                    {/* Bio Settings */}
+                                    {/* Bio Input Section */}
+                                    <div className="flex flex-col gap-2 px-2 pb-6">
+                                        <div className="flex items-center justify-between px-1">
+                                            <label htmlFor="editor-profile-bio" className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Bio Description</label>
+                                            <button
+                                                onClick={() => setProfile({ ...profile, showBio: !profile.showBio })}
+                                                className={`px-4 py-2.5 rounded-full border border-white/10 hover:bg-white/5 text-[11px] font-bold flex items-center gap-2 transition-all hover:scale-105 shadow-xl shadow-white/5 ${profile.showBio !== false ? 'text-white' : 'text-white/40'}`}
+                                            >
+                                                {profile.showBio !== false ? <EyeOff size={12} /> : <Eye size={12} />}
+                                                {profile.showBio !== false ? 'Hide' : 'Show'}
+                                            </button>
+                                        </div>
+                                        <textarea
+                                            id="editor-profile-bio"
+                                            name="editor-profile-bio"
+                                            value={profile.bio}
+                                            onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
+                                            rows={2}
+                                            className="w-full bg-white/3 border border-white/5 rounded-xl px-5 py-3 text-sm font-medium text-white outline-none focus:border-purple-500/20 focus:bg-white/5 transition-all placeholder:text-white/10 resize-none"
+                                            placeholder="Tell us about yourself..."
+                                        />
                                     </div>
-                                    <div className="flex flex-col">
-                                        <span className="text-sm font-bold text-white">Shadow</span>
-                                        <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Depth & Dimension</span>
-                                    </div>
-                                </div>
 
-                                <div className="grid grid-cols-2 gap-4">
-                                    {[
-                                        { label: 'X Offset', key: 'footerShadowX', min: -20, max: 20 },
-                                        { label: 'Y Offset', key: 'footerShadowY', min: -20, max: 20 },
-                                        { label: 'Blur', key: 'footerShadowBlur', min: 0, max: 50 },
-                                        { label: 'Spread', key: 'footerShadowSpread', min: -10, max: 20 },
-                                        { label: 'Opacity', key: 'footerShadowOpacity', min: 0, max: 1, step: 0.1 }
-                                    ].map(s => (
-                                        <div key={s.key} className="flex flex-col gap-2">
+                                    <div className="flex flex-col gap-6 pt-6 border-t border-white/5">
+                                        <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Bio Text Appearance</span>
+
+                                        <div className="flex flex-col gap-2">
+                                            <SelectField
+                                                id="header-layout-select"
+                                                name="header-layout"
+                                                label="Header Layout"
+                                                value={profile.headerLayout || 'classic'}
+                                                onChange={(e) => setProfile({ ...profile, headerLayout: e.target.value })}
+                                            >
+                                                <option value="classic" className="bg-[#121212]">Classic</option>
+                                                <option value="modern" className="bg-[#121212]">Modern</option>
+                                                <option value="minimal" className="bg-[#121212]">Minimal</option>
+                                            </SelectField>
+                                        </div>
+
+                                        <div className="flex flex-col gap-2">
+                                            <SelectField
+                                                id="header-size-select"
+                                                name="header-size"
+                                                label="Header Size"
+                                                value={profile.headerSize || 'small'}
+                                                onChange={(e) => setProfile({ ...profile, headerSize: e.target.value })}
+                                            >
+                                                <option value="small" className="bg-[#121212]">Small</option>
+                                                <option value="medium" className="bg-[#121212]">Medium</option>
+                                                <option value="large" className="bg-[#121212]">Large</option>
+                                            </SelectField>
+                                        </div>
+                                        <div className="grid grid-cols-1 gap-4">
+                                            <SelectField
+                                                id="bio-font-select"
+                                                name="bio-font"
+                                                label="Font Family"
+                                                value={theme.pageFont || 'Inter'}
+                                                onChange={(e) => setTheme({ ...theme, pageFont: e.target.value })}
+                                            >
+                                                {FONTS.map(font => (
+                                                    <option key={font} value={font} className="bg-[#121212]">{font}</option>
+                                                ))}
+                                            </SelectField>
+
+                                            <div className="grid grid-cols-2 gap-3">
+                                                <SelectField
+                                                    id="bio-weight-select"
+                                                    name="bio-weight"
+                                                    label="Weight"
+                                                    value={theme.pageWeight || 400}
+                                                    onChange={(e) => setTheme({ ...theme, pageWeight: parseInt(e.target.value) })}
+                                                >
+                                                    <option value="300" className="bg-[#121212]">Light</option>
+                                                    <option value="400" className="bg-[#121212]">Regular</option>
+                                                    <option value="500" className="bg-[#121212]">Medium</option>
+                                                    <option value="600" className="bg-[#121212]">Semibold</option>
+                                                    <option value="700" className="bg-[#121212]">Bold</option>
+                                                </SelectField>
+                                                <SelectField
+                                                    id="bio-transform-select"
+                                                    name="bio-transform"
+                                                    label="Transform"
+                                                    value={theme.pageTransform || 'none'}
+                                                    onChange={(e) => setTheme({ ...theme, pageTransform: e.target.value })}
+                                                >
+                                                    <option value="none" className="bg-[#121212]">None</option>
+                                                    <option value="uppercase" className="bg-[#121212]">Uppercase</option>
+                                                    <option value="lowercase" className="bg-[#121212]">Lowercase</option>
+                                                    <option value="capitalize" className="bg-[#121212]">Capitalize</option>
+                                                </SelectField>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex flex-col gap-3 px-1">
                                             <div className="flex items-center justify-between">
-                                                <label htmlFor={`footer-shadow-${s.key}`} className="text-[8px] font-bold text-white/30 uppercase">{s.label}</label>
-                                                <span className="text-[8px] font-bold text-white">{theme[s.key]}{s.label === 'Opacity' ? '' : 'px'}</span>
+                                                <label htmlFor="bio-size-slider" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Bio Size</label>
+                                                <span className="text-[10px] font-bold text-white">{theme.pageSize || 14}px</span>
                                             </div>
                                             <input
-                                                id={`footer-shadow-${s.key}`}
-                                                name={`footer-shadow-${s.key}`}
+                                                id="bio-size-slider"
+                                                name="bio-size"
                                                 type="range"
-                                                min={s.min}
-                                                max={s.max}
-                                                step={s.step || 1}
-                                                value={theme[s.key]}
-                                                onChange={(e) => setTheme({ ...theme, [s.key]: parseFloat(e.target.value) })}
+                                                min="10"
+                                                max="32"
+                                                value={theme.pageSize || 14}
+                                                onChange={(e) => setTheme({ ...theme, pageSize: parseInt(e.target.value) })}
                                                 className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white"
                                             />
                                         </div>
+
+                                        <div className="flex flex-col gap-3">
+                                            <div className="flex items-center justify-between px-1">
+                                                <label htmlFor="header-spacing-input" className="text-[10px] font-black text-white/20 uppercase tracking-widest">Header Spacing</label>
+                                                <span className="text-[10px] font-bold text-white">{profile.headerSpacing || 24}px</span>
+                                            </div>
+                                            <input
+                                                id="header-spacing-input"
+                                                name="header-spacing"
+                                                type="range"
+                                                min="0"
+                                                max="100"
+                                                value={profile.headerSpacing || 24}
+                                                onChange={(e) => setProfile({ ...profile, headerSpacing: parseInt(e.target.value) })}
+                                                className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white"
+                                            />
+                                        </div>
+
+                                        {/* Bio Animation */}
+                                        <div className="flex flex-col gap-2">
+                                            <SelectField
+                                                id="bio-animation-select"
+                                                name="bio-animation"
+                                                label="Bio Animation"
+                                                value={theme.pageAnimation || 'none'}
+                                                onChange={(e) => setTheme({ ...theme, pageAnimation: e.target.value })}
+                                            >
+                                                {ANIMATION_OPTIONS.map(opt => (
+                                                    <option key={opt.id} value={opt.id} className="bg-[#121212]">{opt.label}</option>
+                                                ))}
+                                            </SelectField>
+                                        </div>
+
+
+                                        {/* Bio Color Mode Selector */}
+                                        <div className="flex flex-col gap-4">
+                                            <div className="flex items-center justify-between px-1">
+                                                <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Bio Color Mode</span>
+                                            </div>
+                                            <ModeSelector
+                                                mode={theme.pageColorType || 'solid'}
+                                                onChange={(mode) => setTheme({ ...theme, pageColorType: mode })}
+                                                activeColor="purple"
+                                            />
+                                        </div>
+
+                                        {/* Bio Color Controls */}
+                                        {(!theme.pageColorType || theme.pageColorType === 'solid') && (
+                                            <ColorPickerRow
+                                                label="Bio Color"
+                                                value={theme.pageColor || '#ffffff'}
+                                                onChange={(val) => setTheme({ ...theme, pageColor: val })}
+                                                colorId="bio-color"
+                                                activeColor="purple"
+                                            />
+                                        )}
+
+                                        {theme.pageColorType === 'gradient' && (
+                                            <div className="flex flex-col gap-4">
+                                                <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Gradient Colors</span>
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    <div className="flex items-center gap-2 p-3 rounded-xl bg-black/20 border border-white/5">
+                                                        <input
+                                                            type="color"
+                                                            id="page-color-gradient-1"
+                                                            name="page-color-gradient-1"
+                                                            value={theme.pageColorGradient1 || '#8228d9'}
+                                                            onChange={(e) => setTheme({ ...theme, pageColorGradient1: e.target.value })}
+                                                            className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer border border-white/10"
+                                                        />
+                                                        <span className="text-[10px] font-mono font-bold text-white uppercase">{theme.pageColorGradient1 || '#8228d9'}</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-2 p-3 rounded-xl bg-black/20 border border-white/5">
+                                                        <input
+                                                            type="color"
+                                                            id="page-color-gradient-2"
+                                                            name="page-color-gradient-2"
+                                                            value={theme.pageColorGradient2 || '#6366f1'}
+                                                            onChange={(e) => setTheme({ ...theme, pageColorGradient2: e.target.value })}
+                                                            className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer border border-white/10"
+                                                        />
+                                                        <span className="text-[10px] font-mono font-bold text-white uppercase">{theme.pageColorGradient2 || '#6366f1'}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {theme.pageColorType === 'pattern' && (
+                                            <div className="flex flex-col gap-4">
+                                                <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Pattern Style</span>
+                                                <div className="grid grid-cols-3 gap-2">
+                                                    {['dots', 'stripes', 'custom'].map((p) => (
+                                                        <button
+                                                            key={p}
+                                                            disabled={p === 'custom' && !theme.pageColorCustomPattern}
+                                                            onClick={() => setTheme({ ...theme, pageColorPattern: p })}
+                                                            className={`py-2.5 px-2 rounded-xl text-[9px] font-bold uppercase tracking-widest transition-all ${theme.pageColorPattern === p
+                                                                ? 'bg-purple-500/20 text-purple-400 border border-purple-500/20'
+                                                                : 'bg-white/5 text-white/40 hover:bg-white/10 hover:text-white border border-white/5'
+                                                                } ${p === 'custom' && !theme.pageColorCustomPattern ? 'opacity-20 cursor-not-allowed' : ''}`}
+                                                        >
+                                                            {p}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                                <ColorPickerRow
+                                                    label="Pattern Color"
+                                                    value={theme.pageColor || '#ffffff'}
+                                                    onChange={(val) => setTheme({ ...theme, pageColor: val })}
+                                                    colorId="bio-pattern-color"
+                                                    activeColor="purple"
+                                                />
+                                                {theme.pageColorPattern === 'custom' && (
+                                                    <div className="flex items-center gap-2">
+                                                        <input
+                                                            type="file"
+                                                            id="bio-pattern-upload"
+                                                            name="bio-pattern-upload"
+                                                            className="hidden"
+                                                            accept="image/*"
+                                                            onChange={(e) => {
+                                                                const file = e.target.files[0];
+                                                                if (file) {
+                                                                    const reader = new FileReader();
+                                                                    reader.onloadend = () => {
+                                                                        setTheme({ ...theme, pageColorCustomPattern: reader.result, pageColorPattern: 'custom' });
+                                                                    };
+                                                                    reader.readAsDataURL(file);
+                                                                }
+                                                            }}
+                                                        />
+                                                        <label
+                                                            htmlFor="bio-pattern-upload"
+                                                            className="w-full text-center px-4 py-3 rounded-xl bg-white/5 border border-dashed border-white/20 hover:border-purple-500/40 text-[10px] font-bold text-white/40 uppercase cursor-pointer transition-all"
+                                                        >
+                                                            Upload Pattern +
+                                                        </label>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {subTab === 'theme' && (
+                            <div className="flex flex-col gap-10">
+                                <div className="flex items-center gap-4 px-1">
+                                    <div className="w-12 h-12 rounded-2xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center shadow-xl shadow-orange-500/5">
+                                        <Palette size={24} className="text-orange-400" />
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <h2 className="text-xl font-bold text-white tracking-tight">Themes</h2>
+                                        <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em]">Select a visual preset</p>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+                                    {THEMES.map(t => (
+                                        <button
+                                            key={t.id}
+                                            onClick={() => setTheme({ ...theme, ...t, pageColor: t.color, titleColor: t.color })}
+                                            className="flex flex-col items-center gap-4 group relative"
+                                        >
+                                            <div
+                                                className={`w-full aspect-4/5 rounded-[2rem] border-2 p-4 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-500 ${theme.id === t.id ? 'border-orange-500/40 bg-orange-500/5 shadow-2xl shadow-orange-500/10' : 'border-white/5 bg-white/2 group-hover:border-white/10 group-hover:bg-white/5 group-hover:scale-[1.02]'}`}
+                                                style={{
+                                                    background: theme.id === t.id ? undefined : t.bg,
+                                                    backgroundImage: t.bg.includes('gradient') ? t.bg : undefined
+                                                }}
+                                            >
+                                                {t.id === 'custom' ? (
+                                                    <div className="flex flex-col items-center gap-3">
+                                                        <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
+                                                            <Paintbrush size={24} className="text-white/40" />
+                                                        </div>
+                                                        <span className="text-[10px] font-black uppercase tracking-widest text-white/20">Create Custom</span>
+                                                    </div>
+                                                ) : (
+                                                    <div className="flex flex-col items-center w-full gap-4">
+                                                        <span className="text-3xl font-black mb-2 filter drop-shadow-lg" style={{ color: t.color }}>Aa</span>
+                                                        <div className="w-full flex flex-col gap-2 p-2 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                                                            <div className="w-full h-4 rounded-lg shadow-sm" style={{ backgroundColor: t.accentColor, border: t.btnStyle === 'outline' ? `1px solid ${t.color}` : 'none' }} />
+                                                            <div className="w-2/3 h-1.5 rounded-full bg-white/10" />
+                                                            <div className="w-1/2 h-1.5 rounded-full bg-white/10" />
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {theme.id === t.id && (
+                                                    <div className="absolute top-4 right-4 w-6 h-6 rounded-full bg-orange-500 border border-orange-400 flex items-center justify-center shadow-lg shadow-orange-500/50 scale-110 active:scale-95 transition-transform">
+                                                        <Zap size={12} className="text-white fill-white" />
+                                                    </div>
+                                                )}
+
+                                                <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            </div>
+                                            <span className={`text-[10px] font-black uppercase tracking-widest transition-colors ${theme.id === t.id ? 'text-orange-400' : 'text-white/20 group-hover:text-white/40'}`}>{t.name}</span>
+                                        </button>
                                     ))}
                                 </div>
+                            </div>
+                        )}
 
-                                {/* Shadow Type Selector */}
-                                <div className="flex flex-col gap-3 pt-4 border-t border-white/5">
-                                    <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Shadow Type</label>
-                                    <div className="grid grid-cols-3 gap-2">
-                                        {['solid', 'gradient', 'pattern'].map((type) => (
-                                            <button
-                                                key={type}
-                                                onClick={() => setTheme({ ...theme, footerShadowType: type })}
-                                                className={`py-2 px-3 rounded-xl text-[10px] font-bold uppercase tracking-widest border transition-all ${theme.footerShadowType === type
-                                                    ? 'bg-white text-black border-white'
-                                                    : 'bg-white/5 text-white/40 border-white/5 hover:bg-white/10'
-                                                    }`}
-                                            >
-                                                {type}
-                                            </button>
-                                        ))}
+                        {subTab === 'wallpaper' && (
+                            <div className="flex flex-col gap-10">
+                                <div className="flex items-center gap-4 px-1">
+                                    <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shadow-xl shadow-emerald-500/5">
+                                        <Image size={24} className="text-emerald-400" />
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <h2 className="text-xl font-bold text-white tracking-tight">Wallpaper</h2>
+                                        <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em]">Customize your background</p>
                                     </div>
                                 </div>
 
-                                {/* Conditional Shadow Inputs */}
-                                {theme.footerShadowType === 'solid' && (
-                                    <div className="flex flex-col gap-2">
-                                        <label htmlFor="footer-shadow-color" className="text-[8px] font-bold text-white/30 uppercase">Color</label>
-                                        <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white/5 border border-white/5">
-                                            <input
-                                                id="footer-shadow-color"
-                                                name="footer-shadow-color"
-                                                type="color"
-                                                value={theme.footerShadowColor}
-                                                onChange={(e) => setTheme({ ...theme, footerShadowColor: e.target.value })}
-                                                className="w-6 h-6 rounded-md overflow-hidden cursor-pointer border border-white/10"
-                                            />
-                                            <span className="text-[10px] font-bold text-white uppercase">{theme.footerShadowColor}</span>
+                                <div className="flex flex-col gap-6 p-6 rounded-3xl bg-white/3 border border-white/5">
+                                    <div className="flex items-center gap-2 px-1">
+                                        <div className="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center border border-emerald-500/10">
+                                            <Layers size={12} className="text-emerald-400" />
                                         </div>
+                                        <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Wallpaper Style</span>
                                     </div>
-                                )}
 
-                                {theme.footerShadowType === 'gradient' && (
-                                    <div className="flex flex-col gap-4">
-                                        <div className="flex flex-col gap-3">
-                                            <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Gradient Colors</label>
-                                            <div className="grid grid-cols-2 gap-3">
-                                                <div className="flex items-center gap-3 p-2 rounded-xl bg-white/5 border border-white/5">
-                                                    <input
-                                                        id="footer-shadow-gradient-1"
-                                                        name="footer-shadow-gradient-1"
-                                                        type="color"
-                                                        value={theme.footerShadowColorGradient1 || '#000000'}
-                                                        onChange={(e) => setTheme({ ...theme, footerShadowColorGradient1: e.target.value })}
-                                                        className="w-6 h-6 rounded-lg overflow-hidden cursor-pointer"
-                                                    />
-                                                    <span className="text-[10px] font-bold text-white uppercase">{theme.footerShadowColorGradient1}</span>
-                                                </div>
-                                                <div className="flex items-center gap-3 p-2 rounded-xl bg-white/5 border border-white/5">
-                                                    <input
-                                                        id="footer-shadow-gradient-2"
-                                                        name="footer-shadow-gradient-2"
-                                                        type="color"
-                                                        value={theme.footerShadowColorGradient2 || '#000000'}
-                                                        onChange={(e) => setTheme({ ...theme, footerShadowColorGradient2: e.target.value })}
-                                                        className="w-6 h-6 rounded-lg overflow-hidden cursor-pointer"
-                                                    />
-                                                    <span className="text-[10px] font-bold text-white uppercase">{theme.footerShadowColorGradient2}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-
-                                {theme.footerShadowType === 'pattern' && (
-                                    <div className="flex flex-col gap-4">
-                                        <div className="flex flex-col gap-3">
-                                            <div className="flex items-center justify-between">
-                                                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Select Pattern</span>
-                                            </div>
-                                            <div className="grid grid-cols-4 gap-2">
-                                                {['dots', 'stripes', 'noise', 'custom'].map((p) => (
+                                    <div className="grid grid-cols-6 gap-3">
+                                        {[
+                                            { id: 'fill', label: 'Fill', icon: Square },
+                                            { id: 'gradient', label: 'Gradient', icon: Layers },
+                                            { id: 'blur', label: 'Blur', icon: Wand2 },
+                                            { id: 'pattern', label: 'Pattern', icon: LayoutGrid },
+                                            { id: 'image', label: 'Image', icon: Image, premium: true },
+                                            { id: 'video', label: 'Video', icon: Video, premium: true }
+                                        ].map(style => {
+                                            const Icon = style.icon;
+                                            return (
+                                                <div key={style.id} className="flex flex-col items-center gap-2">
                                                     <button
-                                                        key={p}
-                                                        disabled={p === 'custom' && !theme.footerShadowCustomPattern}
-                                                        onClick={() => setTheme({ ...theme, footerShadowPattern: p })}
-                                                        className={`py-2 px-1 rounded-xl text-[9px] font-bold uppercase tracking-widest transition-all ${theme.footerShadowPattern === p
-                                                            ? 'bg-white/20 text-white border border-white/20'
-                                                            : 'bg-white/5 text-white/40 border border-white/5 hover:bg-white/10'
-                                                            } ${p === 'custom' && !theme.footerShadowCustomPattern ? 'opacity-20 cursor-not-allowed' : ''}`}
+                                                        onClick={() => setTheme({ ...theme, wallpaperStyle: style.id })}
+                                                        className={`w-full aspect-square rounded-2xl border-2 flex flex-col items-center justify-center relative transition-all duration-300 ${theme.wallpaperStyle === style.id ? 'border-emerald-500/40 bg-emerald-500/10 shadow-lg shadow-emerald-500/5' : 'border-white/5 bg-white/2 hover:border-white/10 hover:bg-white/5'}`}
                                                     >
-                                                        {p === 'custom' && theme.footerShadowCustomPattern ? (
-                                                            <div className="w-4 h-4 rounded-sm border border-white/10 mx-auto" style={{ background: `url(${theme.footerShadowCustomPattern}) center/cover` }} />
-                                                        ) : p}
+                                                        {style.id === 'fill' && <div className="w-6 h-6 rounded-lg bg-gray-400/50 shadow-sm" />}
+                                                        {style.id === 'gradient' && <div className="w-6 h-6 rounded-lg bg-linear-to-br from-gray-300/50 to-gray-600/50 shadow-sm" />}
+                                                        {style.id === 'blur' && (
+                                                            <div className="relative w-6 h-6 flex items-center justify-center">
+                                                                <div className="w-5 h-5 rounded-full bg-gray-400/40 blur-[2px]" />
+                                                            </div>
+                                                        )}
+                                                        {style.id === 'pattern' && (
+                                                            <div className="grid grid-cols-2 gap-0.5 opacity-40">
+                                                                {[1, 2, 3, 4].map(i => <div key={i} className="w-2.5 h-2.5 bg-gray-300 rounded-[1px]" />)}
+                                                            </div>
+                                                        )}
+                                                        {(style.id === 'image' || style.id === 'video') && <Icon size={20} className="text-white/20" />}
+
+                                                        {style.premium && (
+                                                            <div className="absolute top-1.5 right-1.5 p-1 bg-emerald-500 rounded-full shadow-lg shadow-emerald-500/20">
+                                                                <Zap size={6} className="text-white fill-white" />
+                                                            </div>
+                                                        )}
+                                                    </button>
+                                                    <span className={`text-[9px] font-black uppercase tracking-widest transition-colors ${theme.wallpaperStyle === style.id ? 'text-emerald-400' : 'text-white/10'}`}>{style.label}</span>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+
+                                {/* Fill Specific Controls */}
+                                {theme.wallpaperStyle === 'fill' && (
+                                    <div className="flex flex-col gap-4 p-6 rounded-[2rem] bg-white/3 border border-white/5">
+                                        <div className="flex items-center gap-2 px-1">
+                                            <div className="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center border border-emerald-500/10">
+                                                <Square size={12} className="text-emerald-400" />
+                                            </div>
+                                            <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Solid Background</span>
+                                        </div>
+                                        <div className="flex items-center justify-between p-3 rounded-xl bg-black/20 border border-white/5 group focus-within:border-emerald-500/20 transition-all">
+                                            <div className="flex flex-col gap-1">
+                                                <label htmlFor="bg-fill-color" className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em]">Color Hex</label>
+                                                <input
+                                                    id="bg-fill-color"
+                                                    name="bg-fill-color"
+                                                    type="text"
+                                                    value={theme.bg || '#ffffff'}
+                                                    onChange={(e) => setTheme({ ...theme, bg: e.target.value })}
+                                                    className="bg-transparent border-none outline-none font-mono text-sm uppercase w-full text-white"
+                                                />
+                                            </div>
+                                            <div className="relative w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-white/10 shadow-lg">
+                                                <input
+                                                    id="bg-fill-color-picker"
+                                                    name="bg-fill-color-picker"
+                                                    type="color"
+                                                    value={theme.bg || '#ffffff'}
+                                                    onChange={(e) => setTheme({ ...theme, bg: e.target.value })}
+                                                    className="absolute inset-0 w-[150%] h-[150%] -translate-x-1/4 -translate-y-1/4 cursor-pointer"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Gradient Specific Controls */}
+                                {theme.wallpaperStyle === 'gradient' && (
+                                    <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5">
+                                        <div className="flex items-center gap-2 px-1">
+                                            <div className="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center border border-emerald-500/10">
+                                                <Layers size={12} className="text-emerald-400" />
+                                            </div>
+                                            <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Gradient Config</span>
+                                        </div>
+
+                                        <div className="grid grid-cols-2 gap-4">
+                                            {[
+                                                { id: 'start', key: '1', val: theme.gradientColor1 || '#ffffff', label: 'Start' },
+                                                { id: 'end', key: '2', val: theme.gradientColor2 || '#000000', label: 'End' }
+                                            ].map(c => (
+                                                <div key={c.key} className="flex items-center justify-between p-3 rounded-xl bg-black/10 border border-white/5">
+                                                    <div className="flex flex-col gap-0.5">
+                                                        <label htmlFor={`gradient-${c.id}-color`} className="text-[8px] font-black text-white/20 uppercase tracking-widest">{c.label}</label>
+                                                        <span className="text-[10px] font-mono text-white/60 uppercase">{c.val}</span>
+                                                    </div>
+                                                    <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-white/10">
+                                                        <input
+                                                            id={`gradient-${c.id}-color`}
+                                                            name={`gradient-${c.id}-color`}
+                                                            type="color"
+                                                            value={c.val}
+                                                            onChange={(e) => setTheme({ ...theme, [`gradientColor${c.key}`]: e.target.value })}
+                                                            className="absolute inset-0 w-[150%] h-[150%] -translate-x-1/4 -translate-y-1/4 cursor-pointer"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        <div className="flex flex-col gap-4">
+                                            <div className="flex items-center justify-between px-1">
+                                                <label htmlFor="gradient-angle-slider" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Direction / Angle</label>
+                                                <span className="text-[10px] font-bold text-white">{theme.gradientAngle || 135}°</span>
+                                            </div>
+                                            <input
+                                                id="gradient-angle-slider"
+                                                name="gradient-angle"
+                                                type="range"
+                                                min="0"
+                                                max="360"
+                                                value={theme.gradientAngle || 135}
+                                                onChange={(e) => setTheme({ ...theme, gradientAngle: parseInt(e.target.value) })}
+                                                className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                                            />
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Blur Specific Controls */}
+                                {theme.wallpaperStyle === 'blur' && (
+                                    <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5">
+                                        <div className="flex items-center gap-2 px-1">
+                                            <div className="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center border border-emerald-500/10">
+                                                <Wand2 size={12} className="text-emerald-400" />
+                                            </div>
+                                            <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Aurora Design</span>
+                                        </div>
+
+                                        <div className="flex items-center justify-between p-3 rounded-xl bg-black/20 border border-white/5 group focus-within:border-emerald-500/20 transition-all">
+                                            <div className="flex flex-col gap-1">
+                                                <label htmlFor="aurora-tint-color" className="text-[8px] font-black text-white/20 uppercase tracking-widest">Base Tint</label>
+                                                <span className="text-[10px] font-mono text-white/60 uppercase">{theme.blurColor || '#ffffff'}</span>
+                                            </div>
+                                            <div className="relative w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-white/10">
+                                                <input
+                                                    id="aurora-tint-color"
+                                                    name="aurora-tint-color"
+                                                    type="color"
+                                                    value={theme.blurColor || '#ffffff'}
+                                                    onChange={(e) => setTheme({ ...theme, blurColor: e.target.value })}
+                                                    className="absolute inset-0 w-[150%] h-[150%] -translate-x-1/4 -translate-y-1/4 cursor-pointer"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="flex flex-col gap-4">
+                                            <div className="flex items-center justify-between px-1">
+                                                <label htmlFor="aurora-intensity-slider" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Intensity</label>
+                                                <span className="text-[10px] font-bold text-white">{theme.blurIntensity}%</span>
+                                            </div>
+                                            <input
+                                                id="aurora-intensity-slider"
+                                                name="aurora-intensity"
+                                                type="range"
+                                                min="0"
+                                                max="100"
+                                                value={theme.blurIntensity}
+                                                onChange={(e) => setTheme({ ...theme, blurIntensity: parseInt(e.target.value) })}
+                                                className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                                            />
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Pattern Specific Controls */}
+                                {theme.wallpaperStyle === 'pattern' && (
+                                    <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5">
+                                        <div className="flex items-center gap-2 px-1">
+                                            <div className="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center border border-emerald-500/10">
+                                                <LayoutGrid size={12} className="text-emerald-400" />
+                                            </div>
+                                            <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Pattern Config</span>
+                                        </div>
+
+                                        {/* Pattern Style Selector */}
+                                        <div className="flex flex-col gap-4">
+                                            <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Pattern Style</label>
+                                            <div className="grid grid-cols-5 gap-2">
+                                                {[
+                                                    { id: 'dots', label: 'Dots' },
+                                                    { id: 'stripes', label: 'Stripes' },
+                                                    { id: 'grid', label: 'Grid' },
+                                                    { id: 'diagonal', label: 'Diagonal' },
+                                                    { id: 'waves', label: 'Waves' },
+                                                    { id: 'circles', label: 'Circles' },
+                                                    { id: 'hexagon', label: 'Hexagon' },
+                                                    { id: 'triangles', label: 'Triangles' },
+                                                    { id: 'zigzag', label: 'Zigzag' },
+                                                    { id: 'checkerboard', label: 'Checker' },
+                                                    { id: 'custom', label: 'Custom' }
+                                                ].map((p) => (
+                                                    <button
+                                                        key={p.id}
+                                                        disabled={p.id === 'custom' && !theme.customPatternImage}
+                                                        onClick={() => setTheme({ ...theme, patternType: p.id })}
+                                                        className={`py-2.5 px-2 rounded-xl text-[9px] font-bold uppercase tracking-widest transition-all ${theme.patternType === p.id
+                                                            ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 shadow-lg'
+                                                            : 'bg-white/5 text-white/40 hover:bg-white/10 hover:text-white border border-white/5'
+                                                            } ${p.id === 'custom' && !theme.customPatternImage ? 'opacity-30 cursor-not-allowed' : ''}`}
+                                                    >
+                                                        {p.label}
                                                     </button>
                                                 ))}
                                             </div>
                                         </div>
-                                        <div className="flex flex-col gap-3">
-                                            <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Pattern Color</span>
-                                            <div className="flex items-center gap-4 p-3 rounded-2xl bg-white/5 border border-white/5 group focus-within:border-white/10 transition-all">
+
+                                        {/* Upload Custom Pattern */}
+                                        {theme.patternType === 'custom' ? (
+                                            <div className="flex flex-col gap-3">
                                                 <input
-                                                    id="footer-shadow-pattern-color"
-                                                    name="footer-shadow-pattern-color"
-                                                    type="color"
-                                                    value={theme.footerShadowColor || '#000000'}
-                                                    onChange={(e) => setTheme({ ...theme, footerShadowColor: e.target.value })}
-                                                    className="w-6 h-6 rounded-md overflow-hidden cursor-pointer border border-white/10"
+                                                    type="file"
+                                                    id="wallpaper-pattern-upload"
+                                                    name="wallpaper-pattern-upload"
+                                                    className="hidden"
+                                                    accept="image/*"
+                                                    onChange={(e) => {
+                                                        const file = e.target.files[0];
+                                                        if (file) {
+                                                            const reader = new FileReader();
+                                                            reader.onloadend = () => {
+                                                                setTheme({ ...theme, customPatternImage: reader.result, patternType: 'custom' });
+                                                            };
+                                                            reader.readAsDataURL(file);
+                                                        }
+                                                    }}
                                                 />
-                                                <span className="text-[10px] font-bold text-white uppercase">{theme.footerShadowColor}</span>
+                                                {theme.customPatternImage ? (
+                                                    <div className="relative rounded-xl overflow-hidden border border-emerald-500/20 group">
+                                                        <img src={theme.customPatternImage} alt="Custom pattern" className="w-full h-24 object-cover" />
+                                                        <button
+                                                            onClick={() => setTheme({ ...theme, customPatternImage: null, patternType: 'dots' })}
+                                                            className="absolute top-2 right-2 w-8 h-8 bg-black/60 hover:bg-red-500/80 text-white rounded-full transition-all flex items-center justify-center backdrop-blur-md border border-white/10 opacity-0 group-hover:opacity-100"
+                                                        >
+                                                            <X size={14} />
+                                                        </button>
+                                                    </div>
+                                                ) : (
+                                                    <label
+                                                        htmlFor="wallpaper-pattern-upload"
+                                                        className="w-full text-center px-4 py-6 rounded-xl bg-white/5 border-2 border-dashed border-emerald-500/30 hover:border-emerald-500/60 text-[10px] font-bold text-white/40 uppercase cursor-pointer transition-all flex flex-col items-center gap-2"
+                                                    >
+                                                        <Upload size={20} className="text-emerald-400" />
+                                                        Upload Custom Pattern
+                                                    </label>
+                                                )}
+                                            </div>
+                                        ) : null}
+
+                                        <div className="flex items-center justify-between p-3 rounded-xl bg-black/20 border border-white/5 group focus-within:border-emerald-500/20 transition-all">
+                                            <div className="flex flex-col gap-1">
+                                                <label htmlFor="pattern-base-color" className="text-[8px] font-black text-white/20 uppercase tracking-widest">Base Color</label>
+                                                <span className="text-[10px] font-mono text-white/60 uppercase">{theme.patternColor || '#000000'}</span>
+                                            </div>
+                                            <div className="relative w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-white/10">
+                                                <input
+                                                    id="pattern-base-color"
+                                                    name="pattern-base-color"
+                                                    type="color"
+                                                    value={theme.patternColor || '#000000'}
+                                                    onChange={(e) => setTheme({ ...theme, patternColor: e.target.value })}
+                                                    className="absolute inset-0 w-[150%] h-[150%] -translate-x-1/4 -translate-y-1/4 cursor-pointer"
+                                                />
                                             </div>
                                         </div>
-                                        <div className="flex items-center gap-2 border-l border-white/5 pl-4">
-                                            <input
-                                                type="file"
-                                                id="footer-shadow-pattern-upload"
-                                                name="footer-shadow-pattern-upload"
-                                                className="hidden"
-                                                accept="image/*"
-                                                onChange={(e) => {
-                                                    const file = e.target.files[0];
-                                                    if (file) {
-                                                        const reader = new FileReader();
-                                                        reader.onloadend = () => {
-                                                            setTheme({ ...theme, footerShadowCustomPattern: reader.result, footerShadowPattern: 'custom' });
-                                                        };
-                                                        reader.readAsDataURL(file);
-                                                    }
-                                                }}
-                                            />
-                                            <label
-                                                htmlFor="footer-shadow-pattern-upload"
-                                                className="w-full text-center px-4 py-3 rounded-xl bg-white/5 border border-dashed border-white/20 hover:border-white/40 text-[10px] font-bold text-white/40 uppercase cursor-pointer"
-                                            >
-                                                Upload Pattern +
-                                            </label>
+
+                                        <div className="flex items-center justify-between p-3 rounded-xl bg-black/20 border border-white/5 group focus-within:border-emerald-500/20 transition-all">
+                                            <div className="flex flex-col gap-1">
+                                                <label htmlFor="pattern-bg-color" className="text-[8px] font-black text-white/20 uppercase tracking-widest">Background Color</label>
+                                                <span className="text-[10px] font-mono text-white/60 uppercase">{theme.patternBackgroundColor || theme.bg || '#000000'}</span>
+                                            </div>
+                                            <div className="relative w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-white/10">
+                                                <input
+                                                    id="pattern-bg-color"
+                                                    name="pattern-bg-color"
+                                                    type="color"
+                                                    value={theme.patternBackgroundColor || theme.bg || '#000000'}
+                                                    onChange={(e) => setTheme({ ...theme, patternBackgroundColor: e.target.value })}
+                                                    className="absolute inset-0 w-[150%] h-[150%] -translate-x-1/4 -translate-y-1/4 cursor-pointer"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="flex flex-col gap-4">
+                                                <div className="flex items-center justify-between px-1">
+                                                    <label htmlFor="pattern-opacity-slider" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Opacity</label>
+                                                    <span className="text-[10px] font-bold text-white">{Math.round((theme.patternOpacity ?? 0.1) * 100)}%</span>
+                                                </div>
+                                                <input
+                                                    id="pattern-opacity-slider"
+                                                    name="pattern-opacity"
+                                                    type="range"
+                                                    min="0"
+                                                    max="1"
+                                                    step="0.01"
+                                                    value={theme.patternOpacity ?? 0.1}
+                                                    onChange={(e) => setTheme({ ...theme, patternOpacity: parseFloat(e.target.value) })}
+                                                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                                                />
+                                            </div>
+                                            <div className="flex flex-col gap-4">
+                                                <div className="flex items-center justify-between px-1">
+                                                    <label htmlFor="pattern-blur-slider" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Blur</label>
+                                                    <span className="text-[10px] font-bold text-white">{theme.patternBlur ?? 0}px</span>
+                                                </div>
+                                                <input
+                                                    id="pattern-blur-slider"
+                                                    name="pattern-blur"
+                                                    type="range"
+                                                    min="0"
+                                                    max="20"
+                                                    value={theme.patternBlur ?? 0}
+                                                    onChange={(e) => setTheme({ ...theme, patternBlur: parseInt(e.target.value) })}
+                                                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 )}
-                            </div>
-                        </div>
 
-                        {/* Branding Section */}
-                        <div className="flex items-center justify-between p-6 rounded-2xl bg-white/3 border border-white/5">
-                            <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
-                                    <Zap size={16} className="text-indigo-400" />
-                                </div>
-                                <div className="flex flex-col">
-                                    <span className="text-sm font-bold text-white">Vlink Branding</span>
-                                    <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Logo Attribution</span>
-                                </div>
-                            </div>
-                            <button
-                                onClick={() => setTheme({ ...theme, showVlink: !theme.showVlink })}
-                                className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border ${theme.showVlink ? 'bg-indigo-500/10 border-indigo-500/30 text-indigo-400' : 'bg-white/5 border-white/10 text-white/40'}`}
-                            >
-                                {theme.showVlink ? 'Visible' : 'Hidden'}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+                                {/* Image Specific Controls */}
 
-            {subTab === 'socials' && (
-                <div className="flex flex-col gap-10">
-                    {/* Tab Title */}
-                    <div className="flex items-center gap-4 px-1">
-                        <div className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shadow-xl shadow-purple-500/5">
-                            <Share2 size={24} className="text-purple-400" />
-                        </div>
-                        <div className="flex flex-col">
-                            <h2 className="text-xl font-bold text-white tracking-tight">Social Icons</h2>
-                            <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em]">Platform Connections</p>
-                        </div>
-                    </div>
 
-                    {/* Style & Layout Controls */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="p-8 rounded-[2rem] bg-white/3 border border-white/5 flex flex-col gap-6">
-                            <div className="flex items-center gap-2 mb-2">
-                                <div className="w-6 h-6 rounded-lg bg-purple-500/10 flex items-center justify-center border border-purple-500/10">
-                                    <Layers size={12} className="text-purple-400" />
-                                </div>
-                                <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Display & Position</span>
-                            </div>
+                                {/* Image Specific Controls */}
+                                {theme.wallpaperStyle === 'image' && (
+                                    <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5">
+                                        <div className="flex items-center gap-2 px-1">
+                                            <div className="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center border border-emerald-500/10">
+                                                <Image size={12} className="text-emerald-400" />
+                                            </div>
+                                            <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Background Image</span>
+                                        </div>
 
-                            <div className="flex flex-col gap-4">
-                                <span className="text-xs font-bold text-white/60">Display Style</span>
-                                <div className="flex p-1 bg-black/40 rounded-xl border border-white/5">
+                                        <div className="flex flex-col gap-4">
+                                            {theme.backgroundImage ? (
+                                                <div className="flex flex-col gap-6">
+                                                    <div className="relative aspect-video rounded-2xl overflow-hidden group border border-white/10">
+                                                        <img src={theme.backgroundImage} className="w-full h-full object-cover" alt="Wallpaper" />
+                                                        <button
+                                                            onClick={() => setTheme({ ...theme, backgroundImage: null })}
+                                                            className="absolute top-4 right-4 w-10 h-10 bg-black/60 hover:bg-red-500/80 text-white rounded-full transition-all flex items-center justify-center backdrop-blur-md border border-white/10 opacity-0 group-hover:opacity-100"
+                                                        >
+                                                            <Trash2 size={16} />
+                                                        </button>
+                                                    </div>
+                                                    <div className="grid grid-cols-2 gap-4">
+                                                        <div className="flex flex-col gap-4">
+                                                            <div className="flex items-center justify-between px-1">
+                                                                <label htmlFor="wallpaper-image-opacity" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Opacity</label>
+                                                                <span className="text-[10px] font-bold text-white">{Math.round((theme.imageOpacity ?? 1) * 100)}%</span>
+                                                            </div>
+                                                            <input
+                                                                id="wallpaper-image-opacity"
+                                                                name="wallpaper-image-opacity"
+                                                                type="range"
+                                                                min="0"
+                                                                max="1"
+                                                                step="0.01"
+                                                                value={theme.imageOpacity ?? 1}
+                                                                onChange={(e) => setTheme({ ...theme, imageOpacity: parseFloat(e.target.value) })}
+                                                                className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                                                            />
+                                                        </div>
+                                                        <div className="flex flex-col gap-4">
+                                                            <div className="flex items-center justify-between px-1">
+                                                                <label htmlFor="wallpaper-image-blur" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Blur</label>
+                                                                <span className="text-[10px] font-bold text-white">{theme.imageBlur ?? 0}px</span>
+                                                            </div>
+                                                            <input
+                                                                id="wallpaper-image-blur"
+                                                                name="wallpaper-image-blur"
+                                                                type="range"
+                                                                min="0"
+                                                                max="100"
+                                                                value={theme.imageBlur ?? 0}
+                                                                onChange={(e) => setTheme({ ...theme, imageBlur: parseInt(e.target.value) })}
+                                                                className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <label htmlFor="bg-image-upload" className="flex flex-col items-center justify-center aspect-video rounded-[2rem] border-2 border-dashed border-white/5 bg-white/2 hover:bg-white/5 hover:border-emerald-500/20 transition-all cursor-pointer group">
+                                                    <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center border border-white/5 mb-3 group-hover:scale-110 group-hover:border-emerald-500/20 transition-all">
+                                                        <Upload size={20} className="text-white/20 group-hover:text-emerald-400" />
+                                                    </div>
+                                                    <span className="text-xs font-bold text-white/60">Choose Wallpaper Image</span>
+                                                    <span className="text-[9px] text-white/20 font-black uppercase tracking-widest mt-1">PNG, JPG up to 10MB</span>
+                                                    <input
+                                                        id="bg-image-upload"
+                                                        name="bg-image-upload"
+                                                        type="file"
+                                                        accept="image/*"
+                                                        className="hidden"
+                                                        onChange={(e) => {
+                                                            const file = e.target.files[0];
+                                                            if (file) {
+                                                                const url = URL.createObjectURL(file);
+                                                                setTheme({ ...theme, backgroundImage: url });
+                                                            }
+                                                        }}
+                                                    />
+                                                </label>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Video Specific Controls */}
+                                {theme.wallpaperStyle === 'video' && (
+                                    <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5">
+                                        <div className="flex items-center gap-2 px-1">
+                                            <div className="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center border border-emerald-500/10">
+                                                <Video size={12} className="text-emerald-400" />
+                                            </div>
+                                            <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Background Video</span>
+                                        </div>
+
+                                        <div className="flex flex-col gap-4">
+                                            {theme.backgroundVideo ? (
+                                                <div className="flex flex-col gap-6">
+                                                    <div className="relative aspect-video rounded-2xl overflow-hidden group border border-white/10">
+                                                        <video src={theme.backgroundVideo} className="w-full h-full object-cover" autoPlay muted loop />
+                                                        <button
+                                                            onClick={() => setTheme({ ...theme, backgroundVideo: null })}
+                                                            className="absolute top-4 right-4 w-10 h-10 bg-black/60 hover:bg-red-500/80 text-white rounded-full transition-all flex items-center justify-center backdrop-blur-md border border-white/10 opacity-0 group-hover:opacity-100"
+                                                        >
+                                                            <Trash2 size={16} />
+                                                        </button>
+                                                    </div>
+                                                    <div className="grid grid-cols-2 gap-4">
+                                                        <div className="flex flex-col gap-4">
+                                                            <div className="flex items-center justify-between px-1">
+                                                                <label htmlFor="wallpaper-video-opacity" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Opacity</label>
+                                                                <span className="text-[10px] font-bold text-white">{Math.round((theme.videoOpacity ?? 1) * 100)}%</span>
+                                                            </div>
+                                                            <input
+                                                                id="wallpaper-video-opacity"
+                                                                name="wallpaper-video-opacity"
+                                                                type="range"
+                                                                min="0"
+                                                                max="1"
+                                                                step="0.01"
+                                                                value={theme.videoOpacity ?? 1}
+                                                                onChange={(e) => setTheme({ ...theme, videoOpacity: parseFloat(e.target.value) })}
+                                                                className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                                                            />
+                                                        </div>
+                                                        <div className="flex flex-col gap-4">
+                                                            <div className="flex items-center justify-between px-1">
+                                                                <label htmlFor="wallpaper-video-blur" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Blur</label>
+                                                                <span className="text-[10px] font-bold text-white">{theme.videoBlur ?? 0}px</span>
+                                                            </div>
+                                                            <input
+                                                                id="wallpaper-video-blur"
+                                                                name="wallpaper-video-blur"
+                                                                type="range"
+                                                                min="0"
+                                                                max="100"
+                                                                value={theme.videoBlur ?? 0}
+                                                                onChange={(e) => setTheme({ ...theme, videoBlur: parseInt(e.target.value) })}
+                                                                className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <label htmlFor="bg-video-upload" className="flex flex-col items-center justify-center aspect-video rounded-[2rem] border-2 border-dashed border-white/5 bg-white/2 hover:bg-white/5 hover:border-emerald-500/20 transition-all cursor-pointer group">
+                                                    <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center border border-white/5 mb-3 group-hover:scale-110 group-hover:border-emerald-500/20 transition-all">
+                                                        <Video size={20} className="text-white/20 group-hover:text-emerald-400" />
+                                                    </div>
+                                                    <span className="text-xs font-bold text-white/60">Choose Wallpaper Video</span>
+                                                    <span className="text-[9px] text-white/20 font-black uppercase tracking-widest mt-1">MP4, MOV up to 50MB</span>
+                                                    <input
+                                                        id="bg-video-upload"
+                                                        name="bg-video-upload"
+                                                        type="file"
+                                                        accept="video/*"
+                                                        className="hidden"
+                                                        onChange={(e) => {
+                                                            const file = e.target.files[0];
+                                                            if (file) {
+                                                                const url = URL.createObjectURL(file);
+                                                                setTheme({ ...theme, backgroundVideo: url });
+                                                            }
+                                                        }}
+                                                    />
+                                                </label>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Noise Toggle */}
+                                <div className="flex items-center justify-between p-6 rounded-3xl bg-white/5 mt-4">
+                                    <div className="flex flex-col gap-1">
+                                        <span id="noise-toggle-label" className="text-sm font-bold text-white">Noise</span>
+                                        <span className="text-xs text-white/40">Add a subtle grain texture</span>
+                                    </div>
                                     <button
-                                        onClick={() => setTheme({ ...theme, socialStyle: 'icons-only' })}
-                                        className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${theme.socialStyle === 'icons-only' ? 'bg-purple-500/20 border-purple-500/40 text-white shadow-xl shadow-purple-500/5' : 'bg-transparent border-transparent text-white/40 hover:text-white/60'}`}
+                                        id="noise-toggle"
+                                        aria-labelledby="noise-toggle-label"
+                                        onClick={() => setTheme({ ...theme, noise: !theme.noise })}
+                                        className={`w-12 h-6 rounded-full relative ${theme.noise ? 'bg-white' : 'bg-white/10'}`}
                                     >
-                                        <Square size={14} />
-                                        Icons Only
+                                        <div className={`absolute top-1 w-4 h-4 rounded-full ${theme.noise ? 'left-7 bg-black' : 'left-1 bg-white/40'}`} />
                                     </button>
-                                    <button
-                                        onClick={() => setTheme({ ...theme, socialStyle: 'icon-text' })}
-                                        className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${theme.socialStyle === 'icon-text' ? 'bg-purple-500/20 border-purple-500/40 text-white shadow-xl shadow-purple-500/5' : 'bg-transparent border-transparent text-white/40 hover:text-white/60'}`}
-                                    >
-                                        <Type size={14} />
-                                        Icon + Text
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col gap-4">
-                                <span className="text-xs font-bold text-white/60">Position</span>
-                                <div className="flex p-1 bg-black/40 rounded-xl border border-white/5">
-                                    <button
-                                        onClick={() => setTheme({ ...theme, socialPosition: 'top' })}
-                                        className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${theme.socialPosition === 'top' ? 'bg-indigo-500/20 border-indigo-500/40 text-white shadow-xl shadow-indigo-500/5' : 'bg-transparent border-transparent text-white/40 hover:text-white/60'}`}
-                                    >
-                                        <ArrowUp size={14} />
-                                        Top
-                                    </button>
-                                    <button
-                                        onClick={() => setTheme({ ...theme, socialPosition: 'bottom' })}
-                                        className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${theme.socialPosition === 'bottom' ? 'bg-indigo-500/20 border-indigo-500/40 text-white shadow-xl shadow-indigo-500/5' : 'bg-transparent border-transparent text-white/40 hover:text-white/60'}`}
-                                    >
-                                        <ArrowDown size={14} />
-                                        Bottom
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col gap-4">
-                                <span className="text-xs font-bold text-white/60">Alignment</span>
-                                <div className="flex p-1 bg-black/40 rounded-xl border border-white/5">
-                                    <button
-                                        onClick={() => setTheme({ ...theme, socialAlignment: 'left' })}
-                                        className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${theme.socialAlignment === 'left' ? 'bg-purple-500/20 border-purple-500/40 text-white shadow-xl shadow-purple-500/5' : 'bg-transparent border-transparent text-white/40 hover:text-white/60'}`}
-                                    >
-                                        <AlignLeft size={14} />
-                                        Left
-                                    </button>
-                                    <button
-                                        onClick={() => setTheme({ ...theme, socialAlignment: 'center' })}
-                                        className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${theme.socialAlignment === 'center' ? 'bg-purple-500/20 border-purple-500/40 text-white shadow-xl shadow-purple-500/5' : 'bg-transparent border-transparent text-white/40 hover:text-white/60'}`}
-                                    >
-                                        <AlignCenter size={14} />
-                                        Center
-                                    </button>
-                                    <button
-                                        onClick={() => setTheme({ ...theme, socialAlignment: 'right' })}
-                                        className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${theme.socialAlignment === 'right' ? 'bg-purple-500/20 border-purple-500/40 text-white shadow-xl shadow-purple-500/5' : 'bg-transparent border-transparent text-white/40 hover:text-white/60'}`}
-                                    >
-                                        <AlignRight size={14} />
-                                        Right
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="p-8 rounded-[2rem] bg-white/3 border border-white/5 flex flex-col gap-6">
-                            <div className="flex items-center gap-2 mb-2">
-                                <div className="w-6 h-6 rounded-lg bg-purple-500/10 flex items-center justify-center border border-purple-500/10">
-                                    <LayoutGrid size={12} className="text-purple-400" />
-                                </div>
-                                <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Size & Spacing</span>
-                            </div>
-
-                            <div className="flex flex-col gap-4">
-                                <div className="flex items-center justify-between">
-                                    <label htmlFor="social-icon-size" className="text-xs font-bold text-white/60">Icon Size</label>
-                                    <span className="text-[10px] font-black text-purple-400">{theme.socialSize}px</span>
-                                </div>
-                                <input
-                                    id="social-icon-size"
-                                    name="social-icon-size"
-                                    type="range"
-                                    min="16"
-                                    max="48"
-                                    value={theme.socialSize || 20}
-                                    onChange={(e) => setTheme({ ...theme, socialSize: parseInt(e.target.value) })}
-                                    className="w-full h-1.5 bg-white/5 rounded-full appearance-none cursor-pointer accent-purple-500"
-                                />
-                            </div>
-
-                            <div className="flex flex-col gap-4">
-                                <div className="flex items-center justify-between">
-                                    <label htmlFor="social-icon-spacing" className="text-xs font-bold text-white/60">Spacing</label>
-                                    <span className="text-[10px] font-black text-purple-400">{theme.socialSpacing}px</span>
-                                </div>
-                                <input
-                                    id="social-icon-spacing"
-                                    name="social-icon-spacing"
-                                    type="range"
-                                    min="8"
-                                    max="40"
-                                    value={theme.socialSpacing || 16}
-                                    onChange={(e) => setTheme({ ...theme, socialSpacing: parseInt(e.target.value) })}
-                                    className="w-full h-1.5 bg-white/5 rounded-full appearance-none cursor-pointer accent-purple-500"
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Color Section */}
-                    <div className="p-8 rounded-[2rem] bg-white/3 border border-white/5 flex flex-col gap-8">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                                <Paintbrush size={14} className="text-purple-400" />
-                                <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">Color Customization</span>
-                            </div>
-                            <div className="flex p-0.5 bg-black/40 rounded-lg border border-white/5">
-                                <button
-                                    onClick={() => setTheme({ ...theme, socialColorType: 'auto' })}
-                                    className={`px-3 py-1 rounded-md text-[8px] font-black uppercase tracking-widest transition-all ${theme.socialColorType === 'auto' ? 'bg-white/10 text-white' : 'text-white/30 hover:text-white/50'}`}
-                                >
-                                    Auto
-                                </button>
-                                <button
-                                    onClick={() => setTheme({ ...theme, socialColorType: 'brand' })}
-                                    className={`px-3 py-1 rounded-md text-[8px] font-black uppercase tracking-widest transition-all ${theme.socialColorType === 'brand' ? 'bg-white/10 text-white' : 'text-white/30 hover:text-white/50'}`}
-                                >
-                                    Brand
-                                </button>
-                                <button
-                                    onClick={() => setTheme({ ...theme, socialColorType: 'custom' })}
-                                    className={`px-3 py-1 rounded-md text-[8px] font-black uppercase tracking-widest transition-all ${theme.socialColorType === 'custom' ? 'bg-white/10 text-white' : 'text-white/30 hover:text-white/50'}`}
-                                >
-                                    Custom
-                                </button>
-                            </div>
-                        </div>
-
-                        {theme.socialColorType === 'custom' && (
-                            <div className="flex items-center gap-4 animate-in fade-in slide-in-from-top-2 duration-200">
-                                <div className="relative group">
-                                    <input
-                                        id="social-custom-color-picker"
-                                        name="social-custom-color-picker"
-                                        type="color"
-                                        value={theme.socialCustomColor || '#ffffff'}
-                                        onChange={(e) => setTheme({ ...theme, socialCustomColor: e.target.value })}
-                                        className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 cursor-pointer overflow-hidden"
-                                    />
-                                </div>
-                                <div className="flex flex-col gap-1">
-                                    <label htmlFor="social-custom-color-hex" className="text-[10px] font-black uppercase tracking-widest text-white/40">Custom Hex</label>
-                                    <input
-                                        id="social-custom-color-hex"
-                                        name="social-custom-color-hex"
-                                        type="text"
-                                        value={theme.socialCustomColor || '#ffffff'}
-                                        onChange={(e) => setTheme({ ...theme, socialCustomColor: e.target.value })}
-                                        className="bg-transparent border-none text-xl font-black uppercase tracking-tighter text-white/90 outline-none w-32"
-                                    />
                                 </div>
                             </div>
                         )}
-                    </div>
 
-                    {/* Typography & Interaction */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="p-8 rounded-[2rem] bg-white/3 border border-white/5 flex flex-col gap-6 shadow-xl shadow-black/5">
-                            <div className="flex items-center gap-2 mb-2">
-                                <div className="w-6 h-6 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/10">
-                                    <Type size={12} className="text-indigo-400" />
+                        {subTab === 'buttons' && (
+                            <div className="flex flex-col gap-8">
+                                {/* Tab Title */}
+                                <div className="flex items-center gap-4 px-1">
+                                    <div className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shadow-xl shadow-purple-500/5">
+                                        <MousePointer2 size={24} className="text-purple-400" />
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <h2 className="text-xl font-bold text-white tracking-tight">Buttons</h2>
+                                        <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em]">Styles & Appearance</p>
+                                    </div>
                                 </div>
-                                <span className="text-[10px] font-black uppercase tracking-widest text-white/30">Typography</span>
-                            </div>
 
-                            <div className="flex flex-col gap-4">
-                                <span className="text-xs font-bold text-white/60">Font Family</span>
-                                <div className="grid grid-cols-2 gap-2">
-                                    {FONTS.map(f => (
-                                        <button
-                                            key={f}
-                                            onClick={() => setTheme({ ...theme, socialFont: f })}
-                                            className={`px-3 py-2.5 rounded-xl text-[10px] font-bold border transition-all ${theme.socialFont === f ? 'bg-indigo-500/10 border-indigo-500/30 text-white shadow-lg' : 'bg-white/3 border-white/5 text-white/40 hover:text-white/60'}`}
-                                            style={{ fontFamily: f }}
-                                        >
-                                            {f}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col gap-4">
-                                <span className="text-xs font-bold text-white/60">Text Weight</span>
-                                <div className="flex p-1 bg-black/40 rounded-xl border border-white/5">
-                                    {[400, 700, 900].map(weight => (
-                                        <button
-                                            key={weight}
-                                            onClick={() => setTheme({ ...theme, socialTextWeight: weight })}
-                                            className={`flex-1 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest transition-all ${theme.socialTextWeight === weight ? 'bg-white/10 text-white shadow-sm' : 'text-white/30 hover:text-white/50'}`}
-                                        >
-                                            {weight === 400 ? 'Regular' : weight === 700 ? 'Bold' : 'Black'}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="p-8 rounded-[2rem] bg-white/3 border border-white/5 flex flex-col gap-6 shadow-xl shadow-black/5">
-                            <div className="flex items-center gap-2 mb-2">
-                                <div className="w-6 h-6 rounded-lg bg-orange-500/10 flex items-center justify-center border border-orange-500/10">
-                                    <Zap size={12} className="text-orange-400" />
-                                </div>
-                                <span className="text-[10px] font-black uppercase tracking-widest text-white/30">Interactions</span>
-                            </div>
-
-                            <div className="flex flex-col gap-4">
-                                <span className="text-xs font-bold text-white/60">Hover Animation</span>
-                                <div className="grid grid-cols-2 gap-2">
-                                    {[
-                                        { id: 'none', label: 'None', icon: Square },
-                                        { id: 'lift', label: 'Lift', icon: ArrowUp },
-                                        { id: 'scale', label: 'Zoom', icon: LayoutGrid },
-                                        { id: 'glow', label: 'Glow', icon: Zap }
-                                    ].map(hover => (
-                                        <button
-                                            key={hover.id}
-                                            onClick={() => setTheme({ ...theme, socialHover: hover.id })}
-                                            className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${theme.socialHover === hover.id ? 'bg-orange-500/10 border-orange-500/30 text-white shadow-lg shadow-orange-500/5' : 'bg-white/3 border-white/5 text-white/40 hover:text-white/60'}`}
-                                        >
-                                            <hover.icon size={12} className={theme.socialHover === hover.id ? 'text-orange-400' : ''} />
-                                            {hover.label}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="pt-6 border-t border-white/5">
-                                <SelectField
-                                    id="social-animation-select"
-                                    name="social-animation"
-                                    label="Active Animation"
-                                    value={theme.socialAnimation || 'none'}
-                                    onChange={(e) => setTheme({ ...theme, socialAnimation: e.target.value })}
-                                >
-                                    {ANIMATION_OPTIONS.map(opt => (
-                                        <option key={opt.id} value={opt.id} className="bg-[#121212]">{opt.label}</option>
-                                    ))}
-                                </SelectField>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col gap-1 px-2">
-                        <span className="text-[10px] font-black uppercase tracking-widest text-white/20">Platform Links</span>
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-4">
-                        {PLATFORMS.map((p) => {
-                            const currentSocial = socials.find(s => s.platform === p.id);
-                            const Icon = p.icon;
-                            return (
-                                <div key={p.id} className="group relative flex flex-col gap-3 p-6 rounded-3xl bg-white/3 border border-white/5 hover:bg-white/5 hover:border-white/10 transition-all shadow-xl shadow-black/5">
-                                    <div className="flex items-center justify-between px-1">
-                                        <div className="flex items-center gap-3">
-                                            <div className={`p-2 rounded-xl bg-white/2 ${p.color} border border-white/5 group-hover:bg-white/5 transition-colors shadow-inner`}>
-                                                <Icon size={16} />
+                                <div className="flex flex-col gap-6">
+                                    <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5">
+                                        <div className="flex items-center gap-3 px-1">
+                                            <div className="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
+                                                <LayoutGrid size={16} className="text-purple-400" />
                                             </div>
-                                            <label htmlFor={`social-${p.id}`} className="text-[10px] font-black uppercase tracking-widest text-white/30 group-focus-within:text-purple-400 transition-colors">
-                                                {p.name}
-                                            </label>
+                                            <div className="flex flex-col">
+                                                <span className="text-sm font-bold text-white">Button Design</span>
+                                                <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Base Styles</span>
+                                            </div>
                                         </div>
-                                        {currentSocial?.url && currentSocial.url.length > 0 && (
-                                            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/20 shadow-sm shadow-green-500/5">
-                                                <span className="text-[9px] font-black text-green-500/60 uppercase tracking-tighter">Active</span>
-                                                <Check size={10} className="text-green-500" />
+
+                                        {/* Style Presets */}
+                                        <div className="grid grid-cols-3 gap-3">
+                                            {[
+                                                { id: 'solid', label: 'Solid', icon: <div className="w-8 h-4 bg-current rounded-sm shadow-sm" /> },
+                                                { id: 'glass', label: 'Glass', icon: <div className="w-8 h-4 bg-current/20 rounded-sm border border-current/20 shadow-sm" /> },
+                                                { id: 'outline', label: 'Outline', icon: <div className="w-8 h-4 bg-transparent border-2 border-current rounded-sm shadow-sm" /> }
+                                            ].map(opt => (
+                                                <button
+                                                    key={opt.id}
+                                                    onClick={() => setTheme({ ...theme, btnStyle: opt.id })}
+                                                    className={`flex flex-col items-center justify-center gap-3 p-5 rounded-2xl border transition-all duration-300 ${theme.btnStyle === opt.id
+                                                        ? 'bg-purple-500/20 border-purple-500/40 text-white shadow-xl shadow-purple-500/10'
+                                                        : 'bg-black/20 border-white/5 text-white/20 hover:border-white/10 hover:text-white/40'
+                                                        }`}
+                                                >
+                                                    {opt.icon}
+                                                    <span className="text-[9px] font-black uppercase tracking-[0.15em]">{opt.label}</span>
+                                                </button>
+                                            ))}
+                                        </div>
+
+                                        {/* Corner Roundness Slider */}
+                                        <div className="flex flex-col gap-4 py-6 border-y border-white/5">
+                                            <div className="flex items-center justify-between px-1">
+                                                <label htmlFor="btn-corner-roundness" className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Corner Roundness</label>
+                                                <span className="text-[10px] font-bold text-white">{theme.btnRadius}px</span>
+                                            </div>
+                                            <div className="flex flex-col gap-2">
+                                                <input
+                                                    id="btn-corner-roundness"
+                                                    name="btn-corner-roundness"
+                                                    type="range"
+                                                    min="0"
+                                                    max="50"
+                                                    value={typeof theme.btnRadius === 'number' ? theme.btnRadius : 12}
+                                                    onChange={(e) => setTheme({ ...theme, btnRadius: parseInt(e.target.value) })}
+                                                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                                                />
+                                                <div className="flex justify-between px-0.5">
+                                                    <span className="text-[8px] font-black text-white/10 uppercase tracking-widest">Square</span>
+                                                    <span className="text-[8px] font-black text-white/10 uppercase tracking-widest">Pill</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Body / Text Toggle */}
+                                        <div className="flex flex-col gap-4 pt-4">
+                                            <div className="flex bg-black/20 rounded-xl p-1 w-fit border border-white/5">
+                                                <button
+                                                    onClick={() => setButtonDesignSubTab('body')}
+                                                    className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${buttonDesignSubTab === 'body' ? 'bg-purple-500/20 text-white border border-purple-500/20 shadow-lg shadow-purple-500/5' : 'text-white/30 hover:text-white/50 border border-transparent'}`}
+                                                >
+                                                    Body
+                                                </button>
+                                                <button
+                                                    onClick={() => setButtonDesignSubTab('text')}
+                                                    className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${buttonDesignSubTab === 'text' ? 'bg-purple-500/20 text-white border border-purple-500/20 shadow-lg shadow-purple-500/5' : 'text-white/30 hover:text-white/50 border border-transparent'}`}
+                                                >
+                                                    Text
+                                                </button>
+                                            </div>
+
+                                            {/* Mode Selector (Solid/Gradient/Pattern) */}
+                                            {/* Mode Selector (Solid/Gradient/Pattern) */}
+                                            <div className="flex items-center justify-between p-2 rounded-2xl bg-black/20 border border-white/5">
+                                                <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] px-2">Mode</span>
+                                                <div className="flex bg-white/5 rounded-xl p-0.5">
+                                                    {['solid', 'gradient', 'pattern'].map((type) => (
+                                                        <button
+                                                            key={type}
+                                                            onClick={() => {
+                                                                const key = buttonDesignSubTab === 'body' ? 'btnColorType' : 'btnTextColorType';
+                                                                setTheme({ ...theme, [key]: type });
+                                                            }}
+                                                            className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${(buttonDesignSubTab === 'body' ? theme.btnColorType : theme.btnTextColorType) === type
+                                                                ? 'bg-purple-500/30 text-white shadow-xl shadow-purple-500/10 border border-purple-500/20'
+                                                                : 'text-white/20 hover:text-white'
+                                                                }`}
+                                                        >
+                                                            {type}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* Sub-tab Content: BODY */}
+                                            {buttonDesignSubTab === 'body' && (
+                                                <div className="flex flex-col gap-4">
+                                                    {theme.btnColorType === 'solid' && (
+                                                        <ColorPickerRow
+                                                            label="Button Color"
+                                                            value={theme.btnColor || theme.accentColor}
+                                                            onChange={(color) => setTheme({ ...theme, btnColor: color })}
+                                                            colorId="btn-body-color"
+                                                            activeColor="purple"
+                                                        />
+                                                    )}
+
+                                                    {theme.btnColorType === 'gradient' && (
+                                                        <div className="flex flex-col gap-4 p-5 rounded-2xl bg-white/3 border border-white/5">
+                                                            <ColorPickerRow
+                                                                label="Gradient Start"
+                                                                value={theme.btnColorGradient1 || '#8228d9'}
+                                                                onChange={(color) => setTheme({ ...theme, btnColorGradient1: color })}
+                                                                colorId="btn-body-gradient1"
+                                                                activeColor="purple"
+                                                            />
+                                                            <ColorPickerRow
+                                                                label="Gradient End"
+                                                                value={theme.btnColorGradient2 || '#6366f1'}
+                                                                onChange={(color) => setTheme({ ...theme, btnColorGradient2: color })}
+                                                                colorId="btn-body-gradient2"
+                                                                activeColor="purple"
+                                                            />
+                                                            <div className="flex flex-col gap-4 pt-4 border-t border-white/5">
+                                                                <div className="flex items-center justify-between px-1">
+                                                                    <label htmlFor="btn-body-gradient-angle" className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Gradient Angle</label>
+                                                                    <span className="text-[10px] font-bold text-white">{theme.btnGradientAngle || 135}°</span>
+                                                                </div>
+                                                                <input
+                                                                    id="btn-body-gradient-angle"
+                                                                    name="btn-body-gradient-angle"
+                                                                    type="range"
+                                                                    min="0"
+                                                                    max="360"
+                                                                    value={theme.btnGradientAngle || 135}
+                                                                    onChange={(e) => setTheme({ ...theme, btnGradientAngle: parseInt(e.target.value) })}
+                                                                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {theme.btnColorType === 'pattern' && (
+                                                        <div className="flex flex-col gap-4 p-5 rounded-2xl bg-white/3 border border-white/5">
+                                                            <div className="flex flex-col gap-3">
+                                                                <span className="text-[9px] font-black text-white/20 uppercase tracking-widest px-1">Pattern Type</span>
+                                                                <div className="grid grid-cols-4 gap-2">
+                                                                    {['dots', 'stripes', 'noise', 'custom'].map((p) => (
+                                                                        <button
+                                                                            key={p}
+                                                                            disabled={p === 'custom' && !theme.btnColorCustomPattern}
+                                                                            onClick={() => setTheme({ ...theme, btnColorPattern: p })}
+                                                                            className={`py-3 px-1 rounded-xl text-[9px] font-black uppercase tracking-widest border transition-all ${theme.btnColorPattern === p
+                                                                                ? 'bg-purple-500/20 border-purple-500/40 text-white shadow-xl shadow-purple-500/10'
+                                                                                : 'bg-black/20 border-white/5 text-white/20 hover:border-white/10 hover:text-white/40'
+                                                                                } ${p === 'custom' && !theme.btnColorCustomPattern ? 'opacity-20 cursor-not-allowed' : ''}`}
+                                                                        >
+                                                                            {p === 'custom' && theme.btnColorCustomPattern ? (
+                                                                                <div className="w-4 h-4 rounded-sm border border-white/10 mx-auto" style={{ background: `url(${theme.btnColorCustomPattern}) center/cover` }} />
+                                                                            ) : p}
+                                                                        </button>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+
+                                                            <ColorPickerRow
+                                                                label="Pattern Color"
+                                                                value={theme.btnColor || theme.accentColor}
+                                                                onChange={(color) => setTheme({ ...theme, btnColor: color })}
+                                                                colorId="btn-body-pattern-color"
+                                                                activeColor="purple"
+                                                            />
+
+                                                            <div className="flex flex-col gap-2 pt-2 border-t border-white/5">
+                                                                <span className="text-[9px] font-black text-white/20 uppercase tracking-widest px-1">Upload Custom Pattern</span>
+                                                                <label htmlFor="btn-body-pattern-upload" className="flex items-center justify-center gap-2 p-3 rounded-xl bg-black/20 border border-white/10 cursor-pointer hover:bg-white/5 hover:border-purple-500/20 transition-all group">
+                                                                    <Upload size={16} className="text-white/20 group-hover:text-purple-400" />
+                                                                    <span className="text-[10px] font-bold text-white/40 group-hover:text-white">Choose Image</span>
+                                                                    <input
+                                                                        type="file"
+                                                                        id="btn-body-pattern-upload"
+                                                                        name="btn-body-pattern-upload"
+                                                                        className="hidden"
+                                                                        accept="image/*"
+                                                                        onChange={(e) => {
+                                                                            const file = e.target.files[0];
+                                                                            if (file) {
+                                                                                const reader = new FileReader();
+                                                                                reader.onloadend = () => {
+                                                                                    setTheme({ ...theme, btnColorCustomPattern: reader.result, btnColorPattern: 'custom' });
+                                                                                };
+                                                                                reader.readAsDataURL(file);
+                                                                            }
+                                                                        }}
+                                                                    />
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {/* Button Dimensions */}
+                                                    <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5">
+                                                        <div className="flex items-center gap-3 px-1">
+                                                            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                                                                <Maximize size={16} className="text-emerald-400" />
+                                                            </div>
+                                                            <div className="flex flex-col">
+                                                                <span className="text-sm font-bold text-white">Sizing & Scale</span>
+                                                                <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Dimensions</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="grid grid-cols-1 gap-6">
+                                                            {/* Width Control */}
+                                                            <div className="flex flex-col gap-4">
+                                                                <div className="flex items-center justify-between px-1">
+                                                                    <label htmlFor="btn-width-slider" className="text-[10px] font-black text-white/20 uppercase tracking-widest">Width</label>
+                                                                    <span className="text-[10px] font-bold text-white">{theme.btnWidth || 100}%</span>
+                                                                </div>
+                                                                <div className="flex items-center gap-4">
+                                                                    <div className="flex-1">
+                                                                        <input
+                                                                            id="btn-width-slider"
+                                                                            name="btn-width"
+                                                                            type="range"
+                                                                            min="50"
+                                                                            max="100"
+                                                                            value={theme.btnWidth || 100}
+                                                                            onChange={(e) => setTheme({ ...theme, btnWidth: parseInt(e.target.value) })}
+                                                                            className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                                                                        />
+                                                                    </div>
+                                                                    <div className="w-16 h-10 rounded-xl bg-black/20 border border-white/5 flex items-center justify-center">
+                                                                        <input
+                                                                            id="btn-width-number"
+                                                                            name="btn-width-number"
+                                                                            type="number"
+                                                                            min="50"
+                                                                            max="100"
+                                                                            value={theme.btnWidth || 100}
+                                                                            onChange={(e) => setTheme({ ...theme, btnWidth: parseInt(e.target.value) })}
+                                                                            className="w-full bg-transparent text-center text-xs font-bold text-white outline-none"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            {/* Height Control */}
+                                                            <div className="flex flex-col gap-4 pt-4 border-t border-white/5">
+                                                                <div className="flex items-center justify-between px-1">
+                                                                    <label htmlFor="btn-height-slider" className="text-[10px] font-black text-white/20 uppercase tracking-widest">Height (Vertical Padding)</label>
+                                                                    <span className="text-[10px] font-bold text-white">{theme.btnHeight || 14}px</span>
+                                                                </div>
+                                                                <div className="flex items-center gap-4">
+                                                                    <div className="flex-1">
+                                                                        <input
+                                                                            id="btn-height-slider"
+                                                                            name="btn-height"
+                                                                            type="range"
+                                                                            min="8"
+                                                                            max="32"
+                                                                            value={theme.btnHeight || 14}
+                                                                            onChange={(e) => setTheme({ ...theme, btnHeight: parseInt(e.target.value) })}
+                                                                            className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                                                                        />
+                                                                    </div>
+                                                                    <div className="w-16 h-10 rounded-xl bg-black/20 border border-white/5 flex items-center justify-center">
+                                                                        <input
+                                                                            id="btn-height-number"
+                                                                            name="btn-height-number"
+                                                                            type="number"
+                                                                            min="8"
+                                                                            max="32"
+                                                                            value={theme.btnHeight || 14}
+                                                                            onChange={(e) => setTheme({ ...theme, btnHeight: parseInt(e.target.value) })}
+                                                                            className="w-full bg-transparent text-center text-xs font-bold text-white outline-none"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {/* Spacing Control */}
+                                                    <div className="flex flex-col gap-4 pt-4 border-t border-white/5">
+                                                        <div className="flex items-center justify-between px-1">
+                                                            <label htmlFor="btn-spacing-slider" className="text-[10px] font-black text-white/20 uppercase tracking-widest">Button Spacing (Gap)</label>
+                                                            <span className="text-[10px] font-bold text-white">{theme.btnSpacing || 12}px</span>
+                                                        </div>
+                                                        <input
+                                                            id="btn-spacing-slider"
+                                                            name="btn-spacing"
+                                                            type="range"
+                                                            min="8"
+                                                            max="40"
+                                                            value={theme.btnSpacing || 12}
+                                                            onChange={(e) => setTheme({ ...theme, btnSpacing: parseInt(e.target.value) })}
+                                                            className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* Sub-tab Content: TEXT */}
+                                            {buttonDesignSubTab === 'text' && (
+                                                <div className="flex flex-col gap-4 mt-2">
+                                                    {/* Helper / Info */}
+                                                    <div className="flex items-center gap-2 pb-2 border-b border-white/5">
+                                                        <Type size={14} className="text-white/40" />
+                                                        <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Button Typography</span>
+                                                    </div>
+
+                                                    {/* Font Family */}
+                                                    <SelectField
+                                                        id="btn-font-select"
+                                                        name="btn-font"
+                                                        label="Font Family"
+                                                        value={theme.btnFont || 'Inter'}
+                                                        onChange={(e) => setTheme({ ...theme, btnFont: e.target.value })}
+                                                    >
+                                                        {FONTS.map(font => (
+                                                            <option key={font} value={font} className="bg-[#121212]">{font}</option>
+                                                        ))}
+                                                    </SelectField>
+
+                                                    <div className="grid grid-cols-2 gap-3">
+                                                        {/* Font Weight */}
+                                                        <SelectField
+                                                            id="btn-weight-select"
+                                                            name="btn-weight"
+                                                            label="Weight"
+                                                            value={theme.btnTextWeight || 600}
+                                                            onChange={(e) => setTheme({ ...theme, btnTextWeight: parseInt(e.target.value) })}
+                                                        >
+                                                            <option value="300" className="bg-[#121212]">Light</option>
+                                                            <option value="400" className="bg-[#121212]">Regular</option>
+                                                            <option value="500" className="bg-[#121212]">Medium</option>
+                                                            <option value="600" className="bg-[#121212]">Semibold</option>
+                                                            <option value="700" className="bg-[#121212]">Bold</option>
+                                                            <option value="800" className="bg-[#121212]">Extra Bold</option>
+                                                        </SelectField>
+
+                                                        {/* Text Transform */}
+                                                        <SelectField
+                                                            id="btn-transform-select"
+                                                            name="btn-transform"
+                                                            label="Transform"
+                                                            value={theme.btnTextTransform || 'none'}
+                                                            onChange={(e) => setTheme({ ...theme, btnTextTransform: e.target.value })}
+                                                        >
+                                                            <option value="none" className="bg-[#121212]">None</option>
+                                                            <option value="uppercase" className="bg-[#121212]">Uppercase</option>
+                                                            <option value="lowercase" className="bg-[#121212]">Lowercase</option>
+                                                            <option value="capitalize" className="bg-[#121212]">Capitalize</option>
+                                                        </SelectField>
+                                                    </div>
+
+                                                    {/* Font Size */}
+                                                    <div className="flex flex-col gap-3">
+                                                        <div className="flex items-center justify-between">
+                                                            <label htmlFor="btn-font-size" className="text-[9px] font-bold text-white/30 uppercase tracking-wider">Size</label>
+                                                            <span className="text-[9px] font-bold text-white">{theme.btnFontSize || 14}px</span>
+                                                        </div>
+                                                        <input
+                                                            id="btn-font-size"
+                                                            name="btn-font-size"
+                                                            type="range"
+                                                            min="10"
+                                                            max="32"
+                                                            value={theme.btnFontSize || 14}
+                                                            onChange={(e) => setTheme({ ...theme, btnFontSize: parseInt(e.target.value) })}
+                                                            className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white"
+                                                        />
+                                                    </div>
+
+                                                    {/* Separator */}
+                                                    <div className="h-px bg-white/5 my-2"></div>
+
+                                                    {theme.btnTextColorType === 'solid' && (
+                                                        <ColorPickerRow
+                                                            label="Text Color"
+                                                            value={theme.btnTextColor || '#FFFFFF'}
+                                                            onChange={(color) => setTheme({ ...theme, btnTextColor: color })}
+                                                            colorId="btn-text-color"
+                                                            activeColor="purple"
+                                                        />
+                                                    )}
+
+                                                    {theme.btnTextColorType === 'gradient' && (
+                                                        <div className="flex flex-col gap-4 p-5 rounded-2xl bg-white/3 border border-white/5">
+                                                            <ColorPickerRow
+                                                                label="Gradient Start"
+                                                                value={theme.btnTextColorGradient1 || '#ffffff'}
+                                                                onChange={(color) => setTheme({ ...theme, btnTextColorGradient1: color })}
+                                                                colorId="btn-text-gradient1"
+                                                                activeColor="purple"
+                                                            />
+                                                            <ColorPickerRow
+                                                                label="Gradient End"
+                                                                value={theme.btnTextColorGradient2 || '#cbd5e1'}
+                                                                onChange={(color) => setTheme({ ...theme, btnTextColorGradient2: color })}
+                                                                colorId="btn-text-gradient2"
+                                                                activeColor="purple"
+                                                            />
+                                                        </div>
+                                                    )}
+
+                                                    {theme.btnTextColorType === 'pattern' && (
+                                                        <div className="flex flex-col gap-4 p-5 rounded-2xl bg-white/3 border border-white/5">
+                                                            <div className="flex flex-col gap-3">
+                                                                <span className="text-[9px] font-black text-white/20 uppercase tracking-widest px-1">Pattern Type</span>
+                                                                <div className="grid grid-cols-4 gap-2">
+                                                                    {['dots', 'stripes', 'noise', 'custom'].map((p) => (
+                                                                        <button
+                                                                            key={p}
+                                                                            disabled={p === 'custom' && !theme.btnTextColorCustomPattern}
+                                                                            onClick={() => setTheme({ ...theme, btnTextColorPattern: p })}
+                                                                            className={`py-3 px-1 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${theme.btnTextColorPattern === p
+                                                                                ? 'bg-white text-black shadow-lg'
+                                                                                : 'text-white/30 hover:bg-white/5 hover:text-white'
+                                                                                } ${p === 'custom' && !theme.btnTextColorCustomPattern ? 'opacity-20 cursor-not-allowed' : ''}`}
+                                                                        >
+                                                                            {p === 'custom' && theme.btnTextColorCustomPattern ? (
+                                                                                <div className="w-4 h-4 rounded-sm border border-white/10 mx-auto" style={{ background: `url(${theme.btnTextColorCustomPattern}) center/cover` }} />
+                                                                            ) : p}
+                                                                        </button>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+
+                                                            <ColorPickerRow
+                                                                label="Pattern Color"
+                                                                value={theme.btnTextColor}
+                                                                onChange={(color) => setTheme({ ...theme, btnTextColor: color })}
+                                                                colorId="btn-text-pattern-color"
+                                                                activeColor="purple"
+                                                            />
+
+                                                            <div className="flex flex-col gap-2 pt-2 border-t border-white/5">
+                                                                <span className="text-[9px] font-black text-white/20 uppercase tracking-widest px-1">Upload Custom Pattern</span>
+                                                                <label htmlFor="btn-text-pattern-upload" className="flex items-center justify-center gap-2 p-3 rounded-xl bg-black/20 border border-white/10 cursor-pointer hover:bg-white/5 hover:border-purple-500/20 transition-all group">
+                                                                    <Upload size={16} className="text-white/20 group-hover:text-purple-400" />
+                                                                    <span className="text-[10px] font-bold text-white/40 group-hover:text-white">Choose Image</span>
+                                                                    <input
+                                                                        type="file"
+                                                                        id="btn-text-pattern-upload"
+                                                                        name="btn-text-pattern-upload"
+                                                                        className="hidden"
+                                                                        accept="image/*"
+                                                                        onChange={(e) => {
+                                                                            const file = e.target.files[0];
+                                                                            if (file) {
+                                                                                const reader = new FileReader();
+                                                                                reader.onloadend = () => {
+                                                                                    setTheme({ ...theme, btnTextColorCustomPattern: reader.result, btnTextColorPattern: 'custom' });
+                                                                                };
+                                                                                reader.readAsDataURL(file);
+                                                                            }
+                                                                        }}
+                                                                    />
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Button Shadow Panel */}
+                                <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5"
+                                    style={{
+                                        animation: 'fadeInUp 0.6s ease-out forwards',
+                                        animationDelay: '0.15s',
+                                        opacity: 0
+                                    }}>
+                                    <div className="flex items-center gap-3 px-1">
+                                        <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                                            <Box size={16} className="text-indigo-400" />
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="text-sm font-bold text-white">Depth & Shadow</span>
+                                            <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Button Elevation</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-col gap-8">
+                                        {/* Shadow Offset & Blur */}
+                                        <div className="grid grid-cols-2 gap-6">
+                                            <div className="flex flex-col gap-4">
+                                                <div className="flex items-center justify-between px-1">
+                                                    <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">Offset X</span>
+                                                    <span className="text-[10px] font-bold text-white">{theme.btnShadowX || 0}px</span>
+                                                </div>
+                                                <input
+                                                    type="range" min="-20" max="20"
+                                                    id="btn-shadow-x"
+                                                    name="btn-shadow-x"
+                                                    value={theme.btnShadowX || 0}
+                                                    onChange={(e) => setTheme({ ...theme, btnShadowX: parseInt(e.target.value) })}
+                                                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                                                />
+                                            </div>
+                                            <div className="flex flex-col gap-4">
+                                                <div className="flex items-center justify-between px-1">
+                                                    <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">Offset Y</span>
+                                                    <span className="text-[10px] font-bold text-white">{theme.btnShadowY || 0}px</span>
+                                                </div>
+                                                <input
+                                                    type="range" min="-20" max="20"
+                                                    id="btn-shadow-y"
+                                                    name="btn-shadow-y"
+                                                    value={theme.btnShadowY || 0}
+                                                    onChange={(e) => setTheme({ ...theme, btnShadowY: parseInt(e.target.value) })}
+                                                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="grid grid-cols-2 gap-6">
+                                            <div className="flex flex-col gap-4">
+                                                <div className="flex items-center justify-between px-1">
+                                                    <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">Blur</span>
+                                                    <span className="text-[10px] font-bold text-white">{theme.btnShadowBlur || 0}px</span>
+                                                </div>
+                                                <input
+                                                    type="range" min="0" max="50"
+                                                    id="btn-shadow-blur"
+                                                    name="btn-shadow-blur"
+                                                    value={theme.btnShadowBlur || 0}
+                                                    onChange={(e) => setTheme({ ...theme, btnShadowBlur: parseInt(e.target.value) })}
+                                                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                                                />
+                                            </div>
+                                            <div className="flex flex-col gap-4">
+                                                <div className="flex items-center justify-between px-1">
+                                                    <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">Opacity</span>
+                                                    <span className="text-[10px] font-bold text-white">{Math.round((theme.btnShadowOpacity || 0) * 100)}%</span>
+                                                </div>
+                                                <input
+                                                    type="range" min="0" max="100"
+                                                    id="btn-shadow-opacity"
+                                                    name="btn-shadow-opacity"
+                                                    value={(theme.btnShadowOpacity || 0) * 100}
+                                                    onChange={(e) => setTheme({ ...theme, btnShadowOpacity: parseInt(e.target.value) / 100 })}
+                                                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Shadow Color Mode Selector */}
+                                        <div className="flex flex-col gap-4 pt-4 border-t border-white/5">
+                                            <div className="flex items-center justify-between p-2 rounded-2xl bg-black/20 border border-white/5">
+                                                <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] px-2">Shadow Mode</span>
+                                                <div className="flex bg-white/5 rounded-xl p-0.5">
+                                                    {['solid', 'gradient', 'pattern'].map((type) => (
+                                                        <button
+                                                            key={type}
+                                                            onClick={() => setTheme({ ...theme, btnShadowType: type })}
+                                                            className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${(theme.btnShadowType || 'solid') === type
+                                                                ? 'bg-indigo-500/30 text-white shadow-xl shadow-indigo-500/10 border border-indigo-500/20'
+                                                                : 'text-white/20 hover:text-white'
+                                                                }`}
+                                                        >
+                                                            {type}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {(theme.btnShadowType === 'solid' || !theme.btnShadowType) && (
+                                                <ColorPickerRow
+                                                    label="Shadow Color"
+                                                    value={theme.btnShadowColor || '#000000'}
+                                                    onChange={(color) => setTheme({ ...theme, btnShadowColor: color })}
+                                                    colorId="btn-shadow-color"
+                                                    activeColor="purple"
+                                                />
+                                            )}
+
+                                            {theme.btnShadowType === 'gradient' && (
+                                                <div className="flex flex-col gap-4 p-5 rounded-2xl bg-white/3 border border-white/5">
+                                                    <ColorPickerRow
+                                                        label="Gradient Start"
+                                                        value={theme.btnShadowColorGradient1 || '#000000'}
+                                                        onChange={(color) => setTheme({ ...theme, btnShadowColorGradient1: color })}
+                                                        colorId="btn-shadow-gradient1"
+                                                        activeColor="purple"
+                                                    />
+                                                    <ColorPickerRow
+                                                        label="Gradient End"
+                                                        value={theme.btnShadowColorGradient2 || '#000000'}
+                                                        onChange={(color) => setTheme({ ...theme, btnShadowColorGradient2: color })}
+                                                        colorId="btn-shadow-gradient2"
+                                                        activeColor="purple"
+                                                    />
+                                                </div>
+                                            )}
+
+                                            {theme.btnShadowType === 'pattern' && (
+                                                <div className="flex flex-col gap-4 p-5 rounded-2xl bg-white/3 border border-white/5">
+                                                    <div className="flex flex-col gap-3">
+                                                        <span className="text-[9px] font-black text-white/20 uppercase tracking-widest px-1">Pattern Type</span>
+                                                        <div className="grid grid-cols-4 gap-2">
+                                                            {['dots', 'stripes', 'noise', 'custom'].map((p) => (
+                                                                <button
+                                                                    key={p}
+                                                                    disabled={p === 'custom' && !theme.btnShadowCustomPattern}
+                                                                    onClick={() => setTheme({ ...theme, btnShadowPattern: p })}
+                                                                    className={`py-3 px-1 rounded-xl text-[9px] font-black uppercase tracking-widest border transition-all ${(theme.btnShadowPattern || 'dots') === p
+                                                                        ? 'bg-indigo-500/20 border-indigo-500/40 text-white shadow-xl shadow-indigo-500/10'
+                                                                        : 'bg-black/20 border-white/5 text-white/20 hover:border-white/10 hover:text-white/40'
+                                                                        } ${p === 'custom' && !theme.btnShadowCustomPattern ? 'opacity-20 cursor-not-allowed' : ''}`}
+                                                                >
+                                                                    {p === 'custom' && theme.btnShadowCustomPattern ? (
+                                                                        <div className="w-4 h-4 rounded-sm border border-white/10 mx-auto" style={{ background: `url(${theme.btnShadowCustomPattern}) center/cover` }} />
+                                                                    ) : p}
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+
+                                                    <ColorPickerRow
+                                                        label="Pattern Color"
+                                                        value={theme.btnShadowColor || '#000000'}
+                                                        onChange={(color) => setTheme({ ...theme, btnShadowColor: color })}
+                                                        colorId="btn-shadow-pattern-color"
+                                                        activeColor="purple"
+                                                    />
+
+                                                    <div className="flex flex-col gap-2 pt-2 border-t border-white/5">
+                                                        <span className="text-[9px] font-black text-white/20 uppercase tracking-widest px-1">Upload Custom Pattern</span>
+                                                        <label htmlFor="btn-shadow-pattern-upload" className="flex items-center justify-center gap-2 p-3 rounded-xl bg-black/20 border border-white/10 cursor-pointer hover:bg-white/5 hover:border-indigo-500/20 transition-all group">
+                                                            <Upload size={16} className="text-white/20 group-hover:text-indigo-400" />
+                                                            <span className="text-[10px] font-bold text-white/40 group-hover:text-white">Choose Image</span>
+                                                            <input
+                                                                type="file"
+                                                                id="btn-shadow-pattern-upload"
+                                                                name="btn-shadow-pattern-upload"
+                                                                className="hidden"
+                                                                accept="image/*"
+                                                                onChange={(e) => {
+                                                                    const file = e.target.files[0];
+                                                                    if (file) {
+                                                                        const reader = new FileReader();
+                                                                        reader.onloadend = () => {
+                                                                            setTheme({ ...theme, btnShadowCustomPattern: reader.result, btnShadowPattern: 'custom' });
+                                                                        };
+                                                                        reader.readAsDataURL(file);
+                                                                    }
+                                                                }}
+                                                            />
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Shadow Animation Selector */}
+                                        <div className="flex flex-col gap-3 pt-6 border-t border-white/5">
+                                            <span className="text-[10px] font-black text-white/20 uppercase tracking-widest px-1">Shadow Animation</span>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                {ANIMATION_OPTIONS.map(opt => (
+                                                    <button
+                                                        key={opt.id}
+                                                        onClick={() => setTheme({ ...theme, btnShadowAnimation: opt.id })}
+                                                        className={`py-3 px-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all border ${(theme.btnShadowAnimation || 'none') === opt.id
+                                                            ? 'bg-indigo-500/20 text-white border-indigo-500/40 shadow-xl shadow-indigo-500/10'
+                                                            : 'bg-black/20 text-white/30 border-white/5 hover:border-white/10 hover:text-white/60 hover:bg-white/5'
+                                                            }`}
+                                                    >
+                                                        {opt.label}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Button Interactions Panel */}
+                                <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/5">
+                                    <div className="flex items-center gap-3 px-1">
+                                        <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                                            <Zap size={16} className="text-amber-400" />
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="text-sm font-bold text-white">Interactions</span>
+                                            <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Hover & Effects</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-col gap-8">
+                                        {/* Hover Effect */}
+                                        <div className="flex flex-col gap-3">
+                                            <span className="text-[10px] font-black text-white/20 uppercase tracking-widest px-1">Hover Response</span>
+                                            <div className="grid grid-cols-4 gap-2">
+                                                {['none', 'lift', 'scale', 'glow'].map(opt => (
+                                                    <button
+                                                        key={opt}
+                                                        onClick={() => setTheme({ ...theme, btnHoverEffect: opt })}
+                                                        className={`py-3 px-1 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${theme.btnHoverEffect === opt
+                                                            ? 'bg-amber-500/20 text-white border-amber-500/40 shadow-xl shadow-amber-500/10'
+                                                            : 'bg-black/20 text-white/20 border-white/5 hover:border-white/10 hover:text-white/40'
+                                                            }`}
+                                                    >
+                                                        {opt}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* Press Effect */}
+                                        <div className="flex flex-col gap-3 pt-6 border-t border-white/5">
+                                            <span className="text-[10px] font-black text-white/20 uppercase tracking-widest px-1">Press Response</span>
+                                            <div className="grid grid-cols-3 gap-3">
+                                                {['none', 'push', 'inset'].map(opt => (
+                                                    <button
+                                                        key={opt}
+                                                        onClick={() => setTheme({ ...theme, btnPressEffect: opt })}
+                                                        className={`py-3 px-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${theme.btnPressEffect === opt
+                                                            ? 'bg-amber-500/20 text-white border-amber-500/40 shadow-xl shadow-amber-500/10'
+                                                            : 'bg-black/20 text-white/20 border-white/5 hover:border-white/10 hover:text-white/40'
+                                                            }`}
+                                                    >
+                                                        {opt}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* Animation Effect */}
+                                        <div className="flex flex-col gap-3 pt-6 border-t border-white/5">
+                                            <span className="text-[10px] font-black text-white/20 uppercase tracking-widest px-1">Entrance Animation</span>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                {ANIMATION_OPTIONS.map(opt => (
+                                                    <button
+                                                        key={opt.id}
+                                                        onClick={() => setTheme({ ...theme, btnAnimation: opt.id })}
+                                                        className={`py-3 px-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all border ${(theme.btnAnimation || 'none') === opt.id
+                                                            ? 'bg-amber-500/20 text-white border-amber-500/40 shadow-xl shadow-amber-500/10'
+                                                            : 'bg-black/20 text-white/30 border-white/5 hover:border-white/10 hover:text-white/60 hover:bg-white/5'
+                                                            }`}
+                                                    >
+                                                        {opt.label}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {subTab === 'footer' && (
+                            <div className="flex flex-col gap-8">
+                                <div className="flex items-center gap-4 px-1">
+                                    <div className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shadow-xl shadow-purple-500/5">
+                                        <Footprints size={24} className="text-purple-400" />
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <h2 className="text-xl font-bold text-white tracking-tight">Footer</h2>
+                                        <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em]">Minimalist & Compact Layout</p>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 gap-6">
+                                    {/* Greeting Card Section */}
+                                    <div className="flex flex-col gap-6 p-6 rounded-2xl bg-white/3 border border-white/5">
+                                        <div className="flex items-center justify-between border-b border-white/5 pb-4">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
+                                                    <Heart size={16} className="text-purple-400" />
+                                                </div>
+                                                <div className="flex flex-col">
+                                                    <span className="text-sm font-bold text-white">Greeting Card</span>
+                                                    <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Visibility Control</span>
+                                                </div>
+                                            </div>
+                                            <button
+                                                onClick={() => setTheme({ ...theme, showFooter: !theme.showFooter })}
+                                                className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border ${theme.showFooter ? 'bg-purple-500/10 border-purple-500/30 text-purple-400' : 'bg-white/5 border-white/10 text-white/40'}`}
+                                            >
+                                                {theme.showFooter ? 'Enabled' : 'Disabled'}
+                                            </button>
+                                        </div>
+
+                                        {theme.showFooter && (
+                                            <div className="flex flex-col gap-4">
+                                                <div className="flex flex-col gap-2">
+                                                    <label htmlFor="footer-greeting-title" className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Greeting Title</label>
+                                                    <input
+                                                        id="footer-greeting-title"
+                                                        name="footer-greeting-title"
+                                                        type="text"
+                                                        value={theme.footerGreetingTitle}
+                                                        onChange={(e) => setTheme({ ...theme, footerGreetingTitle: e.target.value })}
+                                                        placeholder="Enter title..."
+                                                        className="w-full bg-white/2 border border-white/5 rounded-xl px-4 py-3 text-sm font-bold text-white outline-none focus:border-purple-500/30"
+                                                    />
+                                                </div>
+                                                <div className="flex flex-col gap-2">
+                                                    <label htmlFor="footer-greeting-desc" className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] px-1">Message Description</label>
+                                                    <textarea
+                                                        id="footer-greeting-desc"
+                                                        name="footer-greeting-desc"
+                                                        value={theme.footerGreetingDesc}
+                                                        onChange={(e) => setTheme({ ...theme, footerGreetingDesc: e.target.value })}
+                                                        placeholder="Enter description..."
+                                                        rows={2}
+                                                        className="w-full bg-white/2 border border-white/5 rounded-xl px-4 py-3 text-sm font-medium text-white/60 outline-none focus:border-purple-500/30 resize-none leading-relaxed"
+                                                    />
+                                                </div>
                                             </div>
                                         )}
                                     </div>
-                                    <div className="relative">
-                                        <input
-                                            id={`social-${p.id}`}
-                                            name={`social-${p.id}`}
-                                            type="text"
-                                            value={currentSocial?.url || ''}
-                                            onChange={(e) => {
-                                                setSocials(prev => prev.map(s =>
-                                                    s.platform === p.id ? { ...s, url: e.target.value } : s
-                                                ));
-                                            }}
-                                            placeholder={p.placeholder}
-                                            className="w-full bg-black/20 border border-white/5 rounded-2xl px-5 py-4 text-sm font-medium text-white outline-none focus:border-purple-500/20 focus:bg-black/30 transition-all placeholder:text-white/5"
-                                        />
+
+                                    {/* Footer Styling Section */}
+                                    <div className="flex flex-col gap-6 p-6 rounded-[2rem] bg-white/3 border border-white/10">
+                                        <div className="flex items-center gap-3 border-b border-white/5 pb-4">
+                                            <div className="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center">
+                                                <Palette size={16} className="text-orange-400" />
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <span className="text-sm font-bold text-white">Appearance</span>
+                                                <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Design & Aesthetics</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Style Presets */}
+                                        <div className="flex flex-col gap-3">
+                                            <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Style</label>
+                                            <div className="grid grid-cols-3 gap-3">
+                                                {[
+                                                    { id: 'solid', label: 'Solid', icon: <div className="w-10 h-5 bg-current rounded-sm" /> },
+                                                    { id: 'glass', label: 'Glass', icon: <div className="w-10 h-5 bg-current/20 rounded-sm border border-current/20" /> },
+                                                    { id: 'outline', label: 'Outline', icon: <div className="w-10 h-5 bg-transparent border-2 border-current rounded-sm" /> }
+                                                ].map(opt => (
+                                                    <button
+                                                        key={opt.id}
+                                                        onClick={() => setTheme({ ...theme, footerBtnStyle: opt.id })}
+                                                        className={`flex flex-col items-center gap-3 p-4 rounded-2xl border-2 ${theme.footerBtnStyle === opt.id
+                                                            ? 'bg-white text-black border-white shadow-2xl shadow-white/10'
+                                                            : 'bg-white/5 text-white/40 border-transparent hover:bg-white/10 hover:text-white'
+                                                            }`}
+                                                    >
+                                                        {opt.icon}
+                                                        <span className="text-[10px] font-bold uppercase tracking-widest">{opt.label}</span>
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* Corner Roundness */}
+                                        <div className="flex flex-col gap-3 py-6 border-y border-white/5">
+                                            <div className="flex items-center justify-between">
+                                                <label htmlFor="footer-corner-roundness" className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Corner Roundness</label>
+                                                <span className="text-[10px] font-bold text-white">{theme.footerBtnRadius}px</span>
+                                            </div>
+                                            <div className="flex flex-col gap-2">
+                                                <input
+                                                    id="footer-corner-roundness"
+                                                    name="footer-corner-roundness"
+                                                    type="range"
+                                                    min="0"
+                                                    max="40"
+                                                    value={theme.footerBtnRadius}
+                                                    onChange={(e) => setTheme({ ...theme, footerBtnRadius: parseInt(e.target.value) })}
+                                                    className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white"
+                                                />
+                                                <div className="flex justify-between px-0.5">
+                                                    <span className="text-[8px] font-bold text-white/20 uppercase tracking-widest">Square</span>
+                                                    <span className="text-[8px] font-bold text-white/20 uppercase tracking-widest">Full</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Animation */}
+                                        <div className="py-6 border-t border-white/5">
+                                            <SelectField
+                                                id="footer-animation-select"
+                                                name="footer-animation"
+                                                label="Animation"
+                                                value={theme.footerAnimation || 'none'}
+                                                onChange={(e) => setTheme({ ...theme, footerAnimation: e.target.value })}
+                                            >
+                                                {ANIMATION_OPTIONS.map(opt => (
+                                                    <option key={opt.id} value={opt.id} className="bg-[#121212]">{opt.label}</option>
+                                                ))}
+                                            </SelectField>
+                                        </div>
+
+                                        {/* Body / Text Toggle */}
+                                        <div className="flex flex-col gap-4">
+                                            <div className="flex bg-white/5 rounded-2xl p-1.5 self-start">
+                                                <button
+                                                    onClick={() => setFooterDesignSubTab('body')}
+                                                    className={`px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest ${footerDesignSubTab === 'body' ? 'bg-white text-black shadow-lg' : 'text-white/40 hover:text-white'}`}
+                                                >
+                                                    Body
+                                                </button>
+                                                <button
+                                                    onClick={() => setFooterDesignSubTab('text')}
+                                                    className={`px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest ${footerDesignSubTab === 'text' ? 'bg-white text-black shadow-lg' : 'text-white/40 hover:text-white'}`}
+                                                >
+                                                    Text
+                                                </button>
+                                            </div>
+
+                                            {/* Mode Selector */}
+                                            <div className="flex items-center justify-between mt-2">
+                                                <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest">
+                                                    {footerDesignSubTab === 'body' ? 'Background Mode' : 'Text Mode'}
+                                                </label>
+                                                <div className="flex bg-white/5 rounded-lg p-0.5">
+                                                    {['solid', 'gradient', 'pattern'].map((type) => (
+                                                        <button
+                                                            key={type}
+                                                            onClick={() => {
+                                                                const key = footerDesignSubTab === 'body' ? 'footerBtnColorType' : 'footerBtnTextColorType';
+                                                                setTheme({ ...theme, [key]: type });
+                                                            }}
+                                                            className={`px-3 py-1.5 rounded-md text-[9px] font-bold uppercase tracking-widest ${(footerDesignSubTab === 'body' ? theme.footerBtnColorType : theme.footerBtnTextColorType) === type
+                                                                ? 'bg-white/20 text-white shadow-sm shadow-black/20'
+                                                                : 'text-white/30 hover:text-white'
+                                                                }`}
+                                                        >
+                                                            {type}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* Sub-tab Content: BODY */}
+                                            {footerDesignSubTab === 'body' && (
+                                                <div className="flex flex-col gap-4 mt-2">
+                                                    {theme.footerBtnColorType === 'solid' && (
+                                                        <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 group focus-within:border-white/10">
+                                                            <div className="relative w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-white/10">
+                                                                <input
+                                                                    id="footer-body-color"
+                                                                    name="footer-body-color"
+                                                                    type="color"
+                                                                    value={theme.footerBtnColor || '#ffffff'}
+                                                                    onChange={(e) => setTheme({ ...theme, footerBtnColor: e.target.value })}
+                                                                    className="absolute inset-0 w-[150%] h-[150%] -translate-x-[25%] -translate-y-[25%] cursor-pointer"
+                                                                />
+                                                            </div>
+                                                            <div className="flex flex-col gap-0.5">
+                                                                <input
+                                                                    id="footer-body-color-hex"
+                                                                    name="footer-body-color-hex"
+                                                                    type="text"
+                                                                    value={theme.footerBtnColor || '#ffffff'}
+                                                                    onChange={(e) => setTheme({ ...theme, footerBtnColor: e.target.value })}
+                                                                    className="bg-transparent text-sm font-bold text-white outline-none uppercase"
+                                                                />
+                                                                <span className="text-[10px] text-white/30 font-bold uppercase tracking-widest">Footer Base</span>
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {theme.footerBtnColorType === 'gradient' && (
+                                                        <div className="grid grid-cols-2 gap-3">
+                                                            <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/5">
+                                                                <input
+                                                                    id="footer-body-gradient-1"
+                                                                    name="footer-body-gradient-1"
+                                                                    type="color"
+                                                                    value={theme.footerBtnColorGradient1 || '#8228d9'}
+                                                                    onChange={(e) => setTheme({ ...theme, footerBtnColorGradient1: e.target.value })}
+                                                                    className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer"
+                                                                />
+                                                                <span className="text-[10px] font-bold text-white uppercase">{theme.footerBtnColorGradient1}</span>
+                                                            </div>
+                                                            <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/5">
+                                                                <input
+                                                                    id="footer-body-gradient-2"
+                                                                    name="footer-body-gradient-2"
+                                                                    type="color"
+                                                                    value={theme.footerBtnColorGradient2 || '#6366f1'}
+                                                                    onChange={(e) => setTheme({ ...theme, footerBtnColorGradient2: e.target.value })}
+                                                                    className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer"
+                                                                />
+                                                                <span className="text-[10px] font-bold text-white uppercase">{theme.footerBtnColorGradient2}</span>
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {theme.footerBtnColorType === 'pattern' && (
+                                                        <div className="flex flex-col gap-4">
+                                                            <div className="flex items-center justify-between p-1.5 rounded-2xl bg-white/5 border border-white/5">
+                                                                <div className="grid grid-cols-4 gap-2 w-full">
+                                                                    {['dots', 'stripes', 'noise', 'custom'].map((p) => (
+                                                                        <button
+                                                                            key={p}
+                                                                            disabled={p === 'custom' && !theme.footerBtnColorCustomPattern}
+                                                                            onClick={() => setTheme({ ...theme, footerBtnColorPattern: p })}
+                                                                            className={`py-2 px-1 rounded-xl text-[9px] font-bold uppercase tracking-widest ${theme.footerBtnColorPattern === p
+                                                                                ? 'bg-white text-black shadow-lg'
+                                                                                : 'text-white/30 hover:bg-white/5 hover:text-white'
+                                                                                } ${p === 'custom' && !theme.footerBtnColorCustomPattern ? 'opacity-20 cursor-not-allowed' : ''}`}
+                                                                        >
+                                                                            {p === 'custom' && theme.footerBtnColorCustomPattern ? (
+                                                                                <div className="w-4 h-4 rounded-sm border border-white/10 mx-auto" style={{ background: `url(${theme.footerBtnColorCustomPattern}) center/cover` }} />
+                                                                            ) : p}
+                                                                        </button>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex items-center justify-between p-3 rounded-2xl bg-white/5 border border-white/5">
+                                                                <div className="flex flex-col gap-0.5">
+                                                                    <span className="text-[9px] text-white/30 font-bold uppercase">Color Filter</span>
+                                                                    <div className="flex items-center gap-2">
+                                                                        <input
+                                                                            id="footer-body-pattern-color"
+                                                                            name="footer-body-pattern-color"
+                                                                            type="color"
+                                                                            value={theme.footerBtnColor || '#ffffff'}
+                                                                            onChange={(e) => setTheme({ ...theme, footerBtnColor: e.target.value })}
+                                                                            className="w-6 h-6 rounded-md overflow-hidden cursor-pointer border border-white/10"
+                                                                        />
+                                                                        <span className="text-[10px] font-bold text-white uppercase">{theme.footerBtnColor}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="flex items-center gap-2 border-l border-white/5 pl-4">
+                                                                    <input
+                                                                        type="file"
+                                                                        id="footer-body-pattern-upload"
+                                                                        name="footer-body-pattern-upload"
+                                                                        className="hidden"
+                                                                        accept="image/*"
+                                                                        onChange={(e) => {
+                                                                            const file = e.target.files[0];
+                                                                            if (file) {
+                                                                                const reader = new FileReader();
+                                                                                reader.onloadend = () => {
+                                                                                    setTheme({ ...theme, footerBtnColorCustomPattern: reader.result, footerBtnColorPattern: 'custom' });
+                                                                                };
+                                                                                reader.readAsDataURL(file);
+                                                                            }
+                                                                        }}
+                                                                    />
+                                                                    <label
+                                                                        htmlFor="footer-body-pattern-upload"
+                                                                        className="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-[9px] font-bold text-white uppercase cursor-pointer whitespace-nowrap"
+                                                                    >
+                                                                        Upload +
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
+
+                                            {/* Sub-tab Content: TEXT */}
+                                            {footerDesignSubTab === 'text' && (
+                                                <div className="flex flex-col gap-4 mt-2">
+                                                    {/* Footer Typography Settings */}
+                                                    <div className="flex flex-col gap-4 border-b border-white/5 pb-4 mb-2">
+                                                        <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Typography</label>
+
+                                                        {/* Font Family */}
+                                                        <SelectField
+                                                            id="footer-font-select"
+                                                            name="footer-font"
+                                                            label="Font Family"
+                                                            value={theme.footerFont || 'Inter'}
+                                                            onChange={(e) => setTheme({ ...theme, footerFont: e.target.value })}
+                                                        >
+                                                            {FONTS.map(font => (
+                                                                <option key={font} value={font} className="bg-[#121212]">{font}</option>
+                                                            ))}
+                                                        </SelectField>
+
+                                                        <div className="grid grid-cols-2 gap-3">
+                                                            {/* Font Weight */}
+                                                            <SelectField
+                                                                id="footer-weight-select"
+                                                                name="footer-weight"
+                                                                label="Weight"
+                                                                value={theme.footerWeight || 400}
+                                                                onChange={(e) => setTheme({ ...theme, footerWeight: parseInt(e.target.value) })}
+                                                            >
+                                                                <option value="300" className="bg-[#121212]">Light</option>
+                                                                <option value="400" className="bg-[#121212]">Regular</option>
+                                                                <option value="500" className="bg-[#121212]">Medium</option>
+                                                                <option value="600" className="bg-[#121212]">Semibold</option>
+                                                                <option value="700" className="bg-[#121212]">Bold</option>
+                                                            </SelectField>
+
+                                                            {/* Text Transform */}
+                                                            <SelectField
+                                                                id="footer-transform-select"
+                                                                name="footer-transform"
+                                                                label="Transform"
+                                                                value={theme.footerTransform || 'none'}
+                                                                onChange={(e) => setTheme({ ...theme, footerTransform: e.target.value })}
+                                                            >
+                                                                <option value="none" className="bg-[#121212]">None</option>
+                                                                <option value="uppercase" className="bg-[#121212]">Uppercase</option>
+                                                                <option value="lowercase" className="bg-[#121212]">Lowercase</option>
+                                                                <option value="capitalize" className="bg-[#121212]">Capitalize</option>
+                                                            </SelectField>
+                                                        </div>
+
+                                                        {/* Font Size */}
+                                                        <div className="flex flex-col gap-3">
+                                                            <div className="flex items-center justify-between">
+                                                                <label htmlFor="footer-font-size" className="text-[9px] font-bold text-white/30 uppercase tracking-wider">Size</label>
+                                                                <span className="text-[9px] font-bold text-white">{theme.footerFontSize || 12}px</span>
+                                                            </div>
+                                                            <input
+                                                                id="footer-font-size"
+                                                                name="footer-font-size"
+                                                                type="range"
+                                                                min="10"
+                                                                max="24"
+                                                                value={theme.footerFontSize || 12}
+                                                                onChange={(e) => setTheme({ ...theme, footerFontSize: parseInt(e.target.value) })}
+                                                                className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    {theme.footerBtnTextColorType === 'solid' && (
+                                                        <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 focus-within:border-white/10">
+                                                            <div className="relative w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-white/10">
+                                                                <input
+                                                                    id="footer-text-color"
+                                                                    name="footer-text-color"
+                                                                    type="color"
+                                                                    value={theme.footerBtnTextColor || '#ffffff'}
+                                                                    onChange={(e) => setTheme({ ...theme, footerBtnTextColor: e.target.value })}
+                                                                    className="absolute inset-0 w-[150%] h-[150%] -translate-x-[25%] -translate-y-[25%] cursor-pointer"
+                                                                />
+                                                            </div>
+                                                            <div className="flex flex-col gap-0.5">
+                                                                <input
+                                                                    id="footer-text-color-hex"
+                                                                    name="footer-text-color-hex"
+                                                                    type="text"
+                                                                    value={theme.footerBtnTextColor || '#ffffff'}
+                                                                    onChange={(e) => setTheme({ ...theme, footerBtnTextColor: e.target.value })}
+                                                                    className="bg-transparent text-sm font-bold text-white outline-none uppercase"
+                                                                />
+                                                                <span className="text-[10px] text-white/30 font-bold uppercase tracking-widest">Text Style</span>
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {theme.footerBtnTextColorType === 'gradient' && (
+                                                        <div className="grid grid-cols-2 gap-3">
+                                                            <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/5">
+                                                                <input
+                                                                    id="footer-text-gradient-1"
+                                                                    name="footer-text-gradient-1"
+                                                                    type="color"
+                                                                    value={theme.footerBtnTextColorGradient1 || '#ffffff'}
+                                                                    onChange={(e) => setTheme({ ...theme, footerBtnTextColorGradient1: e.target.value })}
+                                                                    className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer"
+                                                                />
+                                                                <span className="text-[10px] font-bold text-white uppercase">{theme.footerBtnTextColorGradient1}</span>
+                                                            </div>
+                                                            <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/5">
+                                                                <input
+                                                                    id="footer-text-gradient-2"
+                                                                    name="footer-text-gradient-2"
+                                                                    type="color"
+                                                                    value={theme.footerBtnTextColorGradient2 || '#cbd5e1'}
+                                                                    onChange={(e) => setTheme({ ...theme, footerBtnTextColorGradient2: e.target.value })}
+                                                                    className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer"
+                                                                />
+                                                                <span className="text-[10px] font-bold text-white uppercase">{theme.footerBtnTextColorGradient2}</span>
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {theme.footerBtnTextColorType === 'pattern' && (
+                                                        <div className="flex flex-col gap-3">
+                                                            <div className="grid grid-cols-4 gap-2">
+                                                                {['dots', 'stripes', 'noise', 'custom'].map((p) => (
+                                                                    <button
+                                                                        key={p}
+                                                                        disabled={p === 'custom' && !theme.footerBtnTextColorCustomPattern}
+                                                                        onClick={() => setTheme({ ...theme, footerBtnTextColorPattern: p })}
+                                                                        className={`py-2 px-1 rounded-xl text-[9px] font-bold uppercase tracking-widest ${theme.footerBtnTextColorPattern === p
+                                                                            ? 'bg-white text-black shadow-lg'
+                                                                            : 'text-white/30 hover:bg-white/5 hover:text-white'
+                                                                            } ${p === 'custom' && !theme.footerBtnTextColorCustomPattern ? 'opacity-20 cursor-not-allowed' : ''}`}
+                                                                    >
+                                                                        {p === 'custom' && theme.footerBtnTextColorCustomPattern ? (
+                                                                            <div className="w-4 h-4 rounded-sm border border-white/10 mx-auto" style={{ background: `url(${theme.footerBtnTextColorCustomPattern}) center/cover` }} />
+                                                                        ) : p}
+                                                                    </button>
+                                                                ))}
+                                                            </div>
+                                                            {theme.footerBtnTextColorPattern === 'custom' && (
+                                                                <div className="flex items-center gap-2 mt-1">
+                                                                    <input
+                                                                        type="file"
+                                                                        id="footer-text-pattern-upload"
+                                                                        name="footer-text-pattern-upload"
+                                                                        className="hidden"
+                                                                        accept="image/*"
+                                                                        onChange={(e) => {
+                                                                            const file = e.target.files[0];
+                                                                            if (file) {
+                                                                                const reader = new FileReader();
+                                                                                reader.onloadend = () => {
+                                                                                    setTheme({ ...theme, footerBtnTextColorCustomPattern: reader.result, footerBtnTextColorPattern: 'custom' });
+                                                                                };
+                                                                                reader.readAsDataURL(file);
+                                                                            }
+                                                                        }}
+                                                                    />
+                                                                    <label
+                                                                        htmlFor="footer-text-pattern-upload"
+                                                                        className="w-full text-center px-4 py-3 rounded-xl bg-white/5 border border-dashed border-white/20 hover:border-white/40 text-[10px] font-bold text-white/40 uppercase cursor-pointer"
+                                                                    >
+                                                                        Change Custom Pattern
+                                                                    </label>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Shadow Section */}
+                                        <div className="flex flex-col gap-6 pt-6 border-t border-white/5">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 rounded-lg bg-pink-500/10 border border-pink-500/20 flex items-center justify-center">
+                                                    <Layers size={16} className="text-pink-400" />
+                                                </div>
+                                                <div className="flex flex-col">
+                                                    <span className="text-sm font-bold text-white">Shadow</span>
+                                                    <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Depth & Dimension</span>
+                                                </div>
+                                            </div>
+
+                                            <div className="grid grid-cols-2 gap-4">
+                                                {[
+                                                    { label: 'X Offset', key: 'footerShadowX', min: -20, max: 20 },
+                                                    { label: 'Y Offset', key: 'footerShadowY', min: -20, max: 20 },
+                                                    { label: 'Blur', key: 'footerShadowBlur', min: 0, max: 50 },
+                                                    { label: 'Spread', key: 'footerShadowSpread', min: -10, max: 20 },
+                                                    { label: 'Opacity', key: 'footerShadowOpacity', min: 0, max: 1, step: 0.1 }
+                                                ].map(s => (
+                                                    <div key={s.key} className="flex flex-col gap-2">
+                                                        <div className="flex items-center justify-between">
+                                                            <label htmlFor={`footer-shadow-${s.key}`} className="text-[8px] font-bold text-white/30 uppercase">{s.label}</label>
+                                                            <span className="text-[8px] font-bold text-white">{theme[s.key]}{s.label === 'Opacity' ? '' : 'px'}</span>
+                                                        </div>
+                                                        <input
+                                                            id={`footer-shadow-${s.key}`}
+                                                            name={`footer-shadow-${s.key}`}
+                                                            type="range"
+                                                            min={s.min}
+                                                            max={s.max}
+                                                            step={s.step || 1}
+                                                            value={theme[s.key]}
+                                                            onChange={(e) => setTheme({ ...theme, [s.key]: parseFloat(e.target.value) })}
+                                                            className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white"
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </div>
+
+                                            {/* Shadow Type Selector */}
+                                            <div className="flex flex-col gap-3 pt-4 border-t border-white/5">
+                                                <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Shadow Type</label>
+                                                <div className="grid grid-cols-3 gap-2">
+                                                    {['solid', 'gradient', 'pattern'].map((type) => (
+                                                        <button
+                                                            key={type}
+                                                            onClick={() => setTheme({ ...theme, footerShadowType: type })}
+                                                            className={`py-2 px-3 rounded-xl text-[10px] font-bold uppercase tracking-widest border transition-all ${theme.footerShadowType === type
+                                                                ? 'bg-white text-black border-white'
+                                                                : 'bg-white/5 text-white/40 border-white/5 hover:bg-white/10'
+                                                                }`}
+                                                        >
+                                                            {type}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* Conditional Shadow Inputs */}
+                                            {theme.footerShadowType === 'solid' && (
+                                                <div className="flex flex-col gap-2">
+                                                    <label htmlFor="footer-shadow-color" className="text-[8px] font-bold text-white/30 uppercase">Color</label>
+                                                    <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white/5 border border-white/5">
+                                                        <input
+                                                            id="footer-shadow-color"
+                                                            name="footer-shadow-color"
+                                                            type="color"
+                                                            value={theme.footerShadowColor}
+                                                            onChange={(e) => setTheme({ ...theme, footerShadowColor: e.target.value })}
+                                                            className="w-6 h-6 rounded-md overflow-hidden cursor-pointer border border-white/10"
+                                                        />
+                                                        <span className="text-[10px] font-bold text-white uppercase">{theme.footerShadowColor}</span>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {theme.footerShadowType === 'gradient' && (
+                                                <div className="flex flex-col gap-4">
+                                                    <div className="flex flex-col gap-3">
+                                                        <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Gradient Colors</label>
+                                                        <div className="grid grid-cols-2 gap-3">
+                                                            <div className="flex items-center gap-3 p-2 rounded-xl bg-white/5 border border-white/5">
+                                                                <input
+                                                                    id="footer-shadow-gradient-1"
+                                                                    name="footer-shadow-gradient-1"
+                                                                    type="color"
+                                                                    value={theme.footerShadowColorGradient1 || '#000000'}
+                                                                    onChange={(e) => setTheme({ ...theme, footerShadowColorGradient1: e.target.value })}
+                                                                    className="w-6 h-6 rounded-lg overflow-hidden cursor-pointer"
+                                                                />
+                                                                <span className="text-[10px] font-bold text-white uppercase">{theme.footerShadowColorGradient1}</span>
+                                                            </div>
+                                                            <div className="flex items-center gap-3 p-2 rounded-xl bg-white/5 border border-white/5">
+                                                                <input
+                                                                    id="footer-shadow-gradient-2"
+                                                                    name="footer-shadow-gradient-2"
+                                                                    type="color"
+                                                                    value={theme.footerShadowColorGradient2 || '#000000'}
+                                                                    onChange={(e) => setTheme({ ...theme, footerShadowColorGradient2: e.target.value })}
+                                                                    className="w-6 h-6 rounded-lg overflow-hidden cursor-pointer"
+                                                                />
+                                                                <span className="text-[10px] font-bold text-white uppercase">{theme.footerShadowColorGradient2}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {theme.footerShadowType === 'pattern' && (
+                                                <div className="flex flex-col gap-4">
+                                                    <div className="flex flex-col gap-3">
+                                                        <div className="flex items-center justify-between">
+                                                            <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Select Pattern</span>
+                                                        </div>
+                                                        <div className="grid grid-cols-4 gap-2">
+                                                            {['dots', 'stripes', 'noise', 'custom'].map((p) => (
+                                                                <button
+                                                                    key={p}
+                                                                    disabled={p === 'custom' && !theme.footerShadowCustomPattern}
+                                                                    onClick={() => setTheme({ ...theme, footerShadowPattern: p })}
+                                                                    className={`py-2 px-1 rounded-xl text-[9px] font-bold uppercase tracking-widest transition-all ${theme.footerShadowPattern === p
+                                                                        ? 'bg-white/20 text-white border border-white/20'
+                                                                        : 'bg-white/5 text-white/40 border border-white/5 hover:bg-white/10'
+                                                                        } ${p === 'custom' && !theme.footerShadowCustomPattern ? 'opacity-20 cursor-not-allowed' : ''}`}
+                                                                >
+                                                                    {p === 'custom' && theme.footerShadowCustomPattern ? (
+                                                                        <div className="w-4 h-4 rounded-sm border border-white/10 mx-auto" style={{ background: `url(${theme.footerShadowCustomPattern}) center/cover` }} />
+                                                                    ) : p}
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex flex-col gap-3">
+                                                        <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Pattern Color</span>
+                                                        <div className="flex items-center gap-4 p-3 rounded-2xl bg-white/5 border border-white/5 group focus-within:border-white/10 transition-all">
+                                                            <input
+                                                                id="footer-shadow-pattern-color"
+                                                                name="footer-shadow-pattern-color"
+                                                                type="color"
+                                                                value={theme.footerShadowColor || '#000000'}
+                                                                onChange={(e) => setTheme({ ...theme, footerShadowColor: e.target.value })}
+                                                                className="w-6 h-6 rounded-md overflow-hidden cursor-pointer border border-white/10"
+                                                            />
+                                                            <span className="text-[10px] font-bold text-white uppercase">{theme.footerShadowColor}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex items-center gap-2 border-l border-white/5 pl-4">
+                                                        <input
+                                                            type="file"
+                                                            id="footer-shadow-pattern-upload"
+                                                            name="footer-shadow-pattern-upload"
+                                                            className="hidden"
+                                                            accept="image/*"
+                                                            onChange={(e) => {
+                                                                const file = e.target.files[0];
+                                                                if (file) {
+                                                                    const reader = new FileReader();
+                                                                    reader.onloadend = () => {
+                                                                        setTheme({ ...theme, footerShadowCustomPattern: reader.result, footerShadowPattern: 'custom' });
+                                                                    };
+                                                                    reader.readAsDataURL(file);
+                                                                }
+                                                            }}
+                                                        />
+                                                        <label
+                                                            htmlFor="footer-shadow-pattern-upload"
+                                                            className="w-full text-center px-4 py-3 rounded-xl bg-white/5 border border-dashed border-white/20 hover:border-white/40 text-[10px] font-bold text-white/40 uppercase cursor-pointer"
+                                                        >
+                                                            Upload Pattern +
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* Branding Section */}
+                                    <div className="flex items-center justify-between p-6 rounded-2xl bg-white/3 border border-white/5">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                                                <Zap size={16} className="text-indigo-400" />
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <span className="text-sm font-bold text-white">Vlink Branding</span>
+                                                <span className="text-[9px] text-white/20 font-black uppercase tracking-widest">Logo Attribution</span>
+                                            </div>
+                                        </div>
+                                        <button
+                                            onClick={() => setTheme({ ...theme, showVlink: !theme.showVlink })}
+                                            className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border ${theme.showVlink ? 'bg-indigo-500/10 border-indigo-500/30 text-indigo-400' : 'bg-white/5 border-white/10 text-white/40'}`}
+                                        >
+                                            {theme.showVlink ? 'Visible' : 'Hidden'}
+                                        </button>
                                     </div>
                                 </div>
-                            );
-                        })}
-                    </div>
-                </div>
-            )}
-        </>
+                            </div>
+                        )}
+
+                        {subTab === 'socials' && (
+                            <div className="flex flex-col gap-10">
+                                {/* Tab Title */}
+                                <div className="flex items-center gap-4 px-1">
+                                    <div className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shadow-xl shadow-purple-500/5">
+                                        <Share2 size={24} className="text-purple-400" />
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <h2 className="text-xl font-bold text-white tracking-tight">Social Icons</h2>
+                                        <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em]">Platform Connections</p>
+                                    </div>
+                                </div>
+
+                                {/* Style & Layout Controls */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="p-8 rounded-[2rem] bg-white/3 border border-white/5 flex flex-col gap-6">
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <div className="w-6 h-6 rounded-lg bg-purple-500/10 flex items-center justify-center border border-purple-500/10">
+                                                <Layers size={12} className="text-purple-400" />
+                                            </div>
+                                            <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Display & Position</span>
+                                        </div>
+
+                                        <div className="flex flex-col gap-4">
+                                            <span className="text-xs font-bold text-white/60">Display Style</span>
+                                            <div className="flex p-1 bg-black/40 rounded-xl border border-white/5">
+                                                <button
+                                                    onClick={() => setTheme({ ...theme, socialStyle: 'icons-only' })}
+                                                    className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${theme.socialStyle === 'icons-only' ? 'bg-purple-500/20 border-purple-500/40 text-white shadow-xl shadow-purple-500/5' : 'bg-transparent border-transparent text-white/40 hover:text-white/60'}`}
+                                                >
+                                                    <Square size={14} />
+                                                    Icons Only
+                                                </button>
+                                                <button
+                                                    onClick={() => setTheme({ ...theme, socialStyle: 'icon-text' })}
+                                                    className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${theme.socialStyle === 'icon-text' ? 'bg-purple-500/20 border-purple-500/40 text-white shadow-xl shadow-purple-500/5' : 'bg-transparent border-transparent text-white/40 hover:text-white/60'}`}
+                                                >
+                                                    <Type size={14} />
+                                                    Icon + Text
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex flex-col gap-4">
+                                            <span className="text-xs font-bold text-white/60">Position</span>
+                                            <div className="flex p-1 bg-black/40 rounded-xl border border-white/5">
+                                                <button
+                                                    onClick={() => setTheme({ ...theme, socialPosition: 'top' })}
+                                                    className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${theme.socialPosition === 'top' ? 'bg-indigo-500/20 border-indigo-500/40 text-white shadow-xl shadow-indigo-500/5' : 'bg-transparent border-transparent text-white/40 hover:text-white/60'}`}
+                                                >
+                                                    <ArrowUp size={14} />
+                                                    Top
+                                                </button>
+                                                <button
+                                                    onClick={() => setTheme({ ...theme, socialPosition: 'bottom' })}
+                                                    className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${theme.socialPosition === 'bottom' ? 'bg-indigo-500/20 border-indigo-500/40 text-white shadow-xl shadow-indigo-500/5' : 'bg-transparent border-transparent text-white/40 hover:text-white/60'}`}
+                                                >
+                                                    <ArrowDown size={14} />
+                                                    Bottom
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex flex-col gap-4">
+                                            <span className="text-xs font-bold text-white/60">Alignment</span>
+                                            <div className="flex p-1 bg-black/40 rounded-xl border border-white/5">
+                                                <button
+                                                    onClick={() => setTheme({ ...theme, socialAlignment: 'left' })}
+                                                    className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${theme.socialAlignment === 'left' ? 'bg-purple-500/20 border-purple-500/40 text-white shadow-xl shadow-purple-500/5' : 'bg-transparent border-transparent text-white/40 hover:text-white/60'}`}
+                                                >
+                                                    <AlignLeft size={14} />
+                                                    Left
+                                                </button>
+                                                <button
+                                                    onClick={() => setTheme({ ...theme, socialAlignment: 'center' })}
+                                                    className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${theme.socialAlignment === 'center' ? 'bg-purple-500/20 border-purple-500/40 text-white shadow-xl shadow-purple-500/5' : 'bg-transparent border-transparent text-white/40 hover:text-white/60'}`}
+                                                >
+                                                    <AlignCenter size={14} />
+                                                    Center
+                                                </button>
+                                                <button
+                                                    onClick={() => setTheme({ ...theme, socialAlignment: 'right' })}
+                                                    className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${theme.socialAlignment === 'right' ? 'bg-purple-500/20 border-purple-500/40 text-white shadow-xl shadow-purple-500/5' : 'bg-transparent border-transparent text-white/40 hover:text-white/60'}`}
+                                                >
+                                                    <AlignRight size={14} />
+                                                    Right
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="p-8 rounded-[2rem] bg-white/3 border border-white/5 flex flex-col gap-6">
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <div className="w-6 h-6 rounded-lg bg-purple-500/10 flex items-center justify-center border border-purple-500/10">
+                                                <LayoutGrid size={12} className="text-purple-400" />
+                                            </div>
+                                            <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Size & Spacing</span>
+                                        </div>
+
+                                        <div className="flex flex-col gap-4">
+                                            <div className="flex items-center justify-between">
+                                                <label htmlFor="social-icon-size" className="text-xs font-bold text-white/60">Icon Size</label>
+                                                <span className="text-[10px] font-black text-purple-400">{theme.socialSize}px</span>
+                                            </div>
+                                            <input
+                                                id="social-icon-size"
+                                                name="social-icon-size"
+                                                type="range"
+                                                min="16"
+                                                max="48"
+                                                value={theme.socialSize || 20}
+                                                onChange={(e) => setTheme({ ...theme, socialSize: parseInt(e.target.value) })}
+                                                className="w-full h-1.5 bg-white/5 rounded-full appearance-none cursor-pointer accent-purple-500"
+                                            />
+                                        </div>
+
+                                        <div className="flex flex-col gap-4">
+                                            <div className="flex items-center justify-between">
+                                                <label htmlFor="social-icon-spacing" className="text-xs font-bold text-white/60">Spacing</label>
+                                                <span className="text-[10px] font-black text-purple-400">{theme.socialSpacing}px</span>
+                                            </div>
+                                            <input
+                                                id="social-icon-spacing"
+                                                name="social-icon-spacing"
+                                                type="range"
+                                                min="8"
+                                                max="40"
+                                                value={theme.socialSpacing || 16}
+                                                onChange={(e) => setTheme({ ...theme, socialSpacing: parseInt(e.target.value) })}
+                                                className="w-full h-1.5 bg-white/5 rounded-full appearance-none cursor-pointer accent-purple-500"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Color Section */}
+                                <div className="p-8 rounded-[2rem] bg-white/3 border border-white/5 flex flex-col gap-8">
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-2">
+                                            <Paintbrush size={14} className="text-purple-400" />
+                                            <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">Color Customization</span>
+                                        </div>
+                                        <div className="flex p-0.5 bg-black/40 rounded-lg border border-white/5">
+                                            <button
+                                                onClick={() => setTheme({ ...theme, socialColorType: 'auto' })}
+                                                className={`px-3 py-1 rounded-md text-[8px] font-black uppercase tracking-widest transition-all ${theme.socialColorType === 'auto' ? 'bg-white/10 text-white' : 'text-white/30 hover:text-white/50'}`}
+                                            >
+                                                Auto
+                                            </button>
+                                            <button
+                                                onClick={() => setTheme({ ...theme, socialColorType: 'brand' })}
+                                                className={`px-3 py-1 rounded-md text-[8px] font-black uppercase tracking-widest transition-all ${theme.socialColorType === 'brand' ? 'bg-white/10 text-white' : 'text-white/30 hover:text-white/50'}`}
+                                            >
+                                                Brand
+                                            </button>
+                                            <button
+                                                onClick={() => setTheme({ ...theme, socialColorType: 'custom' })}
+                                                className={`px-3 py-1 rounded-md text-[8px] font-black uppercase tracking-widest transition-all ${theme.socialColorType === 'custom' ? 'bg-white/10 text-white' : 'text-white/30 hover:text-white/50'}`}
+                                            >
+                                                Custom
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {theme.socialColorType === 'custom' && (
+                                        <div className="flex items-center gap-4 animate-in fade-in slide-in-from-top-2 duration-200">
+                                            <div className="relative group">
+                                                <input
+                                                    id="social-custom-color-picker"
+                                                    name="social-custom-color-picker"
+                                                    type="color"
+                                                    value={theme.socialCustomColor || '#ffffff'}
+                                                    onChange={(e) => setTheme({ ...theme, socialCustomColor: e.target.value })}
+                                                    className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 cursor-pointer overflow-hidden"
+                                                />
+                                            </div>
+                                            <div className="flex flex-col gap-1">
+                                                <label htmlFor="social-custom-color-hex" className="text-[10px] font-black uppercase tracking-widest text-white/40">Custom Hex</label>
+                                                <input
+                                                    id="social-custom-color-hex"
+                                                    name="social-custom-color-hex"
+                                                    type="text"
+                                                    value={theme.socialCustomColor || '#ffffff'}
+                                                    onChange={(e) => setTheme({ ...theme, socialCustomColor: e.target.value })}
+                                                    className="bg-transparent border-none text-xl font-black uppercase tracking-tighter text-white/90 outline-none w-32"
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Typography & Interaction */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="p-8 rounded-[2rem] bg-white/3 border border-white/5 flex flex-col gap-6 shadow-xl shadow-black/5">
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <div className="w-6 h-6 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/10">
+                                                <Type size={12} className="text-indigo-400" />
+                                            </div>
+                                            <span className="text-[10px] font-black uppercase tracking-widest text-white/30">Typography</span>
+                                        </div>
+
+                                        <div className="flex flex-col gap-4">
+                                            <span className="text-xs font-bold text-white/60">Font Family</span>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                {FONTS.map(f => (
+                                                    <button
+                                                        key={f}
+                                                        onClick={() => setTheme({ ...theme, socialFont: f })}
+                                                        className={`px-3 py-2.5 rounded-xl text-[10px] font-bold border transition-all ${theme.socialFont === f ? 'bg-indigo-500/10 border-indigo-500/30 text-white shadow-lg' : 'bg-white/3 border-white/5 text-white/40 hover:text-white/60'}`}
+                                                        style={{ fontFamily: f }}
+                                                    >
+                                                        {f}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <div className="flex flex-col gap-4">
+                                            <span className="text-xs font-bold text-white/60">Text Weight</span>
+                                            <div className="flex p-1 bg-black/40 rounded-xl border border-white/5">
+                                                {[400, 700, 900].map(weight => (
+                                                    <button
+                                                        key={weight}
+                                                        onClick={() => setTheme({ ...theme, socialTextWeight: weight })}
+                                                        className={`flex-1 py-1.5 rounded-xl text-[8px] font-black uppercase tracking-widest transition-all ${theme.socialTextWeight === weight ? 'bg-white/10 text-white shadow-sm' : 'text-white/30 hover:text-white/50'}`}
+                                                    >
+                                                        {weight === 400 ? 'Regular' : weight === 700 ? 'Bold' : 'Black'}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="p-8 rounded-[2rem] bg-white/3 border border-white/5 flex flex-col gap-6 shadow-xl shadow-black/5">
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <div className="w-6 h-6 rounded-lg bg-orange-500/10 flex items-center justify-center border border-orange-500/10">
+                                                <Zap size={12} className="text-orange-400" />
+                                            </div>
+                                            <span className="text-[10px] font-black uppercase tracking-widest text-white/30">Interactions</span>
+                                        </div>
+
+                                        <div className="flex flex-col gap-4">
+                                            <span className="text-xs font-bold text-white/60">Hover Animation</span>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                {[
+                                                    { id: 'none', label: 'None', icon: Square },
+                                                    { id: 'lift', label: 'Lift', icon: ArrowUp },
+                                                    { id: 'scale', label: 'Zoom', icon: LayoutGrid },
+                                                    { id: 'glow', label: 'Glow', icon: Zap }
+                                                ].map(hover => (
+                                                    <button
+                                                        key={hover.id}
+                                                        onClick={() => setTheme({ ...theme, socialHover: hover.id })}
+                                                        className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${theme.socialHover === hover.id ? 'bg-orange-500/10 border-orange-500/30 text-white shadow-lg shadow-orange-500/5' : 'bg-white/3 border-white/5 text-white/40 hover:text-white/60'}`}
+                                                    >
+                                                        <hover.icon size={12} className={theme.socialHover === hover.id ? 'text-orange-400' : ''} />
+                                                        {hover.label}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <div className="pt-6 border-t border-white/5">
+                                            <SelectField
+                                                id="social-animation-select"
+                                                name="social-animation"
+                                                label="Active Animation"
+                                                value={theme.socialAnimation || 'none'}
+                                                onChange={(e) => setTheme({ ...theme, socialAnimation: e.target.value })}
+                                            >
+                                                {ANIMATION_OPTIONS.map(opt => (
+                                                    <option key={opt.id} value={opt.id} className="bg-[#121212]">{opt.label}</option>
+                                                ))}
+                                            </SelectField>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col gap-1 px-2">
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-white/20">Platform Links</span>
+                                </div>
+
+                                <div className="grid grid-cols-1 gap-4">
+                                    {PLATFORMS.map((p) => {
+                                        const currentSocial = socials.find(s => s.platform === p.id);
+                                        const Icon = p.icon;
+                                        return (
+                                            <div key={p.id} className="group relative flex flex-col gap-3 p-6 rounded-3xl bg-white/3 border border-white/5 hover:bg-white/5 hover:border-white/10 transition-all shadow-xl shadow-black/5">
+                                                <div className="flex items-center justify-between px-1">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className={`p-2 rounded-xl bg-white/2 ${p.color} border border-white/5 group-hover:bg-white/5 transition-colors shadow-inner`}>
+                                                            <Icon size={16} />
+                                                        </div>
+                                                        <label htmlFor={`social-${p.id}`} className="text-[10px] font-black uppercase tracking-widest text-white/30 group-focus-within:text-purple-400 transition-colors">
+                                                            {p.name}
+                                                        </label>
+                                                    </div>
+                                                    {currentSocial?.url && currentSocial.url.length > 0 && (
+                                                        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/20 shadow-sm shadow-green-500/5">
+                                                            <span className="text-[9px] font-black text-green-500/60 uppercase tracking-tighter">Active</span>
+                                                            <Check size={10} className="text-green-500" />
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                <div className="relative">
+                                                    <input
+                                                        id={`social-${p.id}`}
+                                                        name={`social-${p.id}`}
+                                                        type="text"
+                                                        value={currentSocial?.url || ''}
+                                                        onChange={(e) => {
+                                                            setSocials(prev => prev.map(s =>
+                                                                s.platform === p.id ? { ...s, url: e.target.value } : s
+                                                            ));
+                                                        }}
+                                                        placeholder={p.placeholder}
+                                                        className="w-full bg-black/20 border border-white/5 rounded-2xl px-5 py-4 text-sm font-medium text-white outline-none focus:border-purple-500/20 focus:bg-black/30 transition-all placeholder:text-white/5"
+                                                    />
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+                    </>
                 </main >
             </div >
-    <ProfileImageModal
-        isOpen={profileImageModalOpen}
-        onClose={() => setProfileImageModalOpen(false)}
-        profile={profile}
-        setProfile={setProfile}
-    />
+            <ProfileImageModal
+                isOpen={profileImageModalOpen}
+                onClose={() => setProfileImageModalOpen(false)}
+                profile={profile}
+                setProfile={setProfile}
+            />
         </>
     );
 });
