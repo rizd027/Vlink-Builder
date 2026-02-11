@@ -768,7 +768,7 @@ function App() {
             </main>
 
             {/* Preview Panel */}
-            <div className={`transition-all duration-500 ease-in-out ${isMobilePreview || isEditorHidden ? 'flex-1' : 'md:flex-none hidden md:flex'}`}>
+            <div className={`transition-all duration-500 ease-in-out mt-16 md:mt-0 pb-[88px] md:pb-0 ${isMobilePreview || isEditorHidden ? 'flex-1' : 'md:flex-none hidden md:flex'}`}>
                 <PreviewSection
                     theme={deferredTheme}
                     profile={deferredProfile}
