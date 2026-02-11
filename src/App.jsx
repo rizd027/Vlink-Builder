@@ -5037,6 +5037,12 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
                 profile={profile}
                 setProfile={setProfile}
             />
+            <LogoImageModal
+                isOpen={logoImageModalOpen}
+                onClose={() => setLogoImageModalOpen(false)}
+                theme={theme}
+                setTheme={setTheme}
+            />
         </>
     );
 });
