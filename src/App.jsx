@@ -10,7 +10,7 @@ import SelectField from './components/SelectField';
 import {
     PanelLeft, Palette, Settings, LogOut, ExternalLink,
     Plus, Search, Github, Twitter, Instagram, Youtube, Linkedin,
-    MoreHorizontal, Share2, PanelRight, Smartphone, Eye, EyeOff, Layout, Type,
+    MoreHorizontal, Share2, PanelRight, Smartphone, Eye, EyeOff, Layout, Type, PaintRoller,
     Image, Zap, Bell, QrCode, Globe, Clock, Shield, Trash2, Edit2, Link2,
     Check, ChevronRight, ChevronLeft, X, Star, BarChart2, Calendar, Lock, Upload, Copy, Heart,
     ArrowRight, GripVertical, Edit3, LayoutGrid, Monitor, ShoppingBag, Music,
@@ -621,11 +621,51 @@ function App() {
 
     return (
         <div className="flex flex-col md:flex-row w-full h-screen bg-[#050505] text-white/90 selection:bg-purple-500/30 overflow-hidden relative">
-            {/* Solid Background for better performance */}
+            {/* Solid Background for better perforance */}
             <div className="fixed inset-0 bg-[#050505] -z-10" />
 
+            {/* Mobile/Tablet Header */}
+            <header
+                className="md:hidden fixed top-0 left-0 right-0 h-16 px-6 bg-[#080808]/80 backdrop-blur-xl border-b border-white/5 flex items-center justify-between z-[60] shadow-[0_4px_30px_rgba(130,40,217,0.1)]"
+                style={{
+                    boxShadow: '0 1px 0 0 rgba(130,40,217,0.3)',
+                }}
+            >
+                <div className="flex items-center gap-3">
+                    {activeTab === 'appearance' && !isMobilePreview ? (
+                        <button
+                            onClick={() => setActiveTab('links')}
+                            className="p-2 -ml-2 text-white/40 hover:text-white"
+                        >
+                            <ChevronLeft size={24} className="text-purple-500" />
+                        </button>
+                    ) : (
+                        <button
+                            onClick={() => {
+                                setActiveTab('links');
+                                setIsMobilePreview(false);
+                                setIsEditorHidden(false);
+                            }}
+                            className="w-10 h-10 rounded-xl bg-linear-to-br from-purple-500 to-indigo-600 flex items-center justify-center font-black text-xl shadow-lg shadow-purple-500/20 active:scale-95 transition-all"
+                        >
+                            V
+                        </button>
+                    )}
+                    {activeTab === 'appearance' && !isMobilePreview && (
+                        <h1 className="text-lg font-bold text-white">Appearance</h1>
+                    )}
+                </div>
+                <button
+                    onClick={() => setIsExportModalOpen(true)}
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1c1c1e] border border-white/10 text-white hover:bg-white/5 transition-all active:scale-95"
+                >
+                    <FileCode size={18} className="text-purple-400" />
+                    <span className="text-sm font-bold">Export</span>
+                </button>
+            </header>
+
             {/* Sidebar Navigation - Permanent Bar on Desktop, Bottom Bar on Mobile */}
-            <aside className={`fixed bottom-0 left-0 right-0 h-20 md:relative md:h-full transition-all duration-500 ease-in-out border-t md:border-t-0 md:border-r border-white/5 flex flex-row md:flex-col items-center justify-around md:justify-start md:py-8 md:gap-8 bg-[#080808]/95 backdrop-blur-lg md:bg-[#080808] z-50 shrink-0 overflow-hidden
+            <aside className={`fixed bottom-0 left-0 right-0 h-[88px] md:relative md:h-full transition-all duration-500 ease-in-out md:border-t-0 md:border-r border-white/5 flex flex-row md:flex-col items-center justify-around md:justify-start md:py-8 md:gap-8 bg-[#080808]/95 backdrop-blur-lg md:bg-[#080808] z-50 shrink-0 overflow-hidden
                 ${isEditorHidden ? 'md:w-0 md:opacity-0 md:-translate-x-full md:pointer-events-none' : 'md:w-24 md:opacity-100 md:translate-x-0 translate-y-0 opacity-100'}`}
             >
                 <button
@@ -637,21 +677,48 @@ function App() {
                     <PanelLeft size={20} className="absolute transition-all opacity-0 group-hover:opacity-100" />
                 </button>
 
-                <nav className="flex flex-row md:flex-col shrink-0 items-center w-full md:w-auto justify-around md:justify-start px-4 md:px-0">
-                    <NavItem icon={<PanelLeft size={24} />} active={activeTab === 'links'} onClick={() => { handleTabClick('links'); setIsMobilePreview(false); }} />
-                    <NavItem icon={<Palette size={24} />} active={activeTab === 'appearance'} onClick={() => { handleTabClick('appearance'); setIsMobilePreview(false); }} />
-                    <NavItem icon={<Settings size={24} />} active={activeTab === 'settings'} onClick={() => { handleTabClick('settings'); setIsMobilePreview(false); }} />
+                <nav className="flex flex-row md:flex-col shrink-0 items-center w-full md:w-auto justify-around md:justify-start px-2 md:px-0 h-full overflow-x-auto no-scrollbar">
+                    {activeTab === 'appearance' && !isMobilePreview ? (
+                        SIDEBAR_ITEMS.map((item) => (
+                            <NavItem
+                                key={item.id}
+                                icon={<item.icon size={22} />}
+                                label={item.label}
+                                active={appearanceSubTab === item.id}
+                                onClick={() => setAppearanceSubTab(item.id)}
+                                className="min-w-[70px]"
+                            />
+                        ))
+                    ) : (
+                        <>
+                            <NavItem
+                                icon={<LayoutGrid size={24} />}
+                                label="Add Link"
+                                active={activeTab === 'links' && !isMobilePreview}
+                                onClick={() => { handleTabClick('links'); setIsMobilePreview(false); }}
+                            />
+                            <NavItem
+                                icon={<Palette size={24} />}
+                                label="Appearance"
+                                active={activeTab === 'appearance' && !isMobilePreview}
+                                onClick={() => { handleTabClick('appearance'); setIsMobilePreview(false); }}
+                            />
+                            <NavItem
+                                icon={<Settings size={24} />}
+                                label="Settings"
+                                active={activeTab === 'settings' && !isMobilePreview}
+                                onClick={() => { handleTabClick('settings'); setIsMobilePreview(false); }}
+                            />
 
-                    {/* Mobile Only: Preview Toggle */}
-                    <button
-                        onClick={() => setIsMobilePreview(!isMobilePreview)}
-                        className={`md:hidden flex flex-col items-center gap-1 transition-all duration-300 ${isMobilePreview ? 'text-purple-500' : 'text-white/20'}`}
-                    >
-                        <div className={`p-3 rounded-xl ${isMobilePreview ? 'bg-purple-500/10' : ''}`}>
-                            {isMobilePreview ? <Edit3 size={24} /> : <Eye size={24} />}
-                        </div>
-                        <span className="text-[8px] font-black uppercase tracking-widest">{isMobilePreview ? 'Edit' : 'View'}</span>
-                    </button>
+                            <NavItem
+                                icon={<Eye size={24} />}
+                                label="View"
+                                active={isMobilePreview}
+                                onClick={() => setIsMobilePreview(true)}
+                                className="md:hidden"
+                            />
+                        </>
+                    )}
                 </nav>
             </aside>
 
@@ -666,10 +733,10 @@ function App() {
             </button>
 
             {/* Editor Panel */}
-            <main className={`flex flex-col overflow-hidden bg-[#0a0a0a] z-10 transition-all duration-500 ease-in-out 
+            <main className={`flex flex-col overflow-hidden bg-[#0a0a0a] z-10 transition-all duration-500 ease-in-out mt-16 md:mt-0 
                 ${isMobilePreview ? 'hidden md:flex w-0 opacity-0' : (isEditorHidden ? 'flex-none md:flex-none' : 'flex-1 opacity-100')}
                 ${isEditorHidden ? 'md:w-0 md:opacity-0 md:pointer-events-none' : 'md:flex-1 md:opacity-100'}
-                pb-10 md:pb-0`}
+                pb-[88px] md:pb-0`}
             >
                 {/* Editor Header */}
                 <header className="h-16 md:h-20 px-6 md:px-8 border-b border-white/5 flex items-center justify-between bg-transparent shrink-0">
@@ -727,21 +794,25 @@ function App() {
     );
 }
 
-function NavItem({ icon, active, onClick, label }) {
+function NavItem({ icon, active, onClick, label, className = "" }) {
     return (
         <button
             onClick={onClick}
-            className={`group relative flex flex-col items-center gap-2 transition-all duration-300 hover-scale press-down ${active ? 'text-purple-500' : 'text-white/20 hover:text-white/40'}`}
+            className={`group relative flex-1 flex flex-col items-center justify-center gap-1 transition-all duration-300 h-full ${active ? 'text-purple-500' : 'text-white/40 hover:text-white/60'} ${className}`}
         >
-            <div className={`p-4 rounded-2xl transition-all duration-300 ${active ? 'bg-purple-500/10 shadow-[0_0_20px_rgba(168,85,247,0.15)]' : 'group-hover:bg-white/5'}`}>
+            <div className={`px-6 py-2 rounded-2xl transition-all duration-500 relative flex items-center justify-center
+                ${active && 'border border-purple-500/50 bg-purple-500/5 shadow-[0_0_20px_rgba(168,85,247,0.15)]'}
+            `}>
                 {icon}
+                {active && (
+                    <div className="absolute inset-0 rounded-2xl border-2 border-purple-500 opacity-20 blur-sm pointer-events-none" />
+                )}
             </div>
-            <span className={`text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-300 ${active ? 'opacity-100' : 'opacity-0'}`}>
+            <span className="text-[10px] font-bold tracking-tight whitespace-nowrap mt-1">
                 {label}
             </span>
         </button>
     );
-
 }
 
 
@@ -1708,7 +1779,7 @@ const AppearanceEditor = memo(function AppearanceEditor({ theme, setTheme, profi
         <>
             <div className="flex flex-col md:flex-row overflow-hidden h-full text-white">
                 {/* Appearance Sub-Sidebar - Vertical on Desktop, Horizontal on Mobile */}
-                <aside className={`relative bg-white/5 border-b md:border-b-0 md:border-r border-white/5 py-2 md:py-8 flex flex-row md:flex-col gap-2 transition-all duration-300 ease-in-out shrink-0 overflow-x-auto md:overflow-x-visible no-scrollbar ${isSubSidebarCollapsed ? 'md:w-16' : 'md:w-48'}`}>
+                <aside className={`hidden md:flex relative bg-white/5 border-b md:border-b-0 md:border-r border-white/5 py-2 md:py-8 flex flex-row md:flex-col gap-2 transition-all duration-300 ease-in-out shrink-0 overflow-x-auto md:overflow-x-visible no-scrollbar ${isSubSidebarCollapsed ? 'md:w-16' : 'md:w-48'}`}>
                     {/* Desktop Collapse Toggle */}
                     <button
                         onClick={() => setIsSubSidebarCollapsed(!isSubSidebarCollapsed)}
